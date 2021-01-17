@@ -1,0 +1,352 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Conservation Equations &#8212; Notes for Propulsion</title>
+    
+  <link rel="stylesheet" href="../_static/css/index.73d71520a4ca3b99cfee5594769eaaae.css">
+
+    
+  <link rel="stylesheet"
+    href="../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    
+      
+  <link rel="stylesheet"
+    href="../_static/vendor/open-sans_all/1.44.1/index.css">
+  <link rel="stylesheet"
+    href="../_static/vendor/lato_latin-ext/1.44.1/index.css">
+
+    
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/sphinx-book-theme.40e2e510f6b7d1648584402491bb10fe.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" />
+    
+  <link rel="preload" as="script" href="../_static/js/index.3da636dd464baa7582d2.js">
+
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/togglebutton.js"></script>
+    <script src="../_static/clipboard.min.js"></script>
+    <script src="../_static/copybutton.js"></script>
+    <script >var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="../_static/sphinx-book-theme.d31b09fe5c1d09cb49b26a786de4a05d.js"></script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/x-mathjax-config">MathJax.Hub.Config({"TeX": {"Macros": {"vector": ["\\vec{#1}", 1], "uvec": ["\\hat{#1}", 1], "mag": ["\\lVert#1\\rVert", 1], "cross": "\\times", "unit": ["#1~\\mathrm{#2}", 2], "pf": ["\\overline{#1}", 1], "mat": ["\\left[\\mathbf{#1}\\right]", 1]}}, "tex2jax": {"inlineMath": [["\\(", "\\)"]], "displayMath": [["\\[", "\\]"]], "processRefs": false, "processEnvironments": false}})</script>
+    <script async="async" src="https://unpkg.com/thebelab@latest/lib/index.js"></script>
+    <script >
+        const thebe_selector = ".thebe"
+        const thebe_selector_input = "pre"
+        const thebe_selector_output = ".output"
+    </script>
+    <script async="async" src="../_static/sphinx-thebe.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="prev" title="Introduction" href="1-introduction.html" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="en" />
+
+
+
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
+    
+        <div class="navbar-brand-box">
+<a class="navbar-brand text-wrap" href="../index.html">
+  
+  
+  <h1 class="site-logo" id="site-title">Notes for Propulsion</h1>
+  
+</a>
+</div><form class="bd-search d-flex align-items-center" action="../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form>
+<nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
+    <ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../intro.html">
+   Notes for Propulsion
+  </a>
+ </li>
+</ul>
+<p class="caption collapsible-parent">
+ <span class="caption-text">
+  Review
+ </span>
+</p>
+<ul class="current nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="1-introduction.html">
+   Introduction
+  </a>
+ </li>
+ <li class="toctree-l1 current active">
+  <a class="current reference internal" href="#">
+   Conservation Equations
+  </a>
+ </li>
+</ul>
+
+</nav> <!-- To handle the deprecated key -->
+
+<div class="navbar_extra_footer">
+  Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+</div>
+
+</div>
+
+
+          
+
+
+          
+<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
+    
+    <div class="row topbar fixed-top container-xl">
+    <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show">
+    </div>
+    <div class="col pl-2 topbar-main">
+        
+        <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
+            data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
+            aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
+            title="Toggle navigation" data-toggle="tooltip" data-placement="left">
+            <i class="fas fa-bars"></i>
+            <i class="fas fa-arrow-left"></i>
+            <i class="fas fa-arrow-up"></i>
+        </button>
+        
+        
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
+            class="fas fa-download"></i></button>
+
+    <div class="dropdown-buttons">
+        <!-- ipynb file if we had a myst markdown file -->
+        
+        <!-- Download raw file -->
+        <a class="dropdown-buttons" href="../_sources/review/2-conservation-equations.md"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
+                data-placement="left">.md</button></a>
+        <!-- Download PDF via print -->
+        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
+            onClick="window.print()" data-toggle="tooltip" data-placement="left">.pdf</button>
+    </div>
+</div>
+
+        <!-- Source interaction buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Connect with source repository"><i class="fab fa-github"></i></button>
+    <div class="dropdown-buttons sourcebuttons">
+        <a class="repository-button"
+            href="https://github.com/bryanwweber/propulsion-notes"><button type="button" class="btn btn-secondary topbarbtn"
+                data-toggle="tooltip" data-placement="left" title="Source repository"><i
+                    class="fab fa-github"></i>repository</button></a>
+        <a class="issues-button"
+            href="https://github.com/bryanwweber/propulsion-notes/issues/new?title=Issue%20on%20page%20%2Freview/2-conservation-equations.html&body=Your%20issue%20content%20here."><button
+                type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
+                title="Open an issue"><i class="fas fa-lightbulb"></i>open issue</button></a>
+        <a class="edit-button" href="https://github.com/bryanwweber/propulsion-notes/edit/main/review/2-conservation-equations.md"><button
+                type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
+                title="Edit this page"><i class="fas fa-pencil-alt"></i>suggest edit</button></a>
+    </div>
+</div>
+
+
+        <!-- Full screen (wrap in <a> to have style consistency -->
+        <a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
+                data-placement="bottom" onclick="toggleFullScreen()" aria-label="Fullscreen mode"
+                title="Fullscreen mode"><i
+                    class="fas fa-expand"></i></button></a>
+
+        <!-- Launch buttons -->
+
+    </div>
+
+    <!-- Table of contents -->
+    <div class="d-none d-md-block col-md-2 bd-toc show">
+        
+        <div class="tocsection onthispage pt-5 pb-3">
+            <i class="fas fa-list"></i> Contents
+        </div>
+        <nav id="bd-toc-nav">
+            <ul class="nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#assumptions">
+   Assumptions
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#conservation-of-mass">
+   Conservation of Mass
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#conservation-of-momentum">
+   Conservation of Momentum
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#conservation-of-energy">
+   Conservation of Energy
+  </a>
+ </li>
+</ul>
+
+        </nav>
+        
+    </div>
+</div>
+    <div id="main-content" class="row">
+        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
+        
+              <div>
+                
+  <div class="section" id="conservation-equations">
+<h1>Conservation Equations<a class="headerlink" href="#conservation-equations" title="Permalink to this headline">¶</a></h1>
+<p>There are three conservation laws that are relevant for propulsion engines:</p>
+<ol class="simple">
+<li><p>Conservation of Mass</p></li>
+<li><p>Conservation of Momentum</p></li>
+<li><p>Conservation of Energy</p></li>
+</ol>
+<div class="section" id="assumptions">
+<h2>Assumptions<a class="headerlink" href="#assumptions" title="Permalink to this headline">¶</a></h2>
+<p>Before discussing these equations, we must describe the assumptions we will use to simplify them. We can think of an ideal flow machine as a device that operates on a stream of a fluid in some way and ejects the processed fluid into the surroundings. The device may or may not intake a stream of fluid as well. This kind of simplified flow machine is shown in <a class="reference internal" href="#ideal-flow-machine"><span class="std std-numref">Fig. 1</span></a>.</p>
+<div class="figure align-default" id="ideal-flow-machine">
+<img alt="../_images/ideal-flow-machine.svg" src="../_images/ideal-flow-machine.svg" /><p class="caption"><span class="caption-number">Fig. 1 </span><span class="caption-text">An ideal flow machine.</span><a class="headerlink" href="#ideal-flow-machine" title="Permalink to this image">¶</a></p>
+</div>
+<p><strong>Assumption 1:</strong> Draw an imaginary surface in front of the flow machine. Inside the surface are all the molecules of fluid that will enter the flow machine. A similar surface containing all the molecules that have been processed by the flow machine is drawn from the exit. This surface is called a <strong>streamtube</strong>, and no mass can cross the streamtube surface. The shape of the streamtube may be as shown in <a class="reference internal" href="#ideal-flow-machine"><span class="std std-numref">Fig. 1</span></a>, or it may be different. The combination of the streamtubes and the flow machine create a <strong>control volume</strong> to which we will apply the conservation laws.</p>
+<p><strong>Assumption 2:</strong> The fluid flow is at steady state. This means that there can be no unbalanced forces on the flow machine. Due to the aerodynamic drag, there must be a corresponding applied force to maintain constant velocity. The power required to maintain constant velocity is therefore given by</p>
+<div class="math notranslate nohighlight" id="equation-power-required-steady-state">
+<span class="eqno">(1)<a class="headerlink" href="#equation-power-required-steady-state" title="Permalink to this equation">¶</a></span>\[D V_0 = F V_0\]</div>
+<p>where <span class="math notranslate nohighlight">\(D\)</span> is the drag force and <span class="math notranslate nohighlight">\(F\)</span> is the applied force by the flow machine.</p>
+<p><strong>Assumption 3:</strong> The fluid flow is quasi-one-dimensional. This means that at any cross section of the flow, the properties are constant, and we refer to the properties <strong>at a location</strong> or <strong>at a station</strong>. In the freestream, the properties of the fluid flow are subscripted with <span class="math notranslate nohighlight">\(0\)</span>; at the exit, the properties are subscripted with <span class="math notranslate nohighlight">\(e\)</span>.</p>
+<p><strong>Assumption 4:</strong> The freestream and exit stations are sufficiently far away from the flow machine that the pressures are equal, <span class="math notranslate nohighlight">\(p_e = p_0\)</span>, and are in equilibrium with the surroundings.</p>
+<p><strong>Assumption 5:</strong> There is no stray heat transfer from the flow machine to the surroundings, or across the streamtube boundaries.</p>
+<p><strong>Assumption 6:</strong> We can neglect frictional forces across the streamtube boundary.</p>
+<p><strong>Assumption 7:</strong> The only mass entering and leaving the flow machine are within the inlet streamtube. Any other mass flows, for instance, of fuel are negligible in comparison to this flow. Assuming the stoichiometric mass-basis air-fuel ratio of jet fuel is 15, and assuming the entire flow is used for combustion, neglecting the fuel flow results in about a 5% error in the mass flow rate. However, part of the inlet air flow is used for cooling in the engine, so the actual ratio of incoming air to incoming fuel is much higher than 15, resulting in a smaller error.</p>
+</div>
+<div class="section" id="conservation-of-mass">
+<span id="conservation-of-masss"></span><h2>Conservation of Mass<a class="headerlink" href="#conservation-of-mass" title="Permalink to this headline">¶</a></h2>
+<p>For the control volume described in <strong>Assumption 1</strong>, according to <strong>Assumption 7</strong> the only mass entering is at the freestream (station <span class="math notranslate nohighlight">\(0\)</span>) and the only mass exiting is at the exit (station <span class="math notranslate nohighlight">\(e\)</span>). Second, because the control volume is at steady state (<strong>Assumption 2</strong>), the amount of matter inside the control volume is constant. Finally, according to <strong>Assumption 3</strong>, the flow is quasi-one-dimensional and the properties of the flow at a given station are constant.</p>
+<p>Therefore, we can represent the mass flow rate of the fluid at the freestream as:</p>
+<div class="math notranslate nohighlight" id="equation-mass-flow-rate-freestream">
+<span class="eqno">(2)<a class="headerlink" href="#equation-mass-flow-rate-freestream" title="Permalink to this equation">¶</a></span>\[\dot{m}_0 = \rho_0 A_0 V_0\]</div>
+<p>and the mass flow rate of the fluid at the exit as:</p>
+<div class="math notranslate nohighlight" id="equation-mass-flow-rate-exit">
+<span class="eqno">(3)<a class="headerlink" href="#equation-mass-flow-rate-exit" title="Permalink to this equation">¶</a></span>\[\dot{m}_e = \rho_e A_e V_e\]</div>
+<p>where <span class="math notranslate nohighlight">\(\dot{m}\)</span> is the mass flow rate, <span class="math notranslate nohighlight">\(\rho\)</span> is the density of the fluid, <span class="math notranslate nohighlight">\(A\)</span> is the cross-sectional area of the streamtube at that station, and <span class="math notranslate nohighlight">\(V\)</span> is the fluid velocity.</p>
+<p>According to the Law of Conservation of Mass, mass cannot be created or destroyed. In general, for one-dimensional flow, the Law of Conservation of Mass can be written as:</p>
+<div class="math notranslate nohighlight">
+\[-\sum_i \dot{m}_i + \sum_e \dot{m}_e = -\frac{dm_{cv}}{dt}\]</div>
+<p>where subscript <span class="math notranslate nohighlight">\(i\)</span> indicates an inlet, and <span class="math notranslate nohighlight">\(m_{cv}\)</span> is the mass inside the control volume. At steady state, the right-hand-side is zero by definition, such that the Law of Conservation of Mass simplifies to:</p>
+<div class="math notranslate nohighlight" id="equation-ideal-conservation-of-mass">
+<span class="eqno">(4)<a class="headerlink" href="#equation-ideal-conservation-of-mass" title="Permalink to this equation">¶</a></span>\[\dot{m}_0 = \dot{m}_e = \rho_0 A_0 V_0 = \rho_e A_e V_e = \dot{m}\]</div>
+</div>
+<div class="section" id="conservation-of-momentum">
+<h2>Conservation of Momentum<a class="headerlink" href="#conservation-of-momentum" title="Permalink to this headline">¶</a></h2>
+<p>Newton’s second law of motion can be written as:</p>
+<div class="math notranslate nohighlight">
+\[\frac{d\left(mV\right)}{dt} = \sum F\]</div>
+<p>or, the change of momentum of the fluid is equal to the net force acting on it. For this control volume, we will only consider one net force on the fluid. Newton’s second law can therefore be written as:</p>
+<div class="math notranslate nohighlight">
+\[\left(-\rho_0 A_0 V_0\right)V_0 + \left(\rho_e A_e V_e\right)V_e = F\]</div>
+<p>where we have used the sign convention established in <span class="xref std std-ref">conservation_of_mass</span>. Since the mass flow rate is constant (<span class="math notranslate nohighlight">\(\rho_0 A_0 V_0 = \rho_e A_e V_e\)</span>), this can be rewritten as:</p>
+<div class="math notranslate nohighlight" id="equation-ideal-conservation-of-momentum">
+<span class="eqno">(5)<a class="headerlink" href="#equation-ideal-conservation-of-momentum" title="Permalink to this equation">¶</a></span>\[\dot{m}\left(V_e - V_0\right) = F\]</div>
+<p>Note that the force <span class="math notranslate nohighlight">\(F\)</span> is the force on the fluid. Therefore, the force on the flow machine by the fluid is <span class="math notranslate nohighlight">\(-F\)</span>.</p>
+</div>
+<div class="section" id="conservation-of-energy">
+<h2>Conservation of Energy<a class="headerlink" href="#conservation-of-energy" title="Permalink to this headline">¶</a></h2>
+<p>The First Law of Thermodynamics, applied to this control volume, states that the <strong>total enthalpy</strong> of the flowing fluid can only be changed by heat transfer or power transfer. The total enthalpy is given by:</p>
+<div class="math notranslate nohighlight" id="equation-total-enthalpy">
+<span class="eqno">(6)<a class="headerlink" href="#equation-total-enthalpy" title="Permalink to this equation">¶</a></span>\[h_t = h + \frac{1}{2} V^2\]</div>
+<p>where <span class="math notranslate nohighlight">\(h_t\)</span> is the total enthalpy and <span class="math notranslate nohighlight">\(h\)</span> is the <strong>static enthalpy</strong>. Therefore, the Law of Conservation of Energy can be stated as:</p>
+<div class="math notranslate nohighlight" id="equation-conservation-of-energy">
+<span class="eqno">(7)<a class="headerlink" href="#equation-conservation-of-energy" title="Permalink to this equation">¶</a></span>\[\dot{m}\left[\left(h_e - h_0\right) + \frac{1}{2}\left(V_e^2 - V_0^2\right)\right] = \dot{m} Q + P\]</div>
+<p>where <span class="math notranslate nohighlight">\(h\)</span> and <span class="math notranslate nohighlight">\(Q\)</span> (the heat transfer) have units of kJ/kg in the SI system, and <span class="math notranslate nohighlight">\(P\)</span> (the power) has units of kW. Beware of the kinetic energy term, though, because it does not have consistent units in this system.</p>
+</div>
+</div>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./review"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+        </div>
+    </div>
+    
+    
+    <div class='prev-next-bottom'>
+        
+    <a class='left-prev' id="prev-link" href="1-introduction.html" title="previous page">Introduction</a>
+
+    </div>
+    <footer class="footer mt-5 mt-md-0">
+    <div class="container">
+      <p>
+        
+          By Bryan Weber<br/>
+        
+          <div class="extra_footer">
+            <p xmlns:dct="http://purl.org/dc/terms/" xmlns:cc="http://creativecommons.org/ns#" class="license-text"><a rel="cc:attributionURL" property="dct:title" href="https://bryanwweber.github.io/propulsion-notes">Notes for Propulsion</a> by <span property="cc:attributionName">Bryan Weber</span> is licensed under <a rel="license" href="https://creativecommons.org/licenses/by-sa/4.0">CC BY-SA 4.0<img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/cc.svg?ref=chooser-v1" /><img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/by.svg?ref=chooser-v1" /><img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/sa.svg?ref=chooser-v1" /></a></p>
+
+          </div>
+      </p>
+    </div>
+  </footer>
+</main>
+
+
+      </div>
+    </div>
+
+    
+  <script src="../_static/js/index.3da636dd464baa7582d2.js"></script>
+
+
+    
+  </body>
+</html>
