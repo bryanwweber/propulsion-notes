@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Introduction &#8212; Notes for Propulsion</title>
+    <title>Overview of Flow Devices &#8212; Notes for Propulsion</title>
     
   <link rel="stylesheet" href="../_static/css/index.73d71520a4ca3b99cfee5594769eaaae.css">
 
@@ -56,8 +56,8 @@
     <script async="async" src="../_static/sphinx-thebe.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Conservation Equations" href="2-conservation-equations.html" />
-    <link rel="prev" title="Notes for Propulsion" href="../intro.html" />
+    <link rel="next" title="Flow Machines with No Heat Addition" href="2-no-heat-addition.html" />
+    <link rel="prev" title="Conservation Equations" href="../review/2-conservation-equations.html" />
 
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="en" />
@@ -97,14 +97,14 @@
   Review
  </span>
 </p>
-<ul class="current nav sidenav_l1">
- <li class="toctree-l1 current active">
-  <a class="current reference internal" href="#">
+<ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../review/1-introduction.html">
    Introduction
   </a>
  </li>
  <li class="toctree-l1">
-  <a class="reference internal" href="2-conservation-equations.html">
+  <a class="reference internal" href="../review/2-conservation-equations.html">
    Conservation Equations
   </a>
  </li>
@@ -114,14 +114,14 @@
   Overfiew of Flow Devices
  </span>
 </p>
-<ul class="nav sidenav_l1">
- <li class="toctree-l1">
-  <a class="reference internal" href="../overview-of-flow-devices/1-introduction.html">
+<ul class="current nav sidenav_l1">
+ <li class="toctree-l1 current active">
+  <a class="current reference internal" href="#">
    Overview of Flow Devices
   </a>
  </li>
  <li class="toctree-l1">
-  <a class="reference internal" href="../overview-of-flow-devices/2-no-heat-addition.html">
+  <a class="reference internal" href="2-no-heat-addition.html">
    Flow Machines with No Heat Addition
   </a>
  </li>
@@ -165,7 +165,7 @@
         <!-- ipynb file if we had a myst markdown file -->
         
         <!-- Download raw file -->
-        <a class="dropdown-buttons" href="../_sources/review/1-introduction.md"><button type="button"
+        <a class="dropdown-buttons" href="../_sources/overview-of-flow-devices/1-introduction.md"><button type="button"
                 class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
                 data-placement="left">.md</button></a>
         <!-- Download PDF via print -->
@@ -185,10 +185,10 @@
                 data-toggle="tooltip" data-placement="left" title="Source repository"><i
                     class="fab fa-github"></i>repository</button></a>
         <a class="issues-button"
-            href="https://github.com/bryanwweber/propulsion-notes/issues/new?title=Issue%20on%20page%20%2Freview/1-introduction.html&body=Your%20issue%20content%20here."><button
+            href="https://github.com/bryanwweber/propulsion-notes/issues/new?title=Issue%20on%20page%20%2Foverview-of-flow-devices/1-introduction.html&body=Your%20issue%20content%20here."><button
                 type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
                 title="Open an issue"><i class="fas fa-lightbulb"></i>open issue</button></a>
-        <a class="edit-button" href="https://github.com/bryanwweber/propulsion-notes/edit/main/review/1-introduction.md"><button
+        <a class="edit-button" href="https://github.com/bryanwweber/propulsion-notes/edit/main/overview-of-flow-devices/1-introduction.md"><button
                 type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
                 title="Edit this page"><i class="fas fa-pencil-alt"></i>suggest edit</button></a>
     </div>
@@ -208,20 +208,6 @@
     <!-- Table of contents -->
     <div class="d-none d-md-block col-md-2 bd-toc show">
         
-        <div class="tocsection onthispage pt-5 pb-3">
-            <i class="fas fa-list"></i> Contents
-        </div>
-        <nav id="bd-toc-nav">
-            <ul class="nav section-nav flex-column">
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#overview-of-the-material">
-   Overview of the Material
-  </a>
- </li>
-</ul>
-
-        </nav>
-        
     </div>
 </div>
     <div id="main-content" class="row">
@@ -229,14 +215,11 @@
         
               <div>
                 
-  <div class="section" id="introduction">
-<span id="review-introduction"></span><h1>Introduction<a class="headerlink" href="#introduction" title="Permalink to this headline">¶</a></h1>
-<p>This class is focused on propulsion engines for aerospace applications. In any propulsion engine, the primary goal is to provide a net force on the craft to accelerate it or to balance an opposing force to maintain a constant speed. This force is commonly called the <strong>thrust</strong> and is generated by changing the momentum of a fluid as it passes through the propulsion engine.</p>
-<p>The change of fluid momentum is due to the forces acting on the fluid, according to Newton’s second law. Newton’s third law says that the fluid provides an equal and opposite force on the boundaries of the flow, thus producing the desired thrust force. These kind of propulsion engines are therefore also called <strong>reaction motors</strong> and <strong>flow machines</strong>.</p>
-<p>There are a number of common ways of characterizing propulsion engines. First, we can categorize the engine based on whether it requires fluid from its environment, or whether the propulsive fluids are carried entirely onboard the craft. The former type of engine is typically called <strong>air-breathing</strong> and the latter is a <strong>rocket</strong>.</p>
-<p>Another way to characterize propulsion engines is by the types of thermodynamic processes they undergo. In this sense, we can categorize based on whether the fluid acquires a net work input, a net heat transfer input, or both. The types of engines we will discuss in this class are shown in <a class="reference internal" href="#engine-types"><span class="std std-numref">Table 1</span></a>.</p>
-<table class="table" id="engine-types">
-<caption><span class="caption-number">Table 1 </span><span class="caption-text">Engines categorized by energy requirement</span><a class="headerlink" href="#engine-types" title="Permalink to this table">¶</a></caption>
+  <div class="section" id="overview-of-flow-devices">
+<h1>Overview of Flow Devices<a class="headerlink" href="#overview-of-flow-devices" title="Permalink to this headline">¶</a></h1>
+<p>In this chapter, we will give an overview of the different flow machines we described in the <a class="reference internal" href="../review/1-introduction.html#review-introduction"><span class="std std-ref">Introduction</span></a>. We categorized the machines by whether they provide the fluid with power input, heat transfer input, or both.</p>
+<table class="table" id="engine-types-2">
+<caption><span class="caption-number">Table 2 </span><span class="caption-text">Engines categorized by energy requirement</span><a class="headerlink" href="#engine-types-2" title="Permalink to this table">¶</a></caption>
 <colgroup>
 <col style="width: 50%" />
 <col style="width: 50%" />
@@ -258,11 +241,6 @@
 </tr>
 </tbody>
 </table>
-<p>All of the devices that use a net heat transfer input commonly on chemical energy, released in the form of combustion, to operate. For space-based applications, other options are available to energize the propellant. Nuclear thermal propulsion uses the energy from a nuclear reactor to heat the propellant, while resistojets use electrical resistance to heat the propellant, and arc jets use a plasma arc to do the same. Finally, devices that accelerate ions or molecules tend to be very high efficiency but very low thrust, and are only suited for long-term use in space.</p>
-<div class="section" id="overview-of-the-material">
-<h2>Overview of the Material<a class="headerlink" href="#overview-of-the-material" title="Permalink to this headline">¶</a></h2>
-<p>In the next few sections, we will review the fundamental equations relevant to propulsion engines. Following that, we will discuss each of the propulsion devices listed above at a high level to determine their basic performance characteristics and compare them. Then, we will dive in to detail of each of the devices.</p>
-</div>
 </div>
 
     <script type="text/x-thebe-config">
@@ -278,7 +256,7 @@
         },
         kernelOptions: {
             kernelName: "python3",
-            path: "./review"
+            path: "./overview-of-flow-devices"
         },
         predefinedOutput: true
     }
@@ -293,8 +271,8 @@
     
     <div class='prev-next-bottom'>
         
-    <a class='left-prev' id="prev-link" href="../intro.html" title="previous page">Notes for Propulsion</a>
-    <a class='right-next' id="next-link" href="2-conservation-equations.html" title="next page">Conservation Equations</a>
+    <a class='left-prev' id="prev-link" href="../review/2-conservation-equations.html" title="previous page">Conservation Equations</a>
+    <a class='right-next' id="next-link" href="2-no-heat-addition.html" title="next page">Flow Machines with No Heat Addition</a>
 
     </div>
     <footer class="footer mt-5 mt-md-0">

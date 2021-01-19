@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Introduction &#8212; Notes for Propulsion</title>
+    <title>Flow Machines with No Heat Addition &#8212; Notes for Propulsion</title>
     
   <link rel="stylesheet" href="../_static/css/index.73d71520a4ca3b99cfee5594769eaaae.css">
 
@@ -56,8 +56,7 @@
     <script async="async" src="../_static/sphinx-thebe.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Conservation Equations" href="2-conservation-equations.html" />
-    <link rel="prev" title="Notes for Propulsion" href="../intro.html" />
+    <link rel="prev" title="Overview of Flow Devices" href="1-introduction.html" />
 
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="en" />
@@ -97,14 +96,14 @@
   Review
  </span>
 </p>
-<ul class="current nav sidenav_l1">
- <li class="toctree-l1 current active">
-  <a class="current reference internal" href="#">
+<ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../review/1-introduction.html">
    Introduction
   </a>
  </li>
  <li class="toctree-l1">
-  <a class="reference internal" href="2-conservation-equations.html">
+  <a class="reference internal" href="../review/2-conservation-equations.html">
    Conservation Equations
   </a>
  </li>
@@ -114,14 +113,14 @@
   Overfiew of Flow Devices
  </span>
 </p>
-<ul class="nav sidenav_l1">
+<ul class="current nav sidenav_l1">
  <li class="toctree-l1">
-  <a class="reference internal" href="../overview-of-flow-devices/1-introduction.html">
+  <a class="reference internal" href="1-introduction.html">
    Overview of Flow Devices
   </a>
  </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="../overview-of-flow-devices/2-no-heat-addition.html">
+ <li class="toctree-l1 current active">
+  <a class="current reference internal" href="#">
    Flow Machines with No Heat Addition
   </a>
  </li>
@@ -165,7 +164,7 @@
         <!-- ipynb file if we had a myst markdown file -->
         
         <!-- Download raw file -->
-        <a class="dropdown-buttons" href="../_sources/review/1-introduction.md"><button type="button"
+        <a class="dropdown-buttons" href="../_sources/overview-of-flow-devices/2-no-heat-addition.md"><button type="button"
                 class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
                 data-placement="left">.md</button></a>
         <!-- Download PDF via print -->
@@ -185,10 +184,10 @@
                 data-toggle="tooltip" data-placement="left" title="Source repository"><i
                     class="fab fa-github"></i>repository</button></a>
         <a class="issues-button"
-            href="https://github.com/bryanwweber/propulsion-notes/issues/new?title=Issue%20on%20page%20%2Freview/1-introduction.html&body=Your%20issue%20content%20here."><button
+            href="https://github.com/bryanwweber/propulsion-notes/issues/new?title=Issue%20on%20page%20%2Foverview-of-flow-devices/2-no-heat-addition.html&body=Your%20issue%20content%20here."><button
                 type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
                 title="Open an issue"><i class="fas fa-lightbulb"></i>open issue</button></a>
-        <a class="edit-button" href="https://github.com/bryanwweber/propulsion-notes/edit/main/review/1-introduction.md"><button
+        <a class="edit-button" href="https://github.com/bryanwweber/propulsion-notes/edit/main/overview-of-flow-devices/2-no-heat-addition.md"><button
                 type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
                 title="Edit this page"><i class="fas fa-pencil-alt"></i>suggest edit</button></a>
     </div>
@@ -214,8 +213,23 @@
         <nav id="bd-toc-nav">
             <ul class="nav section-nav flex-column">
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#overview-of-the-material">
-   Overview of the Material
+  <a class="reference internal nav-link" href="#energy-conservation">
+   Energy Conservation
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#mass-conservation">
+   Mass Conservation
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#constant-applied-power">
+   Constant Applied Power
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#propulsive-efficiency">
+   Propulsive Efficiency
   </a>
  </li>
 </ul>
@@ -229,39 +243,56 @@
         
               <div>
                 
-  <div class="section" id="introduction">
-<span id="review-introduction"></span><h1>Introduction<a class="headerlink" href="#introduction" title="Permalink to this headline">¶</a></h1>
-<p>This class is focused on propulsion engines for aerospace applications. In any propulsion engine, the primary goal is to provide a net force on the craft to accelerate it or to balance an opposing force to maintain a constant speed. This force is commonly called the <strong>thrust</strong> and is generated by changing the momentum of a fluid as it passes through the propulsion engine.</p>
-<p>The change of fluid momentum is due to the forces acting on the fluid, according to Newton’s second law. Newton’s third law says that the fluid provides an equal and opposite force on the boundaries of the flow, thus producing the desired thrust force. These kind of propulsion engines are therefore also called <strong>reaction motors</strong> and <strong>flow machines</strong>.</p>
-<p>There are a number of common ways of characterizing propulsion engines. First, we can categorize the engine based on whether it requires fluid from its environment, or whether the propulsive fluids are carried entirely onboard the craft. The former type of engine is typically called <strong>air-breathing</strong> and the latter is a <strong>rocket</strong>.</p>
-<p>Another way to characterize propulsion engines is by the types of thermodynamic processes they undergo. In this sense, we can categorize based on whether the fluid acquires a net work input, a net heat transfer input, or both. The types of engines we will discuss in this class are shown in <a class="reference internal" href="#engine-types"><span class="std std-numref">Table 1</span></a>.</p>
-<table class="table" id="engine-types">
-<caption><span class="caption-number">Table 1 </span><span class="caption-text">Engines categorized by energy requirement</span><a class="headerlink" href="#engine-types" title="Permalink to this table">¶</a></caption>
-<colgroup>
-<col style="width: 50%" />
-<col style="width: 50%" />
-</colgroup>
-<thead>
-<tr class="row-odd"><th class="head"><p>Type</p></th>
-<th class="head"><p>Engines</p></th>
-</tr>
-</thead>
-<tbody>
-<tr class="row-even"><td><p>Net Work Input</p></td>
-<td><p>Propeller</p></td>
-</tr>
-<tr class="row-odd"><td><p>Net Heat Transfer Input</p></td>
-<td><p>Turbojet, Ramjet, Scramjet, Pulsejet, Rocket</p></td>
-</tr>
-<tr class="row-even"><td><p>Both</p></td>
-<td><p>Turbofan</p></td>
-</tr>
-</tbody>
-</table>
-<p>All of the devices that use a net heat transfer input commonly on chemical energy, released in the form of combustion, to operate. For space-based applications, other options are available to energize the propellant. Nuclear thermal propulsion uses the energy from a nuclear reactor to heat the propellant, while resistojets use electrical resistance to heat the propellant, and arc jets use a plasma arc to do the same. Finally, devices that accelerate ions or molecules tend to be very high efficiency but very low thrust, and are only suited for long-term use in space.</p>
-<div class="section" id="overview-of-the-material">
-<h2>Overview of the Material<a class="headerlink" href="#overview-of-the-material" title="Permalink to this headline">¶</a></h2>
-<p>In the next few sections, we will review the fundamental equations relevant to propulsion engines. Following that, we will discuss each of the propulsion devices listed above at a high level to determine their basic performance characteristics and compare them. Then, we will dive in to detail of each of the devices.</p>
+  <div class="section" id="flow-machines-with-no-heat-addition">
+<h1>Flow Machines with No Heat Addition<a class="headerlink" href="#flow-machines-with-no-heat-addition" title="Permalink to this headline">¶</a></h1>
+<p>Under the idealized assumptions we discussed in <a class="reference internal" href="../review/2-conservation-equations.html#conservation-equations-review"><span class="std std-ref">Conservation Equations</span></a>, we assumed that there would be no stray heat transfer. This typically means that devices whose purpose is not to have a heat transfer do not. In propulsion engines, these devices are typically:</p>
+<ul class="simple">
+<li><p>Propellers</p></li>
+<li><p>Fans</p></li>
+<li><p>Compressors</p></li>
+<li><p>Turbines</p></li>
+</ul>
+<p>Consider a simple propeller. This may be attached to an aircraft to provide thrust, if there is a power source. Or, it may be a wind turbine, and there is a power sink. In either case, the system is shown in <a class="reference internal" href="#propeller"><span class="std std-numref">Fig. 2</span></a>.</p>
+<div class="figure align-default" id="propeller">
+<img alt="../_images/propeller.svg" src="../_images/propeller.svg" /><p class="caption"><span class="caption-number">Fig. 2 </span><span class="caption-text">A simplified propeller. Note that station 1 is aligned with the plane of the propller blades.</span><a class="headerlink" href="#propeller" title="Permalink to this image">¶</a></p>
+</div>
+<p>The plane through the propeller blades is perpendicular to the oncoming velocity. As the fluid passes over the propeller blades, which are shaped like wings, it experiences a change of momentum. In the case of a power source, the blades do work on the fluid, and the fluid is accelerated by the blades.</p>
+<p>Now we will focus on propulsive applications, such that a power input is required (<span class="math notranslate nohighlight">\(P &gt; 0\)</span>) and the force on the fluid is positive (<span class="math notranslate nohighlight">\(F&gt;0\)</span>).</p>
+<div class="section" id="energy-conservation">
+<h2>Energy Conservation<a class="headerlink" href="#energy-conservation" title="Permalink to this headline">¶</a></h2>
+<p>The energy conservation relationship simplifies to:</p>
+<div class="math notranslate nohighlight" id="equation-no-heat-addition-energy">
+<span class="eqno">(8)<a class="headerlink" href="#equation-no-heat-addition-energy" title="Permalink to this equation">¶</a></span>\[P = \dot{m}\left[\left(h_e - h_0\right) + \frac{1}{2}\left(V_e^2 - V_0^2\right)\right]\]</div>
+<p>However, we expect that the static temperature of the air stays nearly constant during this process, since <span class="math notranslate nohighlight">\(Q = 0\)</span>. Since the static enthalpy is directly proportional to the static temperature, if the static temperature is constant so is the static enthalpy. In an equation:</p>
+<div class="math notranslate nohighlight" id="equation-static-enthalpy-temperature">
+<span class="eqno">(9)<a class="headerlink" href="#equation-static-enthalpy-temperature" title="Permalink to this equation">¶</a></span>\[h_e - h_0 = \int_{T_0}^{T_e} c_p dT\]</div>
+<p>If temperature is constant, then <span class="math notranslate nohighlight">\(dT\)</span> is zero and <span class="math notranslate nohighlight">\(h_e - h_0 = 0\)</span>. This further simplifies Eq. <a class="reference internal" href="#equation-no-heat-addition-energy">(8)</a> to:</p>
+<div class="math notranslate nohighlight" id="equation-simplified-no-heat-energy">
+<span class="eqno">(10)<a class="headerlink" href="#equation-simplified-no-heat-energy" title="Permalink to this equation">¶</a></span>\[P = \frac{1}{2}\dot{m}\left(V_e^2 - V_0^2\right) = \frac{1}{2}\dot{m}\left(V_e - V_0\right)\left(V_e + V_0\right)\]</div>
+<p>where the last equation on the right hand side is found by factoring the squared velocity terms. Then, noting that <span class="math notranslate nohighlight">\(\dot{m}\left(V_e - V_0\right)\)</span> is the change in momentum of the fluid, and <span class="math notranslate nohighlight">\(\left(V_e + V_0\right)/2\)</span> is the average velocity, we can write:</p>
+<div class="math notranslate nohighlight" id="equation-propeller-power">
+<span class="eqno">(11)<a class="headerlink" href="#equation-propeller-power" title="Permalink to this equation">¶</a></span>\[P = F V_{\text{avg}}\]</div>
+</div>
+<div class="section" id="mass-conservation">
+<h2>Mass Conservation<a class="headerlink" href="#mass-conservation" title="Permalink to this headline">¶</a></h2>
+<p>We will show later on that the average velocity is equal to the velocity at the plane of rotation of the propeller, such that:</p>
+<div class="math notranslate nohighlight" id="equation-no-heat-addition-mass">
+<span class="eqno">(12)<a class="headerlink" href="#equation-no-heat-addition-mass" title="Permalink to this equation">¶</a></span>\[\dot{m} = \rho_0 A_0 V_0 = \rho_e A_e V_e = \rho_1 A_1 V_{\text{avg}}\]</div>
+</div>
+<div class="section" id="constant-applied-power">
+<h2>Constant Applied Power<a class="headerlink" href="#constant-applied-power" title="Permalink to this headline">¶</a></h2>
+<p>If the applied power <span class="math notranslate nohighlight">\(P\)</span> is constant, Eq. <a class="reference internal" href="#equation-propeller-power">(11)</a> shows that the thrust force drops off as flight speed increases:</p>
+<div class="math notranslate nohighlight">
+\[F = \frac{P}{V_{\text{avg}}} = \frac{2P}{V_e + V_0} = \frac{2P}{V_0\left(1 + V_e/V_0\right)}\]</div>
+</div>
+<div class="section" id="propulsive-efficiency">
+<h2>Propulsive Efficiency<a class="headerlink" href="#propulsive-efficiency" title="Permalink to this headline">¶</a></h2>
+<p>Under our assumption of steady state, the drag is equal to the thrust, <span class="math notranslate nohighlight">\(D = F\)</span>. The <strong>required power</strong>, also called the <strong>useful power</strong>, is the power required to overcome the drag, <span class="math notranslate nohighlight">\(P_u = D V_0 = FV_0\)</span>. Then, it is useful to divide the total power provided by the propeller into the useful portion and the portion accounting for losses. This will allow us to define a <strong>propulsive efficiency</strong>.</p>
+<div class="math notranslate nohighlight">
+\[P = P_u + P_l = F V_0 + P_l\]</div>
+<p>where <span class="math notranslate nohighlight">\(P_l\)</span> is the power loss and <span class="math notranslate nohighlight">\(P_u\)</span> is the useful power. Solving for the loss term, and plugging in Eq. <a class="reference internal" href="#equation-simplified-no-heat-energy">(10)</a>:</p>
+<div class="math notranslate nohighlight" id="equation-propeller-power-loss">
+<span class="eqno">(13)<a class="headerlink" href="#equation-propeller-power-loss" title="Permalink to this equation">¶</a></span>\[P_l = \frac{1}{2}\dot{m}\left(V_e^2 - V_0^2\right) - \dot{m}\left(V_e - V_0\right)V_0 = \frac{1}{2}\dot{m}\left(V_e - V_0\right)^2\]</div>
 </div>
 </div>
 
@@ -278,7 +309,7 @@
         },
         kernelOptions: {
             kernelName: "python3",
-            path: "./review"
+            path: "./overview-of-flow-devices"
         },
         predefinedOutput: true
     }
@@ -293,8 +324,7 @@
     
     <div class='prev-next-bottom'>
         
-    <a class='left-prev' id="prev-link" href="../intro.html" title="previous page">Notes for Propulsion</a>
-    <a class='right-next' id="next-link" href="2-conservation-equations.html" title="next page">Conservation Equations</a>
+    <a class='left-prev' id="prev-link" href="1-introduction.html" title="previous page">Overview of Flow Devices</a>
 
     </div>
     <footer class="footer mt-5 mt-md-0">
