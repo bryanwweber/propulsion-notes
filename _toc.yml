@@ -3,3 +3,7 @@
   chapters:
     - file: review/1-introduction
     - file: review/2-conservation-equations
+- part: Overfiew of Flow Devices
+  chapters:
+    - file: overview-of-flow-devices/1-introduction
+    - file: overview-of-flow-devices/2-no-heat-addition
