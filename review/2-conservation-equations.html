@@ -270,7 +270,7 @@
 <p><strong>Assumption 7:</strong> The only mass entering and leaving the flow machine are within the inlet streamtube. Any other mass flows, for instance, of fuel are negligible in comparison to this flow. Assuming the stoichiometric mass-basis air-fuel ratio of jet fuel is 15, and assuming the entire flow is used for combustion, neglecting the fuel flow results in about a 5% error in the mass flow rate. However, part of the inlet air flow is used for cooling in the engine, so the actual ratio of incoming air to incoming fuel is much higher than 15, resulting in a smaller error.</p>
 </div>
 <div class="section" id="conservation-of-mass">
-<span id="conservation-of-masss"></span><h2>Conservation of Mass<a class="headerlink" href="#conservation-of-mass" title="Permalink to this headline">¶</a></h2>
+<span id="id1"></span><h2>Conservation of Mass<a class="headerlink" href="#conservation-of-mass" title="Permalink to this headline">¶</a></h2>
 <p>For the control volume described in <strong>Assumption 1</strong>, according to <strong>Assumption 7</strong> the only mass entering is at the freestream (station <span class="math notranslate nohighlight">\(0\)</span>) and the only mass exiting is at the exit (station <span class="math notranslate nohighlight">\(e\)</span>). Second, because the control volume is at steady state (<strong>Assumption 2</strong>), the amount of matter inside the control volume is constant. Finally, according to <strong>Assumption 3</strong>, the flow is quasi-one-dimensional and the properties of the flow at a given station are constant.</p>
 <p>Therefore, we can represent the mass flow rate of the fluid at the freestream as:</p>
 <div class="math notranslate nohighlight" id="equation-mass-flow-rate-freestream">
@@ -294,7 +294,7 @@
 <p>or, the change of momentum of the fluid is equal to the net force acting on it. For this control volume, we will only consider one net force on the fluid. Newton’s second law can therefore be written as:</p>
 <div class="math notranslate nohighlight">
 \[\left(-\rho_0 A_0 V_0\right)V_0 + \left(\rho_e A_e V_e\right)V_e = F\]</div>
-<p>where we have used the sign convention established in <span class="xref std std-ref">conservation_of_mass</span>. Since the mass flow rate is constant (<span class="math notranslate nohighlight">\(\rho_0 A_0 V_0 = \rho_e A_e V_e\)</span>), this can be rewritten as:</p>
+<p>where we have used the sign convention established in <a class="reference internal" href="#conservation-of-mass"><span class="std std-ref">Conservation of Mass</span></a>. Since the mass flow rate is constant (<span class="math notranslate nohighlight">\(\rho_0 A_0 V_0 = \rho_e A_e V_e\)</span>), this can be rewritten as:</p>
 <div class="math notranslate nohighlight" id="equation-ideal-conservation-of-momentum">
 <span class="eqno">(5)<a class="headerlink" href="#equation-ideal-conservation-of-momentum" title="Permalink to this equation">¶</a></span>\[\dot{m}\left(V_e - V_0\right) = F\]</div>
 <p>Note that the force <span class="math notranslate nohighlight">\(F\)</span> is the force on the fluid. Therefore, the force on the flow machine by the fluid is <span class="math notranslate nohighlight">\(-F\)</span>.</p>
