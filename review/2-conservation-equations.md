@@ -39,7 +39,7 @@ where $D$ is the drag force and $F$ is the applied force by the flow machine.
 
 **Assumption 7:** The only mass entering and leaving the flow machine are within the inlet streamtube. Any other mass flows, for instance, of fuel are negligible in comparison to this flow. Assuming the stoichiometric mass-basis air-fuel ratio of jet fuel is 15, and assuming the entire flow is used for combustion, neglecting the fuel flow results in about a 5% error in the mass flow rate. However, part of the inlet air flow is used for cooling in the engine, so the actual ratio of incoming air to incoming fuel is much higher than 15, resulting in a smaller error.
 
-(conservation_of_masss)=
+(conservation_of_mass)=
 ## Conservation of Mass
 
 For the control volume described in **Assumption 1**, according to **Assumption 7** the only mass entering is at the freestream (station $0$) and the only mass exiting is at the exit (station $e$). Second, because the control volume is at steady state (**Assumption 2**), the amount of matter inside the control volume is constant. Finally, according to **Assumption 3**, the flow is quasi-one-dimensional and the properties of the flow at a given station are constant.

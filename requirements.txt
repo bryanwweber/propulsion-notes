@@ -3,3 +3,5 @@ matplotlib
 numpy
 scipy
 bokeh
+pint
+ambiance
