@@ -1,0 +1,689 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Flow Machines with No Net Power Input &#8212; Notes for Propulsion</title>
+    
+  <link rel="stylesheet" href="../_static/css/index.f658d18f9b420779cfdf24aa0a7e2d77.css">
+
+    
+  <link rel="stylesheet"
+    href="../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    
+      
+  <link rel="stylesheet"
+    href="../_static/vendor/open-sans_all/1.44.1/index.css">
+  <link rel="stylesheet"
+    href="../_static/vendor/lato_latin-ext/1.44.1/index.css">
+
+    
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/sphinx-book-theme.40e2e510f6b7d1648584402491bb10fe.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" />
+    
+  <link rel="preload" as="script" href="../_static/js/index.d3f166471bb80abb5163.js">
+
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/togglebutton.js"></script>
+    <script src="../_static/clipboard.min.js"></script>
+    <script src="../_static/copybutton.js"></script>
+    <script >var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="../_static/sphinx-book-theme.d31b09fe5c1d09cb49b26a786de4a05d.js"></script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/x-mathjax-config">MathJax.Hub.Config({"TeX": {"Macros": {"vector": ["\\vec{#1}", 1], "uvec": ["\\hat{#1}", 1], "mag": ["\\lVert#1\\rVert", 1], "cross": "\\times", "unit": ["#1~\\mathrm{#2}", 2], "pf": ["\\overline{#1}", 1], "mat": ["\\left[\\mathbf{#1}\\right]", 1]}}, "tex2jax": {"inlineMath": [["\\(", "\\)"]], "displayMath": [["\\[", "\\]"]], "processRefs": false, "processEnvironments": false}})</script>
+    <script async="async" src="https://unpkg.com/thebelab@latest/lib/index.js"></script>
+    <script >
+        const thebe_selector = ".thebe"
+        const thebe_selector_input = "pre"
+        const thebe_selector_output = ".output"
+    </script>
+    <script async="async" src="../_static/sphinx-thebe.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="prev" title="Flow Machines with No Heat Addition" href="2-no-heat-addition.html" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="en" />
+
+
+
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
+    
+        <div class="navbar-brand-box">
+<a class="navbar-brand text-wrap" href="../index.html">
+  
+  
+  <h1 class="site-logo" id="site-title">Notes for Propulsion</h1>
+  
+</a>
+</div><form class="bd-search d-flex align-items-center" action="../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form>
+<nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
+    <ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../intro.html">
+   Notes for Propulsion
+  </a>
+ </li>
+</ul>
+<p class="caption collapsible-parent">
+ <span class="caption-text">
+  Review
+ </span>
+</p>
+<ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../review/1-introduction.html">
+   Introduction
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../review/2-conservation-equations.html">
+   Conservation Equations
+  </a>
+ </li>
+</ul>
+<p class="caption collapsible-parent">
+ <span class="caption-text">
+  Overfiew of Flow Devices
+ </span>
+</p>
+<ul class="current nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="1-introduction.html">
+   Overview of Flow Devices
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="2-no-heat-addition.html">
+   Flow Machines with No Heat Addition
+  </a>
+ </li>
+ <li class="toctree-l1 current active">
+  <a class="current reference internal" href="#">
+   Flow Machines with No Net Power Input
+  </a>
+ </li>
+</ul>
+
+</nav> <!-- To handle the deprecated key -->
+
+<div class="navbar_extra_footer">
+  Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+</div>
+
+</div>
+
+
+          
+
+
+          
+<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
+    
+    <div class="row topbar fixed-top container-xl">
+    <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show">
+    </div>
+    <div class="col pl-2 topbar-main">
+        
+        <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
+            data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
+            aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
+            title="Toggle navigation" data-toggle="tooltip" data-placement="left">
+            <i class="fas fa-bars"></i>
+            <i class="fas fa-arrow-left"></i>
+            <i class="fas fa-arrow-up"></i>
+        </button>
+        
+        
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
+            class="fas fa-download"></i></button>
+
+    <div class="dropdown-buttons">
+        <!-- ipynb file if we had a myst markdown file -->
+        <a class="dropdown-buttons"
+            href="../_sources/overview-of-flow-devices/3-no-net-power.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Download notebook file" data-toggle="tooltip"
+                data-placement="left">.ipynb</button></a>
+        <!-- Download raw file -->
+        <a class="dropdown-buttons" href="../_sources/overview-of-flow-devices/3-no-net-power.md"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
+                data-placement="left">.md</button></a>
+        <!-- Download PDF via print -->
+        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
+            onClick="window.print()" data-toggle="tooltip" data-placement="left">.pdf</button>
+    </div>
+</div>
+
+        <!-- Source interaction buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Connect with source repository"><i class="fab fa-github"></i></button>
+    <div class="dropdown-buttons sourcebuttons">
+        <a class="repository-button"
+            href="https://github.com/bryanwweber/propulsion-notes"><button type="button" class="btn btn-secondary topbarbtn"
+                data-toggle="tooltip" data-placement="left" title="Source repository"><i
+                    class="fab fa-github"></i>repository</button></a>
+        <a class="issues-button"
+            href="https://github.com/bryanwweber/propulsion-notes/issues/new?title=Issue%20on%20page%20%2Foverview-of-flow-devices/3-no-net-power.html&body=Your%20issue%20content%20here."><button
+                type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
+                title="Open an issue"><i class="fas fa-lightbulb"></i>open issue</button></a>
+        <a class="edit-button" href="https://github.com/bryanwweber/propulsion-notes/edit/main/overview-of-flow-devices/3-no-net-power.md"><button
+                type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
+                title="Edit this page"><i class="fas fa-pencil-alt"></i>suggest edit</button></a>
+    </div>
+</div>
+
+
+        <!-- Full screen (wrap in <a> to have style consistency -->
+        <a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
+                data-placement="bottom" onclick="toggleFullScreen()" aria-label="Fullscreen mode"
+                title="Fullscreen mode"><i
+                    class="fas fa-expand"></i></button></a>
+
+        <!-- Launch buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
+    <div class="dropdown-buttons">
+        
+        <a class="binder-button" href="https://mybinder.org/v2/gh/bryanwweber/propulsion-notes/main?urlpath=tree/overview-of-flow-devices/3-no-net-power.md"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip"
+                data-placement="left"><img class="binder-button-logo"
+                    src="../_static/images/logo_binder.svg"
+                    alt="Interact on binder">Binder</button></a>
+        
+        
+        
+        
+    </div>
+</div>
+
+    </div>
+
+    <!-- Table of contents -->
+    <div class="d-none d-md-block col-md-2 bd-toc show">
+        
+        <div class="tocsection onthispage pt-5 pb-3">
+            <i class="fas fa-list"></i> Contents
+        </div>
+        <nav id="bd-toc-nav">
+            <ul class="nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#engine-designs">
+   Engine Designs
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#turbojet">
+     Turbojet
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#ramjet-and-scramjet">
+     Ramjet and Scramjet
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#efficiency-of-jet-engines">
+   Efficiency of Jet Engines
+  </a>
+ </li>
+</ul>
+
+        </nav>
+        
+    </div>
+</div>
+    <div id="main-content" class="row">
+        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
+        
+              <div>
+                
+  <div class="cell tag_remove-input docutils container">
+<div class="cell_output docutils container">
+<script type="application/javascript">
+(function(root) {
+  function now() {
+    return new Date();
+  }
+
+  var force = true;
+
+  if (typeof root._bokeh_onload_callbacks === "undefined" || force === true) {
+    root._bokeh_onload_callbacks = [];
+    root._bokeh_is_loading = undefined;
+  }
+
+  var JS_MIME_TYPE = 'application/javascript';
+  var HTML_MIME_TYPE = 'text/html';
+  var EXEC_MIME_TYPE = 'application/vnd.bokehjs_exec.v0+json';
+  var CLASS_NAME = 'output_bokeh rendered_html';
+
+  /**
+   * Render data to the DOM node
+   */
+  function render(props, node) {
+    var script = document.createElement("script");
+    node.appendChild(script);
+  }
+
+  /**
+   * Handle when an output is cleared or removed
+   */
+  function handleClearOutput(event, handle) {
+    var cell = handle.cell;
+
+    var id = cell.output_area._bokeh_element_id;
+    var server_id = cell.output_area._bokeh_server_id;
+    // Clean up Bokeh references
+    if (id != null && id in Bokeh.index) {
+      Bokeh.index[id].model.document.clear();
+      delete Bokeh.index[id];
+    }
+
+    if (server_id !== undefined) {
+      // Clean up Bokeh references
+      var cmd = "from bokeh.io.state import curstate; print(curstate().uuid_to_server['" + server_id + "'].get_sessions()[0].document.roots[0]._id)";
+      cell.notebook.kernel.execute(cmd, {
+        iopub: {
+          output: function(msg) {
+            var id = msg.content.text.trim();
+            if (id in Bokeh.index) {
+              Bokeh.index[id].model.document.clear();
+              delete Bokeh.index[id];
+            }
+          }
+        }
+      });
+      // Destroy server and session
+      var cmd = "import bokeh.io.notebook as ion; ion.destroy_server('" + server_id + "')";
+      cell.notebook.kernel.execute(cmd);
+    }
+  }
+
+  /**
+   * Handle when a new output is added
+   */
+  function handleAddOutput(event, handle) {
+    var output_area = handle.output_area;
+    var output = handle.output;
+
+    // limit handleAddOutput to display_data with EXEC_MIME_TYPE content only
+    if ((output.output_type != "display_data") || (!output.data.hasOwnProperty(EXEC_MIME_TYPE))) {
+      return
+    }
+
+    var toinsert = output_area.element.find("." + CLASS_NAME.split(' ')[0]);
+
+    if (output.metadata[EXEC_MIME_TYPE]["id"] !== undefined) {
+      toinsert[toinsert.length - 1].firstChild.textContent = output.data[JS_MIME_TYPE];
+      // store reference to embed id on output_area
+      output_area._bokeh_element_id = output.metadata[EXEC_MIME_TYPE]["id"];
+    }
+    if (output.metadata[EXEC_MIME_TYPE]["server_id"] !== undefined) {
+      var bk_div = document.createElement("div");
+      bk_div.innerHTML = output.data[HTML_MIME_TYPE];
+      var script_attrs = bk_div.children[0].attributes;
+      for (var i = 0; i < script_attrs.length; i++) {
+        toinsert[toinsert.length - 1].firstChild.setAttribute(script_attrs[i].name, script_attrs[i].value);
+        toinsert[toinsert.length - 1].firstChild.textContent = bk_div.children[0].textContent
+      }
+      // store reference to server id on output_area
+      output_area._bokeh_server_id = output.metadata[EXEC_MIME_TYPE]["server_id"];
+    }
+  }
+
+  function register_renderer(events, OutputArea) {
+
+    function append_mime(data, metadata, element) {
+      // create a DOM node to render to
+      var toinsert = this.create_output_subarea(
+        metadata,
+        CLASS_NAME,
+        EXEC_MIME_TYPE
+      );
+      this.keyboard_manager.register_events(toinsert);
+      // Render to node
+      var props = {data: data, metadata: metadata[EXEC_MIME_TYPE]};
+      render(props, toinsert[toinsert.length - 1]);
+      element.append(toinsert);
+      return toinsert
+    }
+
+    /* Handle when an output is cleared or removed */
+    events.on('clear_output.CodeCell', handleClearOutput);
+    events.on('delete.Cell', handleClearOutput);
+
+    /* Handle when a new output is added */
+    events.on('output_added.OutputArea', handleAddOutput);
+
+    /**
+     * Register the mime type and append_mime function with output_area
+     */
+    OutputArea.prototype.register_mime_type(EXEC_MIME_TYPE, append_mime, {
+      /* Is output safe? */
+      safe: true,
+      /* Index of renderer in `output_area.display_order` */
+      index: 0
+    });
+  }
+
+  // register the mime type if in Jupyter Notebook environment and previously unregistered
+  if (root.Jupyter !== undefined) {
+    var events = require('base/js/events');
+    var OutputArea = require('notebook/js/outputarea').OutputArea;
+
+    if (OutputArea.prototype.mime_types().indexOf(EXEC_MIME_TYPE) == -1) {
+      register_renderer(events, OutputArea);
+    }
+  }
+
+  
+  if (typeof (root._bokeh_timeout) === "undefined" || force === true) {
+    root._bokeh_timeout = Date.now() + 5000;
+    root._bokeh_failed_load = false;
+  }
+
+  var NB_LOAD_WARNING = {'data': {'text/html':
+     "<div style='background-color: #fdd'>\n"+
+     "<p>\n"+
+     "BokehJS does not appear to have successfully loaded. If loading BokehJS from CDN, this \n"+
+     "may be due to a slow or bad network connection. Possible fixes:\n"+
+     "</p>\n"+
+     "<ul>\n"+
+     "<li>re-rerun `output_notebook()` to attempt to load from CDN again, or</li>\n"+
+     "<li>use INLINE resources instead, as so:</li>\n"+
+     "</ul>\n"+
+     "<code>\n"+
+     "from bokeh.resources import INLINE\n"+
+     "output_notebook(resources=INLINE)\n"+
+     "</code>\n"+
+     "</div>"}};
+
+  function display_loaded() {
+    var el = document.getElementById(null);
+    if (el != null) {
+      el.textContent = "BokehJS is loading...";
+    }
+    if (root.Bokeh !== undefined) {
+      if (el != null) {
+        el.textContent = "BokehJS " + root.Bokeh.version + " successfully loaded.";
+      }
+    } else if (Date.now() < root._bokeh_timeout) {
+      setTimeout(display_loaded, 100)
+    }
+  }
+
+
+  function run_callbacks() {
+    try {
+      root._bokeh_onload_callbacks.forEach(function(callback) {
+        if (callback != null)
+          callback();
+      });
+    } finally {
+      delete root._bokeh_onload_callbacks
+    }
+    console.debug("Bokeh: all callbacks have finished");
+  }
+
+  function load_libs(css_urls, js_urls, callback) {
+    if (css_urls == null) css_urls = [];
+    if (js_urls == null) js_urls = [];
+
+    root._bokeh_onload_callbacks.push(callback);
+    if (root._bokeh_is_loading > 0) {
+      console.debug("Bokeh: BokehJS is being loaded, scheduling callback at", now());
+      return null;
+    }
+    if (js_urls == null || js_urls.length === 0) {
+      run_callbacks();
+      return null;
+    }
+    console.debug("Bokeh: BokehJS not loaded, scheduling load and callback at", now());
+    root._bokeh_is_loading = css_urls.length + js_urls.length;
+
+    function on_load() {
+      root._bokeh_is_loading--;
+      if (root._bokeh_is_loading === 0) {
+        console.debug("Bokeh: all BokehJS libraries/stylesheets loaded");
+        run_callbacks()
+      }
+    }
+
+    function on_error() {
+      console.error("failed to load " + url);
+    }
+
+    for (var i = 0; i < css_urls.length; i++) {
+      var url = css_urls[i];
+      const element = document.createElement("link");
+      element.onload = on_load;
+      element.onerror = on_error;
+      element.rel = "stylesheet";
+      element.type = "text/css";
+      element.href = url;
+      console.debug("Bokeh: injecting link tag for BokehJS stylesheet: ", url);
+      document.body.appendChild(element);
+    }
+
+    const hashes = {"https://cdn.bokeh.org/bokeh/release/bokeh-2.2.3.min.js": "T2yuo9Oe71Cz/I4X9Ac5+gpEa5a8PpJCDlqKYO0CfAuEszu1JrXLl8YugMqYe3sM", "https://cdn.bokeh.org/bokeh/release/bokeh-widgets-2.2.3.min.js": "98GDGJ0kOMCUMUePhksaQ/GYgB3+NH9h996V88sh3aOiUNX3N+fLXAtry6xctSZ6", "https://cdn.bokeh.org/bokeh/release/bokeh-tables-2.2.3.min.js": "89bArO+nlbP3sgakeHjCo1JYxYR5wufVgA3IbUvDY+K7w4zyxJqssu7wVnfeKCq8"};
+
+    for (var i = 0; i < js_urls.length; i++) {
+      var url = js_urls[i];
+      var element = document.createElement('script');
+      element.onload = on_load;
+      element.onerror = on_error;
+      element.async = false;
+      element.src = url;
+      if (url in hashes) {
+        element.crossOrigin = "anonymous";
+        element.integrity = "sha384-" + hashes[url];
+      }
+      console.debug("Bokeh: injecting script tag for BokehJS library: ", url);
+      document.head.appendChild(element);
+    }
+  };
+
+  function inject_raw_css(css) {
+    const element = document.createElement("style");
+    element.appendChild(document.createTextNode(css));
+    document.body.appendChild(element);
+  }
+
+  
+  var js_urls = ["https://cdn.bokeh.org/bokeh/release/bokeh-2.2.3.min.js", "https://cdn.bokeh.org/bokeh/release/bokeh-widgets-2.2.3.min.js", "https://cdn.bokeh.org/bokeh/release/bokeh-tables-2.2.3.min.js"];
+  var css_urls = [];
+  
+
+  var inline_js = [
+    function(Bokeh) {
+      Bokeh.set_log_level("info");
+    },
+    function(Bokeh) {
+    
+    
+    }
+  ];
+
+  function run_inline_js() {
+    
+    if (root.Bokeh !== undefined || force === true) {
+      
+    for (var i = 0; i < inline_js.length; i++) {
+      inline_js[i].call(root, root.Bokeh);
+    }
+    } else if (Date.now() < root._bokeh_timeout) {
+      setTimeout(run_inline_js, 100);
+    } else if (!root._bokeh_failed_load) {
+      console.log("Bokeh: BokehJS failed to load within specified timeout.");
+      root._bokeh_failed_load = true;
+    } else if (force !== true) {
+      var cell = $(document.getElementById(null)).parents('.cell').data().cell;
+      cell.output_area.append_execute_result(NB_LOAD_WARNING)
+    }
+
+  }
+
+  if (root._bokeh_is_loading === 0) {
+    console.debug("Bokeh: BokehJS loaded, going straight to plotting");
+    run_inline_js();
+  } else {
+    load_libs(css_urls, js_urls, function() {
+      console.debug("Bokeh: BokehJS plotting callback run at", now());
+      run_inline_js();
+    });
+  }
+}(window));</script></div>
+</div>
+<div class="section" id="flow-machines-with-no-net-power-input">
+<h1>Flow Machines with No Net Power Input<a class="headerlink" href="#flow-machines-with-no-net-power-input" title="Permalink to this headline">¶</a></h1>
+<p>From the energy equation, we can also set the net power input to zero. In that case, the energy equation becomes:</p>
+<div class="math notranslate nohighlight" id="equation-no-power-energy-equation">
+<span class="eqno">(16)<a class="headerlink" href="#equation-no-power-energy-equation" title="Permalink to this equation">¶</a></span>\[\left(h_e - h_0\right) + \frac{1}{2}\left(V_e^2 - V_0^2\right) = Q\]</div>
+<p>Relating the kinetic energy term to the thrust via the conservation of momentum equation, we can write:</p>
+<div class="math notranslate nohighlight" id="equation-simplify-kinetic-energy">
+<span class="eqno">(17)<a class="headerlink" href="#equation-simplify-kinetic-energy" title="Permalink to this equation">¶</a></span>\[\frac{1}{2}\left(V_e^2 - V_0^2\right) = \frac{1}{2}\left(V_e - V_0\right)\left(V_e + V_0\right) = V_{\text{avg}}\frac{F}{\dot{m}}\]</div>
+<p>Plugging Eq. <a class="reference internal" href="#equation-simplify-kinetic-energy">(17)</a> into Eq. <a class="reference internal" href="#equation-no-power-energy-equation">(16)</a> and solving for the thrust, we find:</p>
+<div class="math notranslate nohighlight" id="equation-no-power-thrust">
+<span class="eqno">(18)<a class="headerlink" href="#equation-no-power-thrust" title="Permalink to this equation">¶</a></span>\[F = \frac{\dot{m}}{V_{\text{avg}}} \left[Q - \left(h_e - h_0\right)\right]\]</div>
+<p>For Eq. <a class="reference internal" href="#equation-no-power-thrust">(18)</a> to be positive, and therefore to be a thrust rather than a drag, the terms in square brackets must be larger than zero. This means that <span class="math notranslate nohighlight">\(Q &gt; 0\)</span> (an input) and <span class="math notranslate nohighlight">\(Q &gt; (h_e - h_0)\)</span>. The heat transfer input typically comes from the combustion of a fuel with air in a jet engine.</p>
+<div class="section" id="engine-designs">
+<h2>Engine Designs<a class="headerlink" href="#engine-designs" title="Permalink to this headline">¶</a></h2>
+<p>The specific choice of fuel and engine components depends on the operating speed range of the flow machine. In all air-breathing engine designs, an inlet, called a <strong>diffuser</strong>, captures air during flight. The air is mixed with fuel and ignited in the <strong>combustor</strong>, providing the input heat transfer. After combustion, the products are exhausted through a <strong>nozzle</strong> to produce thrust.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>In Section <a class="reference internal" href="../review/2-conservation-equations.html#conservation-equations-assumptions"><span class="std std-ref">Assumptions</span></a>, we assumed that the mass flow rate of the added fuel was negligible compared to the other flows in the engine. In principle, neglecting the fuel flow can cause between a 2-5% error in the mass flow rate. However, it happens that some air typically needs to be extracted for functions within the aircraft outside the engine. The mass flow rate of this <strong>bleed air</strong>, taken from the compressor, happens to be approximately equal to the mass flow rate of fuel added in the combustor. This reduces the error even further!</p>
+</div>
+<div class="section" id="turbojet">
+<h3>Turbojet<a class="headerlink" href="#turbojet" title="Permalink to this headline">¶</a></h3>
+<div class="margin sidebar">
+<p class="sidebar-title"></p>
+<p>The <strong>Mach number</strong>, named for Ernst Mach, is the ratio of the flight velocity to the local speed of sound. It is a dimensionless number that is critically important in the analysis of flows through propulsion devices. We will work with the Mach number more specifically in an upcoming section. For now, it is sufficient to identify <span class="math notranslate nohighlight">\(M_0 &gt; 1\)</span> as supersonic flight and <span class="math notranslate nohighlight">\(M_0 &lt; 1\)</span> as subsonic flight.</p>
+</div>
+<p>For flight <strong>Mach numbers</strong> in the range of 0 &lt; <span class="math notranslate nohighlight">\(M_0\)</span> &lt; 3, the pressure of the air must be increased after it is ingested. This is accomplished by a mechanical <strong>compressor</strong>, typically an axial compressor. To provide shaft power input to the compressor, a <strong>turbine</strong> is installed after the combustor, before the nozzle. The power extracted by the turbine exactly offsets the power input by the compressor, so the entire system has no <em>net</em> power. This engine design is called a <strong>turbojet</strong> engine, and the compressor and turbine are typically called <strong>turbomachinery</strong>.</p>
+<p>One limitation of turbojet engines is that the amount of energy that can be added in the combustor is limited by the material properties of the downstream components. This is particularly true for the turbine, whose blades are rotating at extremely high RPM and are under very large stresses as a result. This temperature limit, in turn, limits the exhaust velocity <span class="math notranslate nohighlight">\(V_e\)</span>, which limits the thrust output of a turbojet.</p>
+<p>One way to cool the flow is by directing “cold” air from the compressor around the combustor and injecting it into the flow through cooling holes. Cooling holes are usually installed just downstream of the combustor and within the first few stages of turbine blades.</p>
+<p>For steady state flight, we know that the thrust must equal the drag. However, in the transonic regime (0.8 &lt; <span class="math notranslate nohighlight">\(M_0\)</span> &lt; 1.2), the drag on the aircraft is significantly increased due to a phenomenon called <strong>drag-divergence</strong>. Drag divergence means that most turbojet powered aircraft cannot generate enough thrust to cruise at transsonic Mach numbers.</p>
+<p>However, the engine can be modified to increase the amount of heat transfer input by adding an <strong>afterburner</strong>. This is an additional combustor that is added between the turbine exit and the nozzle. Extra fuel is injected into the flow and ignited. Since there are no turbomachinery components downstream of the afterburner, the temperature can be much higher.</p>
+<p>Since cooling air is added to the flow to keep the turbine from failing, there is sufficient oxygen in the flow after the turbine to support more combustion. However, the total air-to-fuel ratio, which may be as high as 50 for standard turbojets, is halved to approximately 25 by the use of the afterburner.</p>
+</div>
+<div class="section" id="ramjet-and-scramjet">
+<h3>Ramjet and Scramjet<a class="headerlink" href="#ramjet-and-scramjet" title="Permalink to this headline">¶</a></h3>
+<p>At higher flight Mach numbers, between 3 &lt; <span class="math notranslate nohighlight">\(M_0\)</span> &lt; 5, a properly designed inlet can reduce the flow velocity to a subsonic velocity and compress the ingested air to high enough pressures that a compressor is not required. This pressure increase is called the <strong>ram pressure</strong>. Since no turbomachinery components are required, the design of the engine is substantially simplified. This design is called a <strong>ramjet</strong>.</p>
+<p>For flight Mach numbers greater than about 5, reducing the inlet flow to subsonic velocities would cause such a large temperature increase that any combustion would not be able to effectively provide heat transfer. Therefore, the inlet must be designed to reduce the flow velocity to a lower, but still supersonic, velocity. The inlet still provides a ram pressure increase, so no turbomachinery is required. This design is called a <strong>scramjet</strong> where the <em>s</em> and <em>c</em> stand for <emph>S</emph>upersonic <emph>C</emph>ombustion ramjet.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The biggest challenge with the design of scramjet engines is stabilizing the combustion within the engine. In a turbojet or ramjet engine, the flame is usually stabilized by introducing a <strong>flame holder</strong>, essentially a metal wedge, which causes the flow to recirculate. This mixes hot combustion products with fresh mixture, bringing the fresh mixture up to the ignition temperature. However, designers cannot use flame holders in scramjet engines because they would reduce the flow to subsonic velocity, with the accompaning temperature increase and pressure loss.</p>
+</div>
+<p>Eliminating turbomachinery simplifies the design of the ramjet and scramjet, but this comes with a major disadvantage. Ramjets and scramjets do not produce thrust unless they are flying at a high enough velocity to provide enough ram pressure. This means that they cannot accelerate from a standstill to their flight velocity. Instead, they must be started by launching from a high-speed platform, or have an additional on-board engine (for example, a rocket) to propel them to supersonic speeds.</p>
+</div>
+</div>
+<div class="section" id="efficiency-of-jet-engines">
+<h2>Efficiency of Jet Engines<a class="headerlink" href="#efficiency-of-jet-engines" title="Permalink to this headline">¶</a></h2>
+<p>We can expand Eq. <a class="reference internal" href="#equation-no-power-thrust">(18)</a> with the definition of <span class="math notranslate nohighlight">\(\dot{m}\)</span> and <span class="math notranslate nohighlight">\(V_{\text{avg}}\)</span> to find:</p>
+<div class="math notranslate nohighlight" id="equation-expanded-thrust-no-heat">
+<span class="eqno">(19)<a class="headerlink" href="#equation-expanded-thrust-no-heat" title="Permalink to this equation">¶</a></span>\[F = \rho_0 A_0 \frac{V_0}{\left(V_0 + V_e\right)/2} \left[Q - \left(h_e - h_0\right)\right]\]</div>
+<p>As flight velocity <span class="math notranslate nohighlight">\(V_0\)</span> increases, both the top and bottom of the fraction in the middle of Eq. <a class="reference internal" href="#equation-expanded-thrust-no-heat">(19)</a> will increase. This means that the thrust is approximately constant as flight speed changes. This is the primary advantage of jet engines over propellers, because it is not inherently speed-limited.</p>
+<p>To define the overall efficiency of the propulsion engine, we can take the ratio of the useful power output to the rate of heat transfer input:</p>
+<div class="math notranslate nohighlight" id="equation-overall-efficiency">
+<span class="eqno">(20)<a class="headerlink" href="#equation-overall-efficiency" title="Permalink to this equation">¶</a></span>\[\eta_o = \frac{F V_0}{\dot{m}Q} = \frac{V_0}{V_{\text{avg}}} \left[1 - \frac{h_e - h_0}{Q}\right]\]</div>
+<p>In Eq. <a class="reference internal" href="#equation-overall-efficiency">(20)</a>, we identify the ratio <span class="math notranslate nohighlight">\(V_0/V_{\text{avg}}\)</span> as the <strong>propulsive efficiency</strong>, <span class="math notranslate nohighlight">\(\eta_{\text{p}}\)</span>. In addition, we can define the thermal efficiency as:</p>
+<div class="math notranslate nohighlight" id="equation-thermal-efficiency">
+<span class="eqno">(21)<a class="headerlink" href="#equation-thermal-efficiency" title="Permalink to this equation">¶</a></span>\[\eta_{\text{th}} = 1 - \frac{h_e - h_0}{Q}\]</div>
+<p>This means we can represent the overall thermal efficiency as:</p>
+<div class="math notranslate nohighlight">
+\[\eta_o = \eta_{\text{p}} \eta_{\text{th}}\]</div>
+<p>The thermal efficiency captures the imperfect conversion of heat input to usable thermal energy, since some energy is stored in the flow of gases. The propulsive efficiency captures the effect of imperfect conversion of thrust into velocity change.</p>
+<p>In a typical jet engine, these two efficiencies move in opposite directions. When the thermal efficiency is high, the exit velocity is high as well. This leads to a lower propulsive efficiency for a given flight speed. Typical jet aircraft will cruise around <span class="math notranslate nohighlight">\(V_0/V_e \approx 0.6\)</span>, which represents a good balance between the two efficiencies.</p>
+</div>
+</div>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./overview-of-flow-devices"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+        </div>
+    </div>
+    
+    
+    <div class='prev-next-bottom'>
+        
+    <a class='left-prev' id="prev-link" href="2-no-heat-addition.html" title="previous page">Flow Machines with No Heat Addition</a>
+
+    </div>
+    <footer class="footer mt-5 mt-md-0">
+    <div class="container">
+      <p>
+        
+          By Bryan Weber<br/>
+        
+          <div class="extra_footer">
+            <p xmlns:dct="http://purl.org/dc/terms/" xmlns:cc="http://creativecommons.org/ns#" class="license-text"><a rel="cc:attributionURL" property="dct:title" href="https://bryanwweber.github.io/propulsion-notes">Notes for Propulsion</a> by <span property="cc:attributionName">Bryan Weber</span> is licensed under <a rel="license" href="https://creativecommons.org/licenses/by-sa/4.0">CC BY-SA 4.0<img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/cc.svg?ref=chooser-v1" /><img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/by.svg?ref=chooser-v1" /><img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/sa.svg?ref=chooser-v1" /></a></p>
+
+          </div>
+      </p>
+    </div>
+  </footer>
+</main>
+
+
+      </div>
+    </div>
+
+    
+  <script src="../_static/js/index.d3f166471bb80abb5163.js"></script>
+
+
+    
+  </body>
+</html>
