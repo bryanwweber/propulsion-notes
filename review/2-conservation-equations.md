@@ -7,6 +7,7 @@ There are three conservation laws that are relevant for propulsion engines:
 2. Conservation of Momentum
 3. Conservation of Energy
 
+(conservation_equations_assumptions)=
 ## Assumptions
 
 Before discussing these equations, we must describe the assumptions we will use to simplify them. We can think of an ideal flow machine as a device that operates on a stream of a fluid in some way and ejects the processed fluid into the surroundings. The device may or may not intake a stream of fluid as well. This kind of simplified flow machine is shown in {numref}`ideal-flow-machine`.
