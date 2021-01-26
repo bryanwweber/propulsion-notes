@@ -258,6 +258,23 @@
   <a class="reference internal nav-link" href="#efficiency-of-jet-engines">
    Efficiency of Jet Engines
   </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#overall-efficiency">
+     Overall Efficiency
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#fuel-efficiency">
+     Fuel Efficiency
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#example">
+   Example
+  </a>
  </li>
 </ul>
 
@@ -592,16 +609,29 @@
 <p class="sidebar-title"></p>
 <p>The <strong>Mach number</strong>, named for Ernst Mach, is the ratio of the flight velocity to the local speed of sound. It is a dimensionless number that is critically important in the analysis of flows through propulsion devices. We will work with the Mach number more specifically in an upcoming section. For now, it is sufficient to identify <span class="math notranslate nohighlight">\(M_0 &gt; 1\)</span> as supersonic flight and <span class="math notranslate nohighlight">\(M_0 &lt; 1\)</span> as subsonic flight.</p>
 </div>
-<p>For flight <strong>Mach numbers</strong> in the range of 0 &lt; <span class="math notranslate nohighlight">\(M_0\)</span> &lt; 3, the pressure of the air must be increased after it is ingested. This is accomplished by a mechanical <strong>compressor</strong>, typically an axial compressor. To provide shaft power input to the compressor, a <strong>turbine</strong> is installed after the combustor, before the nozzle. The power extracted by the turbine exactly offsets the power input by the compressor, so the entire system has no <em>net</em> power. This engine design is called a <strong>turbojet</strong> engine, and the compressor and turbine are typically called <strong>turbomachinery</strong>.</p>
+<p>For flight <strong>Mach numbers</strong> in the range of 0 &lt; <span class="math notranslate nohighlight">\(M_0\)</span> &lt; 3, the pressure of the air must be increased after it is ingested. This is accomplished by a mechanical <strong>compressor</strong>, typically an axial compressor. To provide shaft power input to the compressor, a <strong>turbine</strong> is installed after the combustor, before the nozzle. The power extracted by the turbine exactly offsets the power input by the compressor, so the entire system has no <em>net</em> power. This engine design is called a <strong>turbojet</strong> engine, shown in <a class="reference internal" href="#turbojet-schematic"><span class="std std-numref">Fig. 3</span></a> and <a class="reference internal" href="#turbojet-image"><span class="std std-numref">Fig. 4</span></a>, and the compressor and turbine are typically called <strong>turbomachinery</strong>.</p>
+<div class="figure align-default" id="turbojet-schematic">
+<img alt="../_images/turbojet.svg" src="../_images/turbojet.svg" /><p class="caption"><span class="caption-number">Fig. 3 </span><span class="caption-text">A schematic of a turbojet engine. Section numbers are indicated corresponding to states analyzed later.</span><a class="headerlink" href="#turbojet-schematic" title="Permalink to this image">¶</a></p>
+</div>
+<div class="figure align-default" id="turbojet-image">
+<img alt="../_images/J85_ge_17a_turbojet_engine.jpg" src="../_images/J85_ge_17a_turbojet_engine.jpg" />
+<p class="caption"><span class="caption-number">Fig. 4 </span><span class="caption-text">A cut-away General Electric J85-GE-17A turbojet engine. Source: <a class="reference external" href="https://commons.wikimedia.org/wiki/File:J85_ge_17a_turbojet_engine.jpg">Wikimedia</a></span><a class="headerlink" href="#turbojet-image" title="Permalink to this image">¶</a></p>
+</div>
 <p>One limitation of turbojet engines is that the amount of energy that can be added in the combustor is limited by the material properties of the downstream components. This is particularly true for the turbine, whose blades are rotating at extremely high RPM and are under very large stresses as a result. This temperature limit, in turn, limits the exhaust velocity <span class="math notranslate nohighlight">\(V_e\)</span>, which limits the thrust output of a turbojet.</p>
 <p>One way to cool the flow is by directing “cold” air from the compressor around the combustor and injecting it into the flow through cooling holes. Cooling holes are usually installed just downstream of the combustor and within the first few stages of turbine blades.</p>
 <p>For steady state flight, we know that the thrust must equal the drag. However, in the transonic regime (0.8 &lt; <span class="math notranslate nohighlight">\(M_0\)</span> &lt; 1.2), the drag on the aircraft is significantly increased due to a phenomenon called <strong>drag-divergence</strong>. Drag divergence means that most turbojet powered aircraft cannot generate enough thrust to cruise at transsonic Mach numbers.</p>
-<p>However, the engine can be modified to increase the amount of heat transfer input by adding an <strong>afterburner</strong>. This is an additional combustor that is added between the turbine exit and the nozzle. Extra fuel is injected into the flow and ignited. Since there are no turbomachinery components downstream of the afterburner, the temperature can be much higher.</p>
-<p>Since cooling air is added to the flow to keep the turbine from failing, there is sufficient oxygen in the flow after the turbine to support more combustion. However, the total air-to-fuel ratio, which may be as high as 50 for standard turbojets, is halved to approximately 25 by the use of the afterburner.</p>
+<p>However, the engine can be modified to increase the amount of heat transfer input by adding an <strong>afterburner</strong>, as shown in <a class="reference internal" href="#turbojet-afterburner"><span class="std std-numref">Fig. 5</span></a>. This is an additional combustor that is added between the turbine exit and the nozzle. Extra fuel is injected into the flow and ignited. Since there are no turbomachinery components downstream of the afterburner, the temperature can be much higher.</p>
+<div class="figure align-default" id="turbojet-afterburner">
+<img alt="../_images/turbojet-afterburner.svg" src="../_images/turbojet-afterburner.svg" /><p class="caption"><span class="caption-number">Fig. 5 </span><span class="caption-text">A schematic of a turbojet engine including an afterburner.</span><a class="headerlink" href="#turbojet-afterburner" title="Permalink to this image">¶</a></p>
+</div>
+<p>Since cooling air is added to the flow to keep the turbine from failing, there is sufficient oxygen in the flow after the turbine to support more combustion. However, the total air-to-fuel ratio, which may be as high as 50 for standard turbojets, is halved to approximately 25 by the use of the afterburner. Due to this, afterburners are only included on aircraft intended for supersonic flight, mainly military aircraft.</p>
 </div>
 <div class="section" id="ramjet-and-scramjet">
 <h3>Ramjet and Scramjet<a class="headerlink" href="#ramjet-and-scramjet" title="Permalink to this headline">¶</a></h3>
-<p>At higher flight Mach numbers, between 3 &lt; <span class="math notranslate nohighlight">\(M_0\)</span> &lt; 5, a properly designed inlet can reduce the flow velocity to a subsonic velocity and compress the ingested air to high enough pressures that a compressor is not required. This pressure increase is called the <strong>ram pressure</strong>. Since no turbomachinery components are required, the design of the engine is substantially simplified. This design is called a <strong>ramjet</strong>.</p>
+<p>At higher flight Mach numbers, between 3 &lt; <span class="math notranslate nohighlight">\(M_0\)</span> &lt; 5, a properly designed inlet can reduce the flow velocity to a subsonic velocity and compress the ingested air to high enough pressures that a compressor is not required. This pressure increase is called the <strong>ram pressure</strong>. Since no turbomachinery components are required, the design of the engine is substantially simplified. This design is called a <strong>ramjet</strong>, as shown in <a class="reference internal" href="#ramjet-scramjet"><span class="std std-numref">Fig. 6</span></a>.</p>
+<div class="figure align-default" id="ramjet-scramjet">
+<img alt="../_images/ramjet-scramjet.svg" src="../_images/ramjet-scramjet.svg" /><p class="caption"><span class="caption-number">Fig. 6 </span><span class="caption-text">A schematic of a ramjet or scramjet engine.</span><a class="headerlink" href="#ramjet-scramjet" title="Permalink to this image">¶</a></p>
+</div>
 <p>For flight Mach numbers greater than about 5, reducing the inlet flow to subsonic velocities would cause such a large temperature increase that any combustion would not be able to effectively provide heat transfer. Therefore, the inlet must be designed to reduce the flow velocity to a lower, but still supersonic, velocity. The inlet still provides a ram pressure increase, so no turbomachinery is required. This design is called a <strong>scramjet</strong> where the <em>s</em> and <em>c</em> stand for <emph>S</emph>upersonic <emph>C</emph>ombustion ramjet.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
@@ -616,6 +646,8 @@
 <div class="math notranslate nohighlight" id="equation-expanded-thrust-no-heat">
 <span class="eqno">(19)<a class="headerlink" href="#equation-expanded-thrust-no-heat" title="Permalink to this equation">¶</a></span>\[F = \rho_0 A_0 \frac{V_0}{\left(V_0 + V_e\right)/2} \left[Q - \left(h_e - h_0\right)\right]\]</div>
 <p>As flight velocity <span class="math notranslate nohighlight">\(V_0\)</span> increases, both the top and bottom of the fraction in the middle of Eq. <a class="reference internal" href="#equation-expanded-thrust-no-heat">(19)</a> will increase. This means that the thrust is approximately constant as flight speed changes. This is the primary advantage of jet engines over propellers, because it is not inherently speed-limited.</p>
+<div class="section" id="overall-efficiency">
+<h3>Overall Efficiency<a class="headerlink" href="#overall-efficiency" title="Permalink to this headline">¶</a></h3>
 <p>To define the overall efficiency of the propulsion engine, we can take the ratio of the useful power output to the rate of heat transfer input:</p>
 <div class="math notranslate nohighlight" id="equation-overall-efficiency">
 <span class="eqno">(20)<a class="headerlink" href="#equation-overall-efficiency" title="Permalink to this equation">¶</a></span>\[\eta_o = \frac{F V_0}{\dot{m}Q} = \frac{V_0}{V_{\text{avg}}} \left[1 - \frac{h_e - h_0}{Q}\right]\]</div>
@@ -627,6 +659,51 @@
 \[\eta_o = \eta_{\text{p}} \eta_{\text{th}}\]</div>
 <p>The thermal efficiency captures the imperfect conversion of heat input to usable thermal energy, since some energy is stored in the flow of gases. The propulsive efficiency captures the effect of imperfect conversion of thrust into velocity change.</p>
 <p>In a typical jet engine, these two efficiencies move in opposite directions. When the thermal efficiency is high, the exit velocity is high as well. This leads to a lower propulsive efficiency for a given flight speed. Typical jet aircraft will cruise around <span class="math notranslate nohighlight">\(V_0/V_e \approx 0.6\)</span>, which represents a good balance between the two efficiencies.</p>
+</div>
+<div class="section" id="fuel-efficiency">
+<h3>Fuel Efficiency<a class="headerlink" href="#fuel-efficiency" title="Permalink to this headline">¶</a></h3>
+<p>A separate metric from the overall efficiency of the engine is the <strong>fuel efficiency</strong>. Whereas the overall efficiency is related to the thermodynamic state of the engine, the fuel efficiency is explicitly related to the consumption of fuel.</p>
+<p>For engines that rely on heat input, the heat added to the flow, <span class="math notranslate nohighlight">\(\dot{m}Q\)</span>, is proportional to the flow rate of fuel, <span class="math notranslate nohighlight">\(\dot{m}_{\text{f}}\)</span> and the heat of combustion of the fuel, <span class="math notranslate nohighlight">\(Q_{\text{f}}\)</span>. The constant of proportionality is called the <strong>burner efficiency</strong>, <span class="math notranslate nohighlight">\(\eta_{\text{b}}\)</span>:</p>
+<div class="math notranslate nohighlight" id="equation-burner-efficiency">
+<span class="eqno">(22)<a class="headerlink" href="#equation-burner-efficiency" title="Permalink to this equation">¶</a></span>\[\dot{m} Q = \eta_{\text{b}} \dot{m}_{\text{f}} Q_{\text{f}}\]</div>
+<div class="margin sidebar">
+<p class="sidebar-title"></p>
+<p>If you need to pick a value of <span class="math notranslate nohighlight">\(\eta_{\text{b}}\)</span> for a calculation, starting at 95% is a pretty good guess. Typical hydrocarbon jet fuels have heat of combustion <span class="math notranslate nohighlight">\(Q_{\text{f}}\)</span> = 43,400 kJ/kg = 18,660 BTU/lbm.</p>
+</div>
+<p>The heat of combustion of the fuel, also called the heating value of the fuel, is a property of the fuel. Well-designed combustors in jet engines can achieve values of <span class="math notranslate nohighlight">\(\eta_{\text{b}}\)</span> in excess of 90%. This implies that more than 90% of the chemical energy of the fuel is transferred into the flow, and the rest is transferred to the structure of the combustor or engine.</p>
+<div class="margin sidebar">
+<p class="sidebar-title"></p>
+<p>Any time you see the word <em>specific</em> in an engineering context like this, it means that the modifier of <em>specific</em> will be in the denominator of a fraction.</p>
+</div>
+<p>The most common metric for fuel consumption in jet engines is thrust-specific fuel consumption, TSFC, given the symbol <span class="math notranslate nohighlight">\(c_{\text{j}}\)</span>. TSFC is defined as the mass flow rate of fuel, usually in mass per hour, divided by the thrust force:</p>
+<div class="math notranslate nohighlight">
+\[c_{\text{j}} = \frac{\dot{m}_{\text{f}}}{F}\]</div>
+<div class="margin sidebar">
+<p class="sidebar-title"></p>
+<p>If you need to pick a value of <span class="math notranslate nohighlight">\(c_{\text{j}}\)</span> for a calculation, starting at 1.0 lbm/h/lbf or 0.102 kg/h/N would be a good guess. Be careful of the units!</p>
+</div>
+<p>The reason why TSFC is preferred over just the fuel flow rate is for the same reason that miles-per-gallon are preferred for automobiles. That is, it is known that generating more thrust (going more miles) will take more mass of fuel (more gallons of fuel), so it is not very interesting that it takes more fuel. What’s more important is how efficient you are at generating that thrust or going that number of miles.</p>
+<p>We can combine the equations for the overall efficiency, Eq. <a class="reference internal" href="#equation-overall-efficiency">(20)</a>, and the burner efficiency, Eq. <a class="reference internal" href="#equation-burner-efficiency">(22)</a>, to simplify the TSFC:</p>
+<div class="math notranslate nohighlight" id="equation-turbojet-tsfc">
+<span class="eqno">(23)<a class="headerlink" href="#equation-turbojet-tsfc" title="Permalink to this equation">¶</a></span>\[c_{\text{j}} = \frac{V_0}{\eta_{\text{o}}\eta_{\text{b}}Q_{\text{f}}} = \frac{V_0}{\eta_{\text{p}}\eta_{\text{th}}\eta_{\text{b}}Q_{\text{f}}} = \frac{V_{\text{avg}}}{\eta_{\text{th}}\eta_{\text{b}}Q_{\text{f}}}\]</div>
+<p>This equation shows us that higher thermal efficiency, burner efficiency, propulsive efficiency, or higher heat of combustion all result in a smaller TSFC. On the other hand, higher flight velocity or higher exhaust velocity result in larger TSFC. A simplified analysis shows us that the TSFC is approximately a linear function of the flight Mach number, <span class="math notranslate nohighlight">\(M_0\)</span>.</p>
+</div>
+</div>
+<div class="section" id="example">
+<h2>Example<a class="headerlink" href="#example" title="Permalink to this headline">¶</a></h2>
+<p>Assume that a JTC3 engine is operating at sea level on a test stand, burning Jet-A fuel with a burner efficiency of 96%. The engine is producing 50 kN of thrust while ingesting 81.5 kg/s of air. The engine is operating at full power and the temperature in the pressure-equilibrated exhaust is measured to be <span class="math notranslate nohighlight">\(T_e\)</span> = 655 K. What is the TSFC of this engine under these conditions? Assume that <span class="math notranslate nohighlight">\(T_0\)</span> = 288 K.</p>
+<p>We can combine Eq. <a class="reference internal" href="#equation-no-power-thrust">(18)</a> with Eq. <a class="reference internal" href="#equation-burner-efficiency">(22)</a> to find:</p>
+<div class="math notranslate nohighlight">
+\[F = \frac{\dot{m}_{\text{f}}}{V_{\text{avg}}}\eta_{\text{b}}Q_{\text{f}} - \frac{\dot{m}}{V_{\text{avg}}}\left(h_e - h_0\right)\]</div>
+<p>Rearranging to solve for <span class="math notranslate nohighlight">\(c_{\text{j}} = \dot{m}_{\text{f}}/F\)</span>, we find:</p>
+<div class="math notranslate nohighlight">
+\[c_{\text{j}} = \frac{\dot{m}_{\text{f}}}{F} = \frac{V_{\text{avg}}}{\eta_{\text{b}}Q_{\text{f}}-\dot{m}/\dot{m}_{\text{f}}\left(h_e - h_0\right)}\]</div>
+<p>Note that there are two unknowns in this equation, <span class="math notranslate nohighlight">\(\dot{m}_{\text{f}}\)</span> and the ratio <span class="math notranslate nohighlight">\(\dot{m}/\dot{m_{\text{f}}\)</span>. Next, we turn to the momentum conservation equation. Although we previously assumed that additional mass flows could be neglected, we need some way to determine the mass flow rate ratio, so we modify the momentum conservation equation to include the fuel mass flow rate:</p>
+<div class="math notranslate nohighlight">
+\[F = \left(\dot{m}_0 + \dot{m}_{\text{f}}\right)V_e - \dot{m}_0 V_0\]</div>
+<p>where <span class="math notranslate nohighlight">\(\dot{m}_0=\dot{m}\)</span> is the ingested air mass flow rate. Solving this equation for <span class="math notranslate nohighlight">\(c_{\text{j}}\)</span>, we find:</p>
+<div class="math notranslate nohighlight">
+\[c_{\text{j}} = \frac{\dot{m}_{\text{f}}}{F} = \frac{\dot{m}_{\text{f}}/\dot{m}_0}{\left(1 + \dot{m}_{\text{f}}/\dot{m}_0\right)V_e - V_0}\]</div>
 </div>
 </div>
 
