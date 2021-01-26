@@ -213,7 +213,7 @@ Rearranging to solve for $c_{\text{j}} = \dot{m}_{\text{f}}/F$, we find:
 c_{\text{j}} = \frac{\dot{m}_{\text{f}}}{F} = \frac{V_{\text{avg}}}{\eta_{\text{b}}Q_{\text{f}}-\dot{m}/\dot{m}_{\text{f}}\left(h_e - h_0\right)}
 ```
 
-Note that there are two unknowns in this equation, $\dot{m}_{\text{f}}$ and the ratio $\dot{m}/\dot{m_{\text{f}}$. Next, we turn to the momentum conservation equation. Although we previously assumed that additional mass flows could be neglected, we need some way to determine the mass flow rate ratio, so we modify the momentum conservation equation to include the fuel mass flow rate:
+Note that there are three unknowns in this equation, $V_e$, $\dot{m}_{\text{f}}$, and the ratio $\dot{m}/\dot{m}_{\text{f}}$. Next, we turn to the momentum conservation equation. Although we previously assumed that additional mass flows could be neglected, we need some way to determine the mass flow rate ratio, so we modify the momentum conservation equation to include the fuel mass flow rate:
 
 ```{math}
 F = \left(\dot{m}_0 + \dot{m}_{\text{f}}\right)V_e - \dot{m}_0 V_0
@@ -224,3 +224,123 @@ where $\dot{m}_0=\dot{m}$ is the ingested air mass flow rate. Solving this equat
 ```{math}
 c_{\text{j}} = \frac{\dot{m}_{\text{f}}}{F} = \frac{\dot{m}_{\text{f}}/\dot{m}_0}{\left(1 + \dot{m}_{\text{f}}/\dot{m}_0\right)V_e - V_0}
 ```
+
+The final equation we need is to rearrange the thrust equation and solve for $V_e$. We note that since the engine is on a test stand, the inlet velocity is zero, $V_0 = 0$:
+
+```{math}
+V_e = \frac{F}{\dot{m}_0 \left(1 + \dot{m}_{\text{f}}/\dot{m}_0\right)}
+```
+
+We now have three equations and three unknowns:
+
+1. $V_e$
+2. $c_{\text{j}}$
+3. $\dot{m}_{\text{f}}/\dot{m}_0$
+
+We can solve these algebraically, but in this case I think it's easier to guess a value for $\dot{m}_{\text{f}}/\dot{m}_0$ and solve iteratively. We will guess a value of $\dot{m}_{\text{f}}/\dot{m}_0$ = 0.02.
+
+```{code-cell}
+from pint import UnitRegistry
+units = UnitRegistry()
+
+mdot_0 = 81.5 * units.kg / units.s
+F = 50 * units.kN
+T_0 = 288 * units.K
+T_e = 655 * units.K
+eta_b = 0.96 * units.dimensionless
+Q_f = 43.4 * units.MJ / units.kg
+
+# From table B-2
+c_pe = 1.11 * units.kJ / (units.kg * units.K)
+c_p0 = 1.03 * units.kJ / (units.kg * units.K)
+delta_h = c_pe * T_e - c_p0 * T_0
+
+f_a_guess = 0.02 * units.dimensionless
+
+V_e_guess = (F / (mdot_0 * (1 + f_a_guess))).to("m/s")
+print(f"{V_e_guess=}")
+
+c_j_1 = (f_a_guess / ((1 + f_a_guess) * V_e_guess)).to("kg/hr/N")
+c_j_2 = (0.5 * V_e_guess / (eta_b * Q_f - 1 / f_a_guess * delta_h)).to("kg/hr/N")
+print(f"{c_j_1=}", f"{c_j_2=}", sep="\n")
+```
+
+Those two values for $c_{\text{j}}$ don't match, and `c_j_1` is larger than `c_j_2`. Let's guess $\dot{m}_{\text{f}}/\dot{m}_0$ = 0.01.
+
+```{code-cell}
+f_a_guess = 0.01 * units.dimensionless
+
+V_e_guess = (F / (mdot_0 * (1 + f_a_guess))).to("m/s")
+print(f"{V_e_guess=}")
+
+c_j_1 = (f_a_guess / ((1 + f_a_guess) * V_e_guess)).to("kg/hr/N")
+c_j_2 = (0.5 * V_e_guess / (eta_b * Q_f - 1 / f_a_guess * delta_h)).to("kg/hr/N")
+print(f"{c_j_1=}", f"{c_j_2=}", sep="\n")
+```
+
+Still no match, but we made `c_j_1` smaller, which is good. Unfortunately, the sign of `c_j_2` is negative, so we went too far. The answer is between 0.02 and 0.01. Let's try 0.015.
+
+```{code-cell}
+f_a_guess = 0.015 * units.dimensionless
+
+V_e_guess = (F / (mdot_0 * (1 + f_a_guess))).to("m/s")
+print(f"{V_e_guess=}")
+
+c_j_1 = (f_a_guess / ((1 + f_a_guess) * V_e_guess)).to("kg/hr/N")
+c_j_2 = (0.5 * V_e_guess / (eta_b * Q_f - 1 / f_a_guess * delta_h)).to("kg/hr/N")
+print(f"{c_j_1=}", f"{c_j_2=}", sep="\n")
+```
+
+Based on our previous results, since `c_j_1 > c_j_2`, the actual fuel/air ratio is smaller than the guess value. Let's try 0.0125.
+
+```{code-cell}
+f_a_guess = 0.0125 * units.dimensionless
+
+V_e_guess = (F / (mdot_0 * (1 + f_a_guess))).to("m/s")
+print(f"{V_e_guess=}")
+
+c_j_1 = (f_a_guess / ((1 + f_a_guess) * V_e_guess)).to("kg/hr/N")
+c_j_2 = (0.5 * V_e_guess / (eta_b * Q_f - 1 / f_a_guess * delta_h)).to("kg/hr/N")
+print(f"{c_j_1=}", f"{c_j_2=}", sep="\n")
+```
+
+Too far again, so the answer is between 0.0125 and 0.015. Let's try the midpoint again, 0.01375.
+
+```{code-cell}
+f_a_guess = 0.01375 * units.dimensionless
+
+V_e_guess = (F / (mdot_0 * (1 + f_a_guess))).to("m/s")
+print(f"{V_e_guess=}")
+
+c_j_1 = (f_a_guess / ((1 + f_a_guess) * V_e_guess)).to("kg/hr/N")
+c_j_2 = (0.5 * V_e_guess / (eta_b * Q_f - 1 / f_a_guess * delta_h)).to("kg/hr/N")
+print(f"{c_j_1=}", f"{c_j_2=}", sep="\n")
+```
+
+Not far enough, the true answer is between 0.01375 and 0.015. The midpoint is now 0.014375.
+
+```{code-cell}
+f_a_guess = 0.014375 * units.dimensionless
+
+V_e_guess = (F / (mdot_0 * (1 + f_a_guess))).to("m/s")
+print(f"{V_e_guess=}")
+
+c_j_1 = (f_a_guess / ((1 + f_a_guess) * V_e_guess)).to("kg/hr/N")
+c_j_2 = (0.5 * V_e_guess / (eta_b * Q_f - 1 / f_a_guess * delta_h)).to("kg/hr/N")
+print(f"{c_j_1=}", f"{c_j_2=}", sep="\n")
+```
+
+We can now continue this process until we find an answer that meets our desired accuracy criteria. This is called the **bisection method** because we are bisecting the search space with each iteration. Continuing until we have 4 digits of agreement in the TSFC:
+
+```{code-cell}
+f_a_guess = 0.0147815 * units.dimensionless
+
+V_e_guess = (F / (mdot_0 * (1 + f_a_guess))).to("m/s")
+print(f"{V_e_guess=}")
+
+c_j_1 = (f_a_guess / ((1 + f_a_guess) * V_e_guess)).to("kg/hr/N")
+c_j_2 = (0.5 * V_e_guess / (eta_b * Q_f - 1 / f_a_guess * delta_h)).to("kg/hr/N")
+print(f"{c_j_1=}", f"{c_j_2=}", f"{c_j_2.to('lb/hr/lbf')=}", sep="\n")
+```
+
+We find that the value here is about 8% higher than the quoted value for the TSFC on [Wikipedia](https://www.wikiwand.com/en/Pratt_%26_Whitney_J57#/General_characteristics_2).

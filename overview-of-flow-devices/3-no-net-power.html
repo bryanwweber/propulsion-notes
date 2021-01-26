@@ -698,12 +698,192 @@
 <p>Rearranging to solve for <span class="math notranslate nohighlight">\(c_{\text{j}} = \dot{m}_{\text{f}}/F\)</span>, we find:</p>
 <div class="math notranslate nohighlight">
 \[c_{\text{j}} = \frac{\dot{m}_{\text{f}}}{F} = \frac{V_{\text{avg}}}{\eta_{\text{b}}Q_{\text{f}}-\dot{m}/\dot{m}_{\text{f}}\left(h_e - h_0\right)}\]</div>
-<p>Note that there are two unknowns in this equation, <span class="math notranslate nohighlight">\(\dot{m}_{\text{f}}\)</span> and the ratio <span class="math notranslate nohighlight">\(\dot{m}/\dot{m_{\text{f}}\)</span>. Next, we turn to the momentum conservation equation. Although we previously assumed that additional mass flows could be neglected, we need some way to determine the mass flow rate ratio, so we modify the momentum conservation equation to include the fuel mass flow rate:</p>
+<p>Note that there are three unknowns in this equation, <span class="math notranslate nohighlight">\(V_e\)</span>, <span class="math notranslate nohighlight">\(\dot{m}_{\text{f}}\)</span>, and the ratio <span class="math notranslate nohighlight">\(\dot{m}/\dot{m}_{\text{f}}\)</span>. Next, we turn to the momentum conservation equation. Although we previously assumed that additional mass flows could be neglected, we need some way to determine the mass flow rate ratio, so we modify the momentum conservation equation to include the fuel mass flow rate:</p>
 <div class="math notranslate nohighlight">
 \[F = \left(\dot{m}_0 + \dot{m}_{\text{f}}\right)V_e - \dot{m}_0 V_0\]</div>
 <p>where <span class="math notranslate nohighlight">\(\dot{m}_0=\dot{m}\)</span> is the ingested air mass flow rate. Solving this equation for <span class="math notranslate nohighlight">\(c_{\text{j}}\)</span>, we find:</p>
 <div class="math notranslate nohighlight">
 \[c_{\text{j}} = \frac{\dot{m}_{\text{f}}}{F} = \frac{\dot{m}_{\text{f}}/\dot{m}_0}{\left(1 + \dot{m}_{\text{f}}/\dot{m}_0\right)V_e - V_0}\]</div>
+<p>The final equation we need is to rearrange the thrust equation and solve for <span class="math notranslate nohighlight">\(V_e\)</span>. We note that since the engine is on a test stand, the inlet velocity is zero, <span class="math notranslate nohighlight">\(V_0 = 0\)</span>:</p>
+<div class="math notranslate nohighlight">
+\[V_e = \frac{F}{\dot{m}_0 \left(1 + \dot{m}_{\text{f}}/\dot{m}_0\right)}\]</div>
+<p>We now have three equations and three unknowns:</p>
+<ol class="simple">
+<li><p><span class="math notranslate nohighlight">\(V_e\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(c_{\text{j}}\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(\dot{m}_{\text{f}}/\dot{m}_0\)</span></p></li>
+</ol>
+<p>We can solve these algebraically, but in this case I think it’s easier to guess a value for <span class="math notranslate nohighlight">\(\dot{m}_{\text{f}}/\dot{m}_0\)</span> and solve iteratively. We will guess a value of <span class="math notranslate nohighlight">\(\dot{m}_{\text{f}}/\dot{m}_0\)</span> = 0.02.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pint</span> <span class="kn">import</span> <span class="n">UnitRegistry</span>
+<span class="n">units</span> <span class="o">=</span> <span class="n">UnitRegistry</span><span class="p">()</span>
+
+<span class="n">mdot_0</span> <span class="o">=</span> <span class="mf">81.5</span> <span class="o">*</span> <span class="n">units</span><span class="o">.</span><span class="n">kg</span> <span class="o">/</span> <span class="n">units</span><span class="o">.</span><span class="n">s</span>
+<span class="n">F</span> <span class="o">=</span> <span class="mi">50</span> <span class="o">*</span> <span class="n">units</span><span class="o">.</span><span class="n">kN</span>
+<span class="n">T_0</span> <span class="o">=</span> <span class="mi">288</span> <span class="o">*</span> <span class="n">units</span><span class="o">.</span><span class="n">K</span>
+<span class="n">T_e</span> <span class="o">=</span> <span class="mi">655</span> <span class="o">*</span> <span class="n">units</span><span class="o">.</span><span class="n">K</span>
+<span class="n">eta_b</span> <span class="o">=</span> <span class="mf">0.96</span> <span class="o">*</span> <span class="n">units</span><span class="o">.</span><span class="n">dimensionless</span>
+<span class="n">Q_f</span> <span class="o">=</span> <span class="mf">43.4</span> <span class="o">*</span> <span class="n">units</span><span class="o">.</span><span class="n">MJ</span> <span class="o">/</span> <span class="n">units</span><span class="o">.</span><span class="n">kg</span>
+
+<span class="c1"># From table B-2</span>
+<span class="n">c_pe</span> <span class="o">=</span> <span class="mf">1.11</span> <span class="o">*</span> <span class="n">units</span><span class="o">.</span><span class="n">kJ</span> <span class="o">/</span> <span class="p">(</span><span class="n">units</span><span class="o">.</span><span class="n">kg</span> <span class="o">*</span> <span class="n">units</span><span class="o">.</span><span class="n">K</span><span class="p">)</span>
+<span class="n">c_p0</span> <span class="o">=</span> <span class="mf">1.03</span> <span class="o">*</span> <span class="n">units</span><span class="o">.</span><span class="n">kJ</span> <span class="o">/</span> <span class="p">(</span><span class="n">units</span><span class="o">.</span><span class="n">kg</span> <span class="o">*</span> <span class="n">units</span><span class="o">.</span><span class="n">K</span><span class="p">)</span>
+<span class="n">delta_h</span> <span class="o">=</span> <span class="n">c_pe</span> <span class="o">*</span> <span class="n">T_e</span> <span class="o">-</span> <span class="n">c_p0</span> <span class="o">*</span> <span class="n">T_0</span>
+
+<span class="n">f_a_guess</span> <span class="o">=</span> <span class="mf">0.02</span> <span class="o">*</span> <span class="n">units</span><span class="o">.</span><span class="n">dimensionless</span>
+
+<span class="n">V_e_guess</span> <span class="o">=</span> <span class="p">(</span><span class="n">F</span> <span class="o">/</span> <span class="p">(</span><span class="n">mdot_0</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="n">f_a_guess</span><span class="p">)))</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="s2">&quot;m/s&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">V_e_guess</span><span class="si">=}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="n">c_j_1</span> <span class="o">=</span> <span class="p">(</span><span class="n">f_a_guess</span> <span class="o">/</span> <span class="p">((</span><span class="mi">1</span> <span class="o">+</span> <span class="n">f_a_guess</span><span class="p">)</span> <span class="o">*</span> <span class="n">V_e_guess</span><span class="p">))</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="s2">&quot;kg/hr/N&quot;</span><span class="p">)</span>
+<span class="n">c_j_2</span> <span class="o">=</span> <span class="p">(</span><span class="mf">0.5</span> <span class="o">*</span> <span class="n">V_e_guess</span> <span class="o">/</span> <span class="p">(</span><span class="n">eta_b</span> <span class="o">*</span> <span class="n">Q_f</span> <span class="o">-</span> <span class="mi">1</span> <span class="o">/</span> <span class="n">f_a_guess</span> <span class="o">*</span> <span class="n">delta_h</span><span class="p">))</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="s2">&quot;kg/hr/N&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">c_j_1</span><span class="si">=}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">c_j_2</span><span class="si">=}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">sep</span><span class="o">=</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>V_e_guess=&lt;Quantity(601.467581, &#39;meter / second&#39;)&gt;
+c_j_1=&lt;Quantity(0.11736, &#39;kilogram / hour / newton&#39;)&gt;
+c_j_2=&lt;Quantity(0.0537464515, &#39;kilogram / hour / newton&#39;)&gt;
+</pre></div>
+</div>
+</div>
+</div>
+<p>Those two values for <span class="math notranslate nohighlight">\(c_{\text{j}}\)</span> don’t match, and <code class="docutils literal notranslate"><span class="pre">c_j_1</span></code> is larger than <code class="docutils literal notranslate"><span class="pre">c_j_2</span></code>. Let’s guess <span class="math notranslate nohighlight">\(\dot{m}_{\text{f}}/\dot{m}_0\)</span> = 0.01.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">f_a_guess</span> <span class="o">=</span> <span class="mf">0.01</span> <span class="o">*</span> <span class="n">units</span><span class="o">.</span><span class="n">dimensionless</span>
+
+<span class="n">V_e_guess</span> <span class="o">=</span> <span class="p">(</span><span class="n">F</span> <span class="o">/</span> <span class="p">(</span><span class="n">mdot_0</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="n">f_a_guess</span><span class="p">)))</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="s2">&quot;m/s&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">V_e_guess</span><span class="si">=}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="n">c_j_1</span> <span class="o">=</span> <span class="p">(</span><span class="n">f_a_guess</span> <span class="o">/</span> <span class="p">((</span><span class="mi">1</span> <span class="o">+</span> <span class="n">f_a_guess</span><span class="p">)</span> <span class="o">*</span> <span class="n">V_e_guess</span><span class="p">))</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="s2">&quot;kg/hr/N&quot;</span><span class="p">)</span>
+<span class="n">c_j_2</span> <span class="o">=</span> <span class="p">(</span><span class="mf">0.5</span> <span class="o">*</span> <span class="n">V_e_guess</span> <span class="o">/</span> <span class="p">(</span><span class="n">eta_b</span> <span class="o">*</span> <span class="n">Q_f</span> <span class="o">-</span> <span class="mi">1</span> <span class="o">/</span> <span class="n">f_a_guess</span> <span class="o">*</span> <span class="n">delta_h</span><span class="p">))</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="s2">&quot;kg/hr/N&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">c_j_1</span><span class="si">=}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">c_j_2</span><span class="si">=}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">sep</span><span class="o">=</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>V_e_guess=&lt;Quantity(607.422705, &#39;meter / second&#39;)&gt;
+c_j_1=&lt;Quantity(0.05868, &#39;kilogram / hour / newton&#39;)&gt;
+c_j_2=&lt;Quantity(-0.794016608, &#39;kilogram / hour / newton&#39;)&gt;
+</pre></div>
+</div>
+</div>
+</div>
+<p>Still no match, but we made <code class="docutils literal notranslate"><span class="pre">c_j_1</span></code> smaller, which is good. Unfortunately, the sign of <code class="docutils literal notranslate"><span class="pre">c_j_2</span></code> is negative, so we went too far. The answer is between 0.02 and 0.01. Let’s try 0.015.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">f_a_guess</span> <span class="o">=</span> <span class="mf">0.015</span> <span class="o">*</span> <span class="n">units</span><span class="o">.</span><span class="n">dimensionless</span>
+
+<span class="n">V_e_guess</span> <span class="o">=</span> <span class="p">(</span><span class="n">F</span> <span class="o">/</span> <span class="p">(</span><span class="n">mdot_0</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="n">f_a_guess</span><span class="p">)))</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="s2">&quot;m/s&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">V_e_guess</span><span class="si">=}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="n">c_j_1</span> <span class="o">=</span> <span class="p">(</span><span class="n">f_a_guess</span> <span class="o">/</span> <span class="p">((</span><span class="mi">1</span> <span class="o">+</span> <span class="n">f_a_guess</span><span class="p">)</span> <span class="o">*</span> <span class="n">V_e_guess</span><span class="p">))</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="s2">&quot;kg/hr/N&quot;</span><span class="p">)</span>
+<span class="n">c_j_2</span> <span class="o">=</span> <span class="p">(</span><span class="mf">0.5</span> <span class="o">*</span> <span class="n">V_e_guess</span> <span class="o">/</span> <span class="p">(</span><span class="n">eta_b</span> <span class="o">*</span> <span class="n">Q_f</span> <span class="o">-</span> <span class="mi">1</span> <span class="o">/</span> <span class="n">f_a_guess</span> <span class="o">*</span> <span class="n">delta_h</span><span class="p">))</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="s2">&quot;kg/hr/N&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">c_j_1</span><span class="si">=}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">c_j_2</span><span class="si">=}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">sep</span><span class="o">=</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>V_e_guess=&lt;Quantity(604.430475, &#39;meter / second&#39;)&gt;
+c_j_1=&lt;Quantity(0.08802, &#39;kilogram / hour / newton&#39;)&gt;
+c_j_2=&lt;Quantity(0.0838839519, &#39;kilogram / hour / newton&#39;)&gt;
+</pre></div>
+</div>
+</div>
+</div>
+<p>Based on our previous results, since <code class="docutils literal notranslate"><span class="pre">c_j_1</span> <span class="pre">&gt;</span> <span class="pre">c_j_2</span></code>, the actual fuel/air ratio is smaller than the guess value. Let’s try 0.0125.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">f_a_guess</span> <span class="o">=</span> <span class="mf">0.0125</span> <span class="o">*</span> <span class="n">units</span><span class="o">.</span><span class="n">dimensionless</span>
+
+<span class="n">V_e_guess</span> <span class="o">=</span> <span class="p">(</span><span class="n">F</span> <span class="o">/</span> <span class="p">(</span><span class="n">mdot_0</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="n">f_a_guess</span><span class="p">)))</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="s2">&quot;m/s&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">V_e_guess</span><span class="si">=}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="n">c_j_1</span> <span class="o">=</span> <span class="p">(</span><span class="n">f_a_guess</span> <span class="o">/</span> <span class="p">((</span><span class="mi">1</span> <span class="o">+</span> <span class="n">f_a_guess</span><span class="p">)</span> <span class="o">*</span> <span class="n">V_e_guess</span><span class="p">))</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="s2">&quot;kg/hr/N&quot;</span><span class="p">)</span>
+<span class="n">c_j_2</span> <span class="o">=</span> <span class="p">(</span><span class="mf">0.5</span> <span class="o">*</span> <span class="n">V_e_guess</span> <span class="o">/</span> <span class="p">(</span><span class="n">eta_b</span> <span class="o">*</span> <span class="n">Q_f</span> <span class="o">-</span> <span class="mi">1</span> <span class="o">/</span> <span class="n">f_a_guess</span> <span class="o">*</span> <span class="n">delta_h</span><span class="p">))</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="s2">&quot;kg/hr/N&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">c_j_1</span><span class="si">=}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">c_j_2</span><span class="si">=}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">sep</span><span class="o">=</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>V_e_guess=&lt;Quantity(605.922896, &#39;meter / second&#39;)&gt;
+c_j_1=&lt;Quantity(0.07335, &#39;kilogram / hour / newton&#39;)&gt;
+c_j_2=&lt;Quantity(0.15082714, &#39;kilogram / hour / newton&#39;)&gt;
+</pre></div>
+</div>
+</div>
+</div>
+<p>Too far again, so the answer is between 0.0125 and 0.015. Let’s try the midpoint again, 0.01375.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">f_a_guess</span> <span class="o">=</span> <span class="mf">0.01375</span> <span class="o">*</span> <span class="n">units</span><span class="o">.</span><span class="n">dimensionless</span>
+
+<span class="n">V_e_guess</span> <span class="o">=</span> <span class="p">(</span><span class="n">F</span> <span class="o">/</span> <span class="p">(</span><span class="n">mdot_0</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="n">f_a_guess</span><span class="p">)))</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="s2">&quot;m/s&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">V_e_guess</span><span class="si">=}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="n">c_j_1</span> <span class="o">=</span> <span class="p">(</span><span class="n">f_a_guess</span> <span class="o">/</span> <span class="p">((</span><span class="mi">1</span> <span class="o">+</span> <span class="n">f_a_guess</span><span class="p">)</span> <span class="o">*</span> <span class="n">V_e_guess</span><span class="p">))</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="s2">&quot;kg/hr/N&quot;</span><span class="p">)</span>
+<span class="n">c_j_2</span> <span class="o">=</span> <span class="p">(</span><span class="mf">0.5</span> <span class="o">*</span> <span class="n">V_e_guess</span> <span class="o">/</span> <span class="p">(</span><span class="n">eta_b</span> <span class="o">*</span> <span class="n">Q_f</span> <span class="o">-</span> <span class="mi">1</span> <span class="o">/</span> <span class="n">f_a_guess</span> <span class="o">*</span> <span class="n">delta_h</span><span class="p">))</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="s2">&quot;kg/hr/N&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">c_j_1</span><span class="si">=}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">c_j_2</span><span class="si">=}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">sep</span><span class="o">=</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>V_e_guess=&lt;Quantity(605.175766, &#39;meter / second&#39;)&gt;
+c_j_1=&lt;Quantity(0.080685, &#39;kilogram / hour / newton&#39;)&gt;
+c_j_2=&lt;Quantity(0.105131608, &#39;kilogram / hour / newton&#39;)&gt;
+</pre></div>
+</div>
+</div>
+</div>
+<p>Not far enough, the true answer is between 0.01375 and 0.015. The midpoint is now 0.014375.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">f_a_guess</span> <span class="o">=</span> <span class="mf">0.014375</span> <span class="o">*</span> <span class="n">units</span><span class="o">.</span><span class="n">dimensionless</span>
+
+<span class="n">V_e_guess</span> <span class="o">=</span> <span class="p">(</span><span class="n">F</span> <span class="o">/</span> <span class="p">(</span><span class="n">mdot_0</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="n">f_a_guess</span><span class="p">)))</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="s2">&quot;m/s&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">V_e_guess</span><span class="si">=}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="n">c_j_1</span> <span class="o">=</span> <span class="p">(</span><span class="n">f_a_guess</span> <span class="o">/</span> <span class="p">((</span><span class="mi">1</span> <span class="o">+</span> <span class="n">f_a_guess</span><span class="p">)</span> <span class="o">*</span> <span class="n">V_e_guess</span><span class="p">))</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="s2">&quot;kg/hr/N&quot;</span><span class="p">)</span>
+<span class="n">c_j_2</span> <span class="o">=</span> <span class="p">(</span><span class="mf">0.5</span> <span class="o">*</span> <span class="n">V_e_guess</span> <span class="o">/</span> <span class="p">(</span><span class="n">eta_b</span> <span class="o">*</span> <span class="n">Q_f</span> <span class="o">-</span> <span class="mi">1</span> <span class="o">/</span> <span class="n">f_a_guess</span> <span class="o">*</span> <span class="n">delta_h</span><span class="p">))</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="s2">&quot;kg/hr/N&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">c_j_1</span><span class="si">=}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">c_j_2</span><span class="si">=}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">sep</span><span class="o">=</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>V_e_guess=&lt;Quantity(604.802891, &#39;meter / second&#39;)&gt;
+c_j_1=&lt;Quantity(0.0843525, &#39;kilogram / hour / newton&#39;)&gt;
+c_j_2=&lt;Quantity(0.092868523, &#39;kilogram / hour / newton&#39;)&gt;
+</pre></div>
+</div>
+</div>
+</div>
+<p>We can now continue this process until we find an answer that meets our desired accuracy criteria. This is called the <strong>bisection method</strong> because we are bisecting the search space with each iteration. Continuing until we have 4 digits of agreement in the TSFC:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">f_a_guess</span> <span class="o">=</span> <span class="mf">0.0147815</span> <span class="o">*</span> <span class="n">units</span><span class="o">.</span><span class="n">dimensionless</span>
+
+<span class="n">V_e_guess</span> <span class="o">=</span> <span class="p">(</span><span class="n">F</span> <span class="o">/</span> <span class="p">(</span><span class="n">mdot_0</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="n">f_a_guess</span><span class="p">)))</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="s2">&quot;m/s&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">V_e_guess</span><span class="si">=}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="n">c_j_1</span> <span class="o">=</span> <span class="p">(</span><span class="n">f_a_guess</span> <span class="o">/</span> <span class="p">((</span><span class="mi">1</span> <span class="o">+</span> <span class="n">f_a_guess</span><span class="p">)</span> <span class="o">*</span> <span class="n">V_e_guess</span><span class="p">))</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="s2">&quot;kg/hr/N&quot;</span><span class="p">)</span>
+<span class="n">c_j_2</span> <span class="o">=</span> <span class="p">(</span><span class="mf">0.5</span> <span class="o">*</span> <span class="n">V_e_guess</span> <span class="o">/</span> <span class="p">(</span><span class="n">eta_b</span> <span class="o">*</span> <span class="n">Q_f</span> <span class="o">-</span> <span class="mi">1</span> <span class="o">/</span> <span class="n">f_a_guess</span> <span class="o">*</span> <span class="n">delta_h</span><span class="p">))</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="s2">&quot;kg/hr/N&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">c_j_1</span><span class="si">=}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">c_j_2</span><span class="si">=}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">c_j_2</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="s1">&#39;lb/hr/lbf&#39;</span><span class="p">)</span><span class="si">=}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">sep</span><span class="o">=</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>V_e_guess=&lt;Quantity(604.56062, &#39;meter / second&#39;)&gt;
+c_j_1=&lt;Quantity(0.086737842, &#39;kilogram / hour / newton&#39;)&gt;
+c_j_2=&lt;Quantity(0.0867386029, &#39;kilogram / hour / newton&#39;)&gt;
+c_j_2.to(&#39;lb/hr/lbf&#39;)=&lt;Quantity(0.85061512, &#39;pound / force_pound / hour&#39;)&gt;
+</pre></div>
+</div>
+</div>
+</div>
+<p>We find that the value here is about 8% higher than the quoted value for the TSFC on <a class="reference external" href="https://www.wikiwand.com/en/Pratt_%26_Whitney_J57#/General_characteristics_2">Wikipedia</a>.</p>
 </div>
 </div>
 
