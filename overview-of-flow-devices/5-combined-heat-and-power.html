@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Overview of Flow Devices &#8212; Notes for Propulsion</title>
+    <title>Combined Heat and Power Addition: The Turbofan &#8212; Notes for Propulsion</title>
     
   <link rel="stylesheet" href="../_static/css/index.f658d18f9b420779cfdf24aa0a7e2d77.css">
 
@@ -56,8 +56,7 @@
     <script async="async" src="../_static/sphinx-thebe.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Flow Machines with No Heat Addition" href="2-no-heat-addition.html" />
-    <link rel="prev" title="Conservation Equations" href="../review/2-conservation-equations.html" />
+    <link rel="prev" title="The Rocket" href="4-the-rocket.html" />
 
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="en" />
@@ -115,8 +114,8 @@
  </span>
 </p>
 <ul class="current nav sidenav_l1">
- <li class="toctree-l1 current active">
-  <a class="current reference internal" href="#">
+ <li class="toctree-l1">
+  <a class="reference internal" href="1-introduction.html">
    Overview of Flow Devices
   </a>
  </li>
@@ -135,8 +134,8 @@
    The Rocket
   </a>
  </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="5-combined-heat-and-power.html">
+ <li class="toctree-l1 current active">
+  <a class="current reference internal" href="#">
    Combined Heat and Power Addition: The Turbofan
   </a>
  </li>
@@ -180,7 +179,7 @@
         <!-- ipynb file if we had a myst markdown file -->
         
         <!-- Download raw file -->
-        <a class="dropdown-buttons" href="../_sources/overview-of-flow-devices/1-introduction.md"><button type="button"
+        <a class="dropdown-buttons" href="../_sources/overview-of-flow-devices/5-combined-heat-and-power.md"><button type="button"
                 class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
                 data-placement="left">.md</button></a>
         <!-- Download PDF via print -->
@@ -200,10 +199,10 @@
                 data-toggle="tooltip" data-placement="left" title="Source repository"><i
                     class="fab fa-github"></i>repository</button></a>
         <a class="issues-button"
-            href="https://github.com/bryanwweber/propulsion-notes/issues/new?title=Issue%20on%20page%20%2Foverview-of-flow-devices/1-introduction.html&body=Your%20issue%20content%20here."><button
+            href="https://github.com/bryanwweber/propulsion-notes/issues/new?title=Issue%20on%20page%20%2Foverview-of-flow-devices/5-combined-heat-and-power.html&body=Your%20issue%20content%20here."><button
                 type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
                 title="Open an issue"><i class="fas fa-lightbulb"></i>open issue</button></a>
-        <a class="edit-button" href="https://github.com/bryanwweber/propulsion-notes/edit/main/overview-of-flow-devices/1-introduction.md"><button
+        <a class="edit-button" href="https://github.com/bryanwweber/propulsion-notes/edit/main/overview-of-flow-devices/5-combined-heat-and-power.md"><button
                 type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
                 title="Edit this page"><i class="fas fa-pencil-alt"></i>suggest edit</button></a>
     </div>
@@ -223,6 +222,25 @@
     <!-- Table of contents -->
     <div class="d-none d-md-block col-md-2 bd-toc show">
         
+        <div class="tocsection onthispage pt-5 pb-3">
+            <i class="fas fa-list"></i> Contents
+        </div>
+        <nav id="bd-toc-nav">
+            <ul class="nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#conservation-equations">
+   Conservation Equations
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#turboprop">
+   Turboprop
+  </a>
+ </li>
+</ul>
+
+        </nav>
+        
     </div>
 </div>
     <div id="main-content" class="row">
@@ -230,32 +248,55 @@
         
               <div>
                 
-  <div class="section" id="overview-of-flow-devices">
-<h1>Overview of Flow Devices<a class="headerlink" href="#overview-of-flow-devices" title="Permalink to this headline">¶</a></h1>
-<p>In this chapter, we will give an overview of the different flow machines we described in the <a class="reference internal" href="../review/1-introduction.html#review-introduction"><span class="std std-ref">Introduction</span></a>. We categorized the machines by whether they provide the fluid with power input, heat transfer input, or both.</p>
-<table class="table" id="engine-types-2">
-<caption><span class="caption-number">Table 2 </span><span class="caption-text">Engines categorized by energy requirement</span><a class="headerlink" href="#engine-types-2" title="Permalink to this table">¶</a></caption>
-<colgroup>
-<col style="width: 50%" />
-<col style="width: 50%" />
-</colgroup>
-<thead>
-<tr class="row-odd"><th class="head"><p>Type</p></th>
-<th class="head"><p>Engines</p></th>
-</tr>
-</thead>
-<tbody>
-<tr class="row-even"><td><p>Net Work Input</p></td>
-<td><p>Propeller</p></td>
-</tr>
-<tr class="row-odd"><td><p>Net Heat Transfer Input</p></td>
-<td><p>Turbojet, Ramjet, Scramjet, Pulsejet, Rocket</p></td>
-</tr>
-<tr class="row-even"><td><p>Both</p></td>
-<td><p>Turbofan</p></td>
-</tr>
-</tbody>
-</table>
+  <div class="section" id="combined-heat-and-power-addition-the-turbofan">
+<h1>Combined Heat and Power Addition: The Turbofan<a class="headerlink" href="#combined-heat-and-power-addition-the-turbofan" title="Permalink to this headline">¶</a></h1>
+<p>We saw from our analysis of the propeller that the efficiency improve by accelerating a large mass of fluid only a little. However, propellers have the disadvantage of speed limitations due to the power input requirements.</p>
+<p>The speed limitation is removed by switching to a jet engine, but the efficiency is reduced. It is possible to combine the turbojet and the propeller to gain advantages of both. The resulting device is called a <strong>turbofan</strong> engine.</p>
+<p>In the turbofan engine, the incoming airstream is divided between a <strong>cold outer flow</strong>, which is accelerated by the fan by power addition, and a <strong>hot inner flow</strong> which proceeds through a turbojet cycle and has heat addition. These flows are shown in <a class="reference internal" href="#turbofan"><span class="std std-numref">Fig. 7</span></a>.</p>
+<div class="figure align-default" id="turbofan">
+<img alt="../_images/turbofan.svg" src="../_images/turbofan.svg" /><p class="caption"><span class="caption-number">Fig. 7 </span><span class="caption-text">Schematic of a turbofan engine.</span><a class="headerlink" href="#turbofan" title="Permalink to this image">¶</a></p>
+</div>
+<div class="section" id="conservation-equations">
+<h2>Conservation Equations<a class="headerlink" href="#conservation-equations" title="Permalink to this headline">¶</a></h2>
+<p>The total mass flow rate coming in to the inlet, <span class="math notranslate nohighlight">\(\dot{m}_0\)</span> is split at the fan into two components:</p>
+<ol class="simple">
+<li><p>The cold flow, <span class="math notranslate nohighlight">\(\dot{m}_c\)</span></p></li>
+<li><p>The hot floe, <span class="math notranslate nohighlight">\(\dot{m}_h\)</span></p></li>
+</ol>
+<p>Applying mass conservation, we find:</p>
+<div class="math notranslate nohighlight">
+\[\dot{m}_0 = \dot{m}_c + \dot{m}_h = \dot{m}_h\left(1 + \beta\right)\]</div>
+<p>where <span class="math notranslate nohighlight">\(\beta\)</span> is the <strong>bypass ratio</strong>, defined as <span class="math notranslate nohighlight">\(\dot{m}_c/\dot{m}_h\)</span>. The force on the fluid from the momentum equation is the sum of the force due to the fan on the cold flow and the nozzle on the hot flow:</p>
+<div class="math notranslate nohighlight">
+\[F = F_h + F_c = \frac{\dot{m}_0}{1 + \beta}\left(V_{e,h} - V_0\right) + \frac{\dot{m}_0 \beta}{1 + \beta}\left(V_{e,c} - V_0\right)\]</div>
+<p>Finally, we can apply the energy equation to the cold and hot flows independently. For the cold flow, there is no heat addition and only power addition. Therefore, the energy equation reduces to the same as the propeller case:</p>
+<div class="math notranslate nohighlight">
+\[P_c = F_c V_{c,\text{avg}}\]</div>
+<p>For the hot flow, there is no net power addition and only heat addition. However, part of the energy extracted in the turbine is used to drive the fan and provide power input to the cold flow. If we include both the hot and cold flow in the energy equation, we can assume that there is no net power addition:</p>
+<div class="math notranslate nohighlight">
+\[\dot{m}_c\left[\left(h_{e,c} - h_0\right) + \frac{1}{2}\left(V_{e,c}^2 - V_0^2\right)\right] + \dot{m}_h\left[\left(h_{e,h} - h_0\right) + \frac{1}{2}\left(V_{e,h}^2 - V_0^2\right)\right] = \dot{m}_h Q\]</div>
+<p>We will also assume that the temperature change of the cold flow is negligible, such that <span class="math notranslate nohighlight">\(h_{e,c}\approx h_0\)</span>. Simplifying the energy equation, and solving for the thrust, we find:</p>
+<div class="math notranslate nohighlight">
+\[F = \frac{\dot{m}_h Q \eta_{\text{th}}}{V_{\text{avg},h}} + \frac{\dot{m}_0 \beta}{1 + \beta}\left[\frac{1}{2}\left(V_{e,c}^2 - V_0^2\right)\left(\frac{1}{V_{\text{avg},c}} - \frac{1}{v_{\text{avg}, h}}\right)\right]\]</div>
+<p>Thus, the specific fuel consumption is:</p>
+<div class="math notranslate nohighlight">
+\[c_{\text{j}} = \frac{\dot{m}_\text{f}}{F} = \left\{\frac{\eta_{\text{th}}\eta_{\text{b}}Q_{\text{f}}}{V_{\text{avg},h}} + \frac{\beta}{\left(f/a\right)}\left[\frac{1}{2}\left(V_{e,c}^2 - V_0^2\right)\left(\frac{1}{V_{\text{avg},c}} - \frac{1}{V_{\text{avg}, h}}\right)\right]\right\}^{-1}\]</div>
+<p>Note that as <span class="math notranslate nohighlight">\(\beta\rightarrow 0\)</span>, we recover the turbojet result. For <span class="math notranslate nohighlight">\(\beta &gt; 0\)</span>, the TSFC is reduced as compared to the turbojet case, showing why the turbofan is worth the additional complexity. The larger that <span class="math notranslate nohighlight">\(\beta\)</span> is, the lower the fuel consumption. Note that the value of <span class="math notranslate nohighlight">\(\beta\)</span> cannot grow infinitely, because the hot core flow is needed to provide power to the fan.</p>
+<p>Modern turbofan bypass ratios can reach as high as approximately 10. Currently, the primary limitation on increasing <span class="math notranslate nohighlight">\(\beta\)</span> for turbofan engines is the larger drag and structural weight they incur on the aircraft. This offsets the benefit provided by the turbofan.</p>
+</div>
+<div class="section" id="turboprop">
+<h2>Turboprop<a class="headerlink" href="#turboprop" title="Permalink to this headline">¶</a></h2>
+<p>Although turbofan engines cannot have <span class="math notranslate nohighlight">\(\beta\)</span> values larger than about 10, removing the cowling around the fan blades removes many of the drag and weight problems. This converts the engine into a <strong>turboprop</strong> engine, where nearly all the heat transfer is used to provide power to the propeller and none is used for jet thrust.</p>
+<p>For the turboprop, the input power is then approximately given by:</p>
+<div class="math notranslate nohighlight">
+\[P_c = \dot{m}_h Q \eta_{\text{th}}\]</div>
+<p>and the total thrust is given by:</p>
+<div class="math notranslate nohighlight">
+\[F = \frac{P_c}{V_{\text{avg},c}}\]</div>
+<p>These are the same equations we developed for the propeller earlier. Thus, the turboprop has the same speed disadvantages as the standard propeller, making it unsuitable for long-range flights. However, the specific fuel consumption is the lowest among the turbomachinery-based engines we have discussed:</p>
+<div class="math notranslate nohighlight">
+\[c_{\text{j}} = \frac{V_{\text{avg},c}}{\eta_b \eta_{\text{th}}Q_{\text{f}}}\]</div>
+</div>
 </div>
 
     <script type="text/x-thebe-config">
@@ -286,8 +327,7 @@
     
     <div class='prev-next-bottom'>
         
-    <a class='left-prev' id="prev-link" href="../review/2-conservation-equations.html" title="previous page">Conservation Equations</a>
-    <a class='right-next' id="next-link" href="2-no-heat-addition.html" title="next page">Flow Machines with No Heat Addition</a>
+    <a class='left-prev' id="prev-link" href="4-the-rocket.html" title="previous page">The Rocket</a>
 
     </div>
     <footer class="footer mt-5 mt-md-0">
