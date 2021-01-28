@@ -1,6 +1,6 @@
 # Combined Heat and Power Addition: The Turbofan
 
-We saw from our analysis of the propeller that the efficiency improve by accelerating a large mass of fluid only a little. However, propellers have the disadvantage of speed limitations due to the power input requirements.
+We saw from our analysis of the propeller that the efficiency is improved by accelerating a large mass of fluid only a little. However, propellers have the disadvantage of speed limitations due to the power input requirements.
 
 The speed limitation is removed by switching to a jet engine, but the efficiency is reduced. It is possible to combine the turbojet and the propeller to gain advantages of both. The resulting device is called a **turbofan** engine.
 

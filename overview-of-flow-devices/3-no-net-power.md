@@ -246,7 +246,7 @@ c_j_2 = (0.5 * V_e_guess / (eta_b * Q_f - 1 / f_a_guess * delta_h)).to("kg/hr/N"
 print(f"{c_j_1=}", f"{c_j_2=}", sep="\n")
 ```
 
-Those two values for $c_{\text{j}}$ don't match, and `c_j_1` is larger than `c_j_2`. Let's guess $\dot{m}_{\text{f}}/\dot{m}_0$ = 0.01.
+Those two values for $c_{\text{j}}$ don't match, and `c_j_1` is larger than `c_j_2`. Since `f_a_guess` is in the numerator of `c_j_1`, which we need to make smaller, we'll guess a smaller value for `f_a_guess`. Let's guess $\dot{m}_{\text{f}}/\dot{m}_0$ = 0.01.
 
 ```{code-cell}
 f_a_guess = 0.01 * units.dimensionless
