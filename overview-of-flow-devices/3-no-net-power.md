@@ -10,26 +10,7 @@ kernelspec:
   name: python3
 ---
 
-```{code-cell}
-:tags: [remove-input]
-
-from bokeh.io import push_notebook, show, output_notebook
-from bokeh.layouts import row
-from bokeh.plotting import figure
-from bokeh.embed import components
-from bokeh.palettes import Category10 as palette
-from IPython.display import HTML
-
-import numpy as np
-from myst_nb import glue
-
-import itertools
-
-output_notebook(hide_banner=True)
-opts = dict(plot_width=500, plot_height=300, min_border=0)
-colors = itertools.cycle(palette[10])
-```
-
+(no-net-power)=
 # Flow Machines with No Net Power Input
 
 From the energy equation, we can also set the net power input to zero. In that case, the energy equation becomes:
@@ -330,7 +311,7 @@ c_j_2 = (0.5 * V_e_guess / (eta_b * Q_f - 1 / f_a_guess * delta_h)).to("kg/hr/N"
 print(f"{c_j_1=}", f"{c_j_2=}", sep="\n")
 ```
 
-We can now continue this process until we find an answer that meets our desired accuracy criteria. This is called the **bisection method** because we are bisecting the search space with each iteration. Continuing until we have 4 digits of agreement in the TSFC:
+We can now continue this process until we find an answer that meets our desired accuracy criteria. This is called the [**bisection method**](https://en.wikipedia.org/wiki/Bisection_method) because we are bisecting the search space with each iteration. Continuing until we have 4 digits of agreement in the TSFC:
 
 ```{code-cell}
 f_a_guess = 0.0147815 * units.dimensionless
@@ -343,4 +324,4 @@ c_j_2 = (0.5 * V_e_guess / (eta_b * Q_f - 1 / f_a_guess * delta_h)).to("kg/hr/N"
 print(f"{c_j_1=}", f"{c_j_2=}", f"{c_j_2.to('lb/hr/lbf')=}", sep="\n")
 ```
 
-We find that the value here is about 8% higher than the quoted value for the TSFC on [Wikipedia](https://www.wikiwand.com/en/Pratt_%26_Whitney_J57#/General_characteristics_2).
+We find that the value here is about 8% higher than the quoted value for the TSFC on [Wikipedia](https://en.wikipedia.org/wiki/Pratt_%26_Whitney_J57#/General_characteristics_2).
