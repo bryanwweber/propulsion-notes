@@ -464,7 +464,7 @@ c_j_2=&lt;Quantity(0.0537464515, &#39;kilogram / hour / newton&#39;)&gt;
 </div>
 </div>
 </div>
-<p>Those two values for <span class="math notranslate nohighlight">\(c_{\text{j}}\)</span> don’t match, and <code class="docutils literal notranslate"><span class="pre">c_j_1</span></code> is larger than <code class="docutils literal notranslate"><span class="pre">c_j_2</span></code>. Let’s guess <span class="math notranslate nohighlight">\(\dot{m}_{\text{f}}/\dot{m}_0\)</span> = 0.01.</p>
+<p>Those two values for <span class="math notranslate nohighlight">\(c_{\text{j}}\)</span> don’t match, and <code class="docutils literal notranslate"><span class="pre">c_j_1</span></code> is larger than <code class="docutils literal notranslate"><span class="pre">c_j_2</span></code>. Since <code class="docutils literal notranslate"><span class="pre">f_a_guess</span></code> is in the numerator of <code class="docutils literal notranslate"><span class="pre">c_j_1</span></code>, which we need to make smaller, we’ll guess a smaller value for <code class="docutils literal notranslate"><span class="pre">f_a_guess</span></code>. Let’s guess <span class="math notranslate nohighlight">\(\dot{m}_{\text{f}}/\dot{m}_0\)</span> = 0.01.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">f_a_guess</span> <span class="o">=</span> <span class="mf">0.01</span> <span class="o">*</span> <span class="n">units</span><span class="o">.</span><span class="n">dimensionless</span>
