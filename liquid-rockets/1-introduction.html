@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Overview of Flow Devices &#8212; Notes for Propulsion</title>
+    <title>Liquid Propellant Rocket Engines &#8212; Notes for Propulsion</title>
     
   <link rel="stylesheet" href="../_static/css/index.f658d18f9b420779cfdf24aa0a7e2d77.css">
 
@@ -56,8 +56,8 @@
     <script async="async" src="../_static/sphinx-thebe.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Flow Machines with No Heat Addition" href="2-no-heat-addition.html" />
-    <link rel="prev" title="Conservation Equations" href="../review/2-conservation-equations.html" />
+    <link rel="next" title="Rocket Nozzles" href="2-rocket-nozzles.html" />
+    <link rel="prev" title="Combined Heat and Power Addition: The Turbofan" href="../overview-of-flow-devices/5-combined-heat-and-power.html" />
 
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="en" />
@@ -114,29 +114,29 @@
   Overfiew of Flow Devices
  </span>
 </p>
-<ul class="current nav sidenav_l1">
- <li class="toctree-l1 current active">
-  <a class="current reference internal" href="#">
+<ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../overview-of-flow-devices/1-introduction.html">
    Overview of Flow Devices
   </a>
  </li>
  <li class="toctree-l1">
-  <a class="reference internal" href="2-no-heat-addition.html">
+  <a class="reference internal" href="../overview-of-flow-devices/2-no-heat-addition.html">
    Flow Machines with No Heat Addition
   </a>
  </li>
  <li class="toctree-l1">
-  <a class="reference internal" href="3-no-net-power.html">
+  <a class="reference internal" href="../overview-of-flow-devices/3-no-net-power.html">
    Flow Machines with No Net Power Input
   </a>
  </li>
  <li class="toctree-l1">
-  <a class="reference internal" href="4-the-rocket.html">
+  <a class="reference internal" href="../overview-of-flow-devices/4-the-rocket.html">
    The Rocket
   </a>
  </li>
  <li class="toctree-l1">
-  <a class="reference internal" href="5-combined-heat-and-power.html">
+  <a class="reference internal" href="../overview-of-flow-devices/5-combined-heat-and-power.html">
    Combined Heat and Power Addition: The Turbofan
   </a>
  </li>
@@ -146,14 +146,14 @@
   Liquid Propellant Rocket Engines
  </span>
 </p>
-<ul class="nav sidenav_l1">
- <li class="toctree-l1">
-  <a class="reference internal" href="../liquid-rockets/1-introduction.html">
+<ul class="current nav sidenav_l1">
+ <li class="toctree-l1 current active">
+  <a class="current reference internal" href="#">
    Liquid Propellant Rocket Engines
   </a>
  </li>
  <li class="toctree-l1">
-  <a class="reference internal" href="../liquid-rockets/2-rocket-nozzles.html">
+  <a class="reference internal" href="2-rocket-nozzles.html">
    Rocket Nozzles
   </a>
  </li>
@@ -209,7 +209,7 @@
         <!-- ipynb file if we had a myst markdown file -->
         
         <!-- Download raw file -->
-        <a class="dropdown-buttons" href="../_sources/overview-of-flow-devices/1-introduction.md"><button type="button"
+        <a class="dropdown-buttons" href="../_sources/liquid-rockets/1-introduction.md"><button type="button"
                 class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
                 data-placement="left">.md</button></a>
         <!-- Download PDF via print -->
@@ -229,10 +229,10 @@
                 data-toggle="tooltip" data-placement="left" title="Source repository"><i
                     class="fab fa-github"></i>repository</button></a>
         <a class="issues-button"
-            href="https://github.com/bryanwweber/propulsion-notes/issues/new?title=Issue%20on%20page%20%2Foverview-of-flow-devices/1-introduction.html&body=Your%20issue%20content%20here."><button
+            href="https://github.com/bryanwweber/propulsion-notes/issues/new?title=Issue%20on%20page%20%2Fliquid-rockets/1-introduction.html&body=Your%20issue%20content%20here."><button
                 type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
                 title="Open an issue"><i class="fas fa-lightbulb"></i>open issue</button></a>
-        <a class="edit-button" href="https://github.com/bryanwweber/propulsion-notes/edit/main/overview-of-flow-devices/1-introduction.md"><button
+        <a class="edit-button" href="https://github.com/bryanwweber/propulsion-notes/edit/main/liquid-rockets/1-introduction.md"><button
                 type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
                 title="Edit this page"><i class="fas fa-pencil-alt"></i>suggest edit</button></a>
     </div>
@@ -252,6 +252,20 @@
     <!-- Table of contents -->
     <div class="d-none d-md-block col-md-2 bd-toc show">
         
+        <div class="tocsection onthispage pt-5 pb-3">
+            <i class="fas fa-list"></i> Contents
+        </div>
+        <nav id="bd-toc-nav">
+            <ul class="nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#rocket-motor-components">
+   Rocket Motor Components
+  </a>
+ </li>
+</ul>
+
+        </nav>
+        
     </div>
 </div>
     <div id="main-content" class="row">
@@ -259,32 +273,50 @@
         
               <div>
                 
-  <div class="section" id="overview-of-flow-devices">
-<h1>Overview of Flow Devices<a class="headerlink" href="#overview-of-flow-devices" title="Permalink to this headline">¶</a></h1>
-<p>In this chapter, we will give an overview of the different flow machines we described in the <a class="reference internal" href="../review/1-introduction.html#review-introduction"><span class="std std-ref">Introduction</span></a>. We categorized the machines by whether they provide the fluid with power input, heat transfer input, or both.</p>
-<table class="table" id="engine-types-2">
-<caption><span class="caption-number">Table 2 </span><span class="caption-text">Engines categorized by energy requirement</span><a class="headerlink" href="#engine-types-2" title="Permalink to this table">¶</a></caption>
-<colgroup>
-<col style="width: 50%" />
-<col style="width: 50%" />
-</colgroup>
-<thead>
-<tr class="row-odd"><th class="head"><p>Type</p></th>
-<th class="head"><p>Engines</p></th>
-</tr>
-</thead>
-<tbody>
-<tr class="row-even"><td><p>Net Work Input</p></td>
-<td><p>Propeller</p></td>
-</tr>
-<tr class="row-odd"><td><p>Net Heat Transfer Input</p></td>
-<td><p>Turbojet, Ramjet, Scramjet, Pulsejet, Rocket</p></td>
-</tr>
-<tr class="row-even"><td><p>Both</p></td>
-<td><p>Turbofan</p></td>
-</tr>
-</tbody>
-</table>
+  <div class="section" id="liquid-propellant-rocket-engines">
+<h1>Liquid Propellant Rocket Engines<a class="headerlink" href="#liquid-propellant-rocket-engines" title="Permalink to this headline">¶</a></h1>
+<p>Liquid propellant rocket engines are a critical piece of a launch vehicle. Many rockets destined for low Earth orbit and beyond are launched from the surface of the Earth using liquid propellant-fueled rockets.</p>
+<p>As we discussed previously, liquid propellant rockets have two big advantages over solid-propellant rockets:</p>
+<ol class="simple">
+<li><p>They can be turned on and off</p></li>
+<li><p>They can be throttled to adjust the thrust level</p></li>
+</ol>
+<p>Both of these characteristics are due to the use of liquid propellants, and in particular, the ability of liquid propellants to be pumped into a combustion chamber. Controlling the flow rate through the pump(s), or turning them off, provides both of the functions described above.</p>
+<p>The most common liquid propellant combinations for launch vehicles are LH<sub>2</sub>/LOX, RP-1/LOX, and LCH<sub>4</sub>/LOX. The <em>L</em> indicates the propellants are in a liquid state, and <em>OX</em> means oxygen in this case. RP-1 is a kerosene-based fuel similar to jet fuel. These combinations are <strong>bipropellants</strong>, or binary propellants, because they require both a fuel and an oxidizer to function.</p>
+<p>Other common fuels include <strong>monopropellants</strong> such as <a class="reference external" href="https://en.wikipedia.org/wiki/Hydrazine#Rocket_fuel">hydrazine</a>, which are able to react by themselves or with the help of a catalyst.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>For an hilarious and insightful read about the early history of rocket fuel development, check out <em>Ignition</em> by John D. Clark. You can buy a new printing of it, but it’s old enough that it’s in the public domain and you can find <a class="reference external" href="https://archive.org/details/ignition_201612">PDFs and epubs of <em>Ignition</em> online</a>. Sample quote:</p>
+<blockquote>
+<div><p>If, however, this coat is melted or scrubbed off, and has no chance to reform, the operator is confronted with the problem of coping with a metal-fluorine fire. For dealing with this situation, I have always recommended a good pair of running shoes. John D. Clark, <em>Ignition</em>, pg. 74. <span class="bibtex" id="id1">[clark2018ignition]</span></p>
+</div></blockquote>
+</div>
+<div class="section" id="rocket-motor-components">
+<h2>Rocket Motor Components<a class="headerlink" href="#rocket-motor-components" title="Permalink to this headline">¶</a></h2>
+<div class="figure align-default" id="rocket-engine">
+<img alt="../_images/rocket-engine.svg" src="../_images/rocket-engine.svg" /><p class="caption"><span class="caption-number">Fig. 8 </span><span class="caption-text">A schematic of a simple rocket engine, showing the injector, combustion chamber, and nozzle.</span><a class="headerlink" href="#rocket-engine" title="Permalink to this image">¶</a></p>
+</div>
+<p>The rocket motor has three primary components, as shown in <a class="reference internal" href="#rocket-engine"><span class="std std-numref">Fig. 8</span></a>:</p>
+<ol class="simple">
+<li><p>The injector</p></li>
+<li><p>The combustion chamber</p></li>
+<li><p>The nozzle</p></li>
+</ol>
+<p>Propellants are injected into the combustion chamber, where they react at nearly zero velocity. After reacting, the propellants enter the <strong>converging-diverging</strong> nozzle, which accelerates them to supersonic speed at the exit.</p>
+<p>There are a few important dimensions on the nozzle we should be aware of. In general, rocket motors are axisymmetric, as shown by the centerline drawn on <a class="reference internal" href="#rocket-engine"><span class="std std-numref">Fig. 8</span></a>:</p>
+<ol class="simple">
+<li><p><span class="math notranslate nohighlight">\(r_c\)</span> - the radius of the combustion chamber</p></li>
+<li><p><span class="math notranslate nohighlight">\(r_t\)</span> - the radius of the nozzle throat, the smallest radius in the nozzle</p></li>
+<li><p><span class="math notranslate nohighlight">\(r_e\)</span> - the radius of the nozzle exit</p></li>
+<li><p><span class="math notranslate nohighlight">\(\alpha\)</span> - the expansion angle of the nozzle at the exit</p></li>
+</ol>
+<p>The converging section of the nozzle accelerates the flow to <span class="math notranslate nohighlight">\(M = 1\)</span>. At the throat, the Mach number is exactly equal to one, and the flow is said to be <strong>choked</strong>. This means that changing the pressure at the nozzle exit will not change the mass flow rate. After the throat, the nozzle diverges. This further accelerates the flow into supersonic speeds.</p>
+<div class="margin sidebar">
+<p class="sidebar-title"></p>
+<p>Additional mass for the nozzle requires additional mass of propellant to launch it. That mass of propellant requires more mass of propellant to launch it, and so on. This is called the <a class="reference external" href="https://www.nasa.gov/mission_pages/station/expeditions/expedition30/tryanny.html"><em>tyranny of the rocket equation</em></a>. Or, you can <a class="reference external" href="https://www.youtube.com/watch?v=V_brZ-KWY3g">watch Chris Hadfield</a> explain the equation on Stand Up Maths.</p>
+</div>
+<p>Ideally, the flow will leave the nozzle parallel to the axis. However, this often requires additional length of the nozzle, translating to additional mass that must be carried. There is a significant penalty for any additional mass on a rocket, so the nozzle may be cut short, and the flow may leave at some angle relative to the axis, given by <span class="math notranslate nohighlight">\(\alpha\)</span>.</p>
+</div>
 </div>
 
     <script type="text/x-thebe-config">
@@ -300,7 +332,7 @@
         },
         kernelOptions: {
             kernelName: "python3",
-            path: "./overview-of-flow-devices"
+            path: "./liquid-rockets"
         },
         predefinedOutput: true
     }
@@ -315,8 +347,8 @@
     
     <div class='prev-next-bottom'>
         
-    <a class='left-prev' id="prev-link" href="../review/2-conservation-equations.html" title="previous page">Conservation Equations</a>
-    <a class='right-next' id="next-link" href="2-no-heat-addition.html" title="next page">Flow Machines with No Heat Addition</a>
+    <a class='left-prev' id="prev-link" href="../overview-of-flow-devices/5-combined-heat-and-power.html" title="previous page">Combined Heat and Power Addition: The Turbofan</a>
+    <a class='right-next' id="next-link" href="2-rocket-nozzles.html" title="next page">Rocket Nozzles</a>
 
     </div>
     <footer class="footer mt-5 mt-md-0">
