@@ -1,12 +1,19 @@
 - file: intro
 - part: Review
   chapters:
-    - file: review/1-introduction
-    - file: review/2-conservation-equations
+  - file: review/1-introduction
+  - file: review/2-conservation-equations
 - part: Overfiew of Flow Devices
   chapters:
-    - file: overview-of-flow-devices/1-introduction
-    - file: overview-of-flow-devices/2-no-heat-addition
-    - file: overview-of-flow-devices/3-no-net-power
-    - file: overview-of-flow-devices/4-the-rocket
-    - file: overview-of-flow-devices/5-combined-heat-and-power
+  - file: overview-of-flow-devices/1-introduction
+  - file: overview-of-flow-devices/2-no-heat-addition
+  - file: overview-of-flow-devices/3-no-net-power
+  - file: overview-of-flow-devices/4-the-rocket
+  - file: overview-of-flow-devices/5-combined-heat-and-power
+- part: Liquid Propellant Rocket Engines
+  chapters:
+  - file: liquid-rockets/1-introduction
+  - file: liquid-rockets/2-rocket-nozzles
+- part: Bibliography
+  chapters:
+  - file: bibliography
