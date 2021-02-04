@@ -202,13 +202,100 @@ and
 \frac{\rho_t}{\rho} = \left(1 + \frac{\gamma - 1}{2}M^2\right)^{\frac{1}{\gamma - 1}}
 ```
 
-### Critical Properties
+We can also define the stagnation speed of sound, based on the stagnation temperature:
 
-Ch. 3.4, Anderson to define the * conditions. Then Ch. 5 to get to the area relationship based on the momentum equation (which might need to go somewhere?).
+```{math}
+:label: a-t-definition
+a_t = \sqrt{\gamma R T_t}
+```
+
+or we can relate this to the local flow conditions by using the energy equation {cite}`Anderson2003` (Ch. 3.5):
+
+```{math}
+:label: stagnation-speed-of-sound
+\frac{a_t^2}{\gamma - 1} = \frac{a^2}{\gamma - 1} + \frac{V^2}{2}
+```
+
+where $a$, $\gamma$, and $V$ are found at the local axial location.
+
+### Characteristic Properties
+
+Another important set of reference properties are called the **characteristic properties**, related to the sonic condition rather than the stagnation condition. The characteristic properties are defined by another imaginary isentropic process that takes the flow from its current velocity to a Mach number $M = 1$. If the flow is supersonic, this will means slowing it down; if it is subsonic, it will be accelerated.
+
+Since this process is adiabatic, we can imagine that this process will change the static temperature. The static temperature reached when $M = 1$ is defined as the **characteristic temperature**, $T^*$. Then, the **characteristic speed of sound** is:
+
+```{math}
+:label: a-star-definition
+a^* = \sqrt{\gamma R T^*}
+```
+
+and the **characteristic Mach number**:
+
+```{math}
+:label: characteristic-mach-number
+M^* = \frac{V}{a^*}
+```
+
+In general, $M^*\neq M$, where $M$ is the actual Mach number at a given axial location in the flow. For the special case when $M^* = 1$, then $M = 1$ as well.
+
+Like the stagnation properties, the characteristic properties are defined for every point in the flow, given the Mach number and static temperature. If the flow is isentropic throughout, then the values for $T^*$ and $a^*$ will be constant throughout the flow.
+
+We can show {cite}`Anderson2003` (Ch. 3.5) that the characteristic speed of sound is given by:
+
+```{math}
+:label: characteristic-speed-of-sound
+\left(a^*\right)^2 \frac{\gamma + 1}{2\left(\gamma - 1\right)} = \frac{a^2}{\gamma - 1} + \frac{V^2}{2}
+```
+
+where $a$, $V$, and $\gamma$ are calculated at the local flow conditions. From this, we can also determine the characteristic Mach number and temperature. Eq. {eq}`characteristic-speed-of-sound` can also be divided by $V^2$ to give a relationship between $M$ and $M^*$:
+
+```{math}
+:label: mach-to-m-star
+M^2 = \frac{2}{\left[\left(\gamma + 1\right)/\left(M^*\right)^2\right] - \left(\gamma - 1\right)}
+```
+
+From this equation, we can see the following relationships:
+
+* $M^* = 1$ if $M = 1$
+* $M^* < 1$ if $M < 1$
+* $M^* > 1$ if $M > 1$
+* $M^*\rightarrow \sqrt{\left(\gamma + 1\right)/\left(\gamma - 1\right)}$ if $M\rightarrow\infty$
+
+### Ratios of Characteristic Properties
+
+Similar to the ratios of total and static properties, we will find it useful to have ratios related to the characteristic properties. Starting from the characteristic speed of sound, Eq. {eq}`characteristic-speed-of-sound`, and dividing by the stagnation speed of sound, Eq. {eq}`stagnation-speed-of-sound`, we find:
+
+```{math}
+:label: a-star-over-a-t
+\frac{a^*}{a_t} = \sqrt{\frac{2}{\gamma + 1}}
+```
+
+From the definition of the speed of sound, we can also write:
+
+```{math}
+:label: T-star-over-T-t
+\frac{T^*}{T_t} = \frac{2}{\gamma + 1}
+```
+
+Finally, we can use the relationships of stagnation pressure and density with the Mach number, Eqs. {eq}`isentropic-pressure-mach` and {eq}`isentropic-density-mach`, noting that for the characteristic conditions $M = 1$, to write:
+
+```{math}
+:label: p-star-over-p-t
+\frac{p^*}{p_t} = \left(\frac{2}{\gamma + 1}\right)^{\frac{\gamma}{\gamma - 1}}
+```
+
+and
+
+```{math}
+:label: rho-star-over-rho-t
+\frac{\rho^*}{\rho_t} = \left(\frac{2}{\gamma + 1}\right)^{\frac{1}{\gamma - 1}}
+```
+
+## Quasi-One-Dimensional Nozzle Flow
 
 Let's now consider a simple nozzle with varying cross-sectional area. We will neglect the influence of skin friction and heat transfer at the nozzle wall, so that the only way that the flow may change is due to the area change. In this nozzle, the flow is adiabatic and reversible, so the entropy is constant.
 
-## Mass Conservation
+### Mass Conservation
 
 In steady flow, the mass flow rate is given by the integral relationship:
 
@@ -242,3 +329,61 @@ where $R = R_u / W$. Using the results from {ref}`relations-for-compressible-flo
 :label: mass-flow-rate-mach-number
 \dot{m} = \frac{p_t A}{\sqrt{T_t}}\sqrt{\frac{\gamma}{R}}M\left(1 + \frac{\gamma - 1}{2}M^2\right)^{\frac{-\left(\gamma + 1\right)}{2\left(\gamma - 1\right)}}
 ```
+
+### Momentum Equation
+
+The integral form of the momentum equation for a control volume around the nozzle is:
+
+```{math}
+\int_{A} \left(\rho \vec{V}\cdot\hat{n}\right)\vec{V} dA = 0
+```
+
+because we are neglecting friction and drag. In the log differential form, this becomes:
+
+```{math}
+\frac{dp}{p} + \frac{1}{2}\frac{\rho}{p}\frac{dV^2}{V^2} = 0
+```
+
+Replacing $\rho/p$ from the ideal gas law, Eq. {eq}`ideal-gas-law` and multiplying and dividing the second term by $a^2$, we can write:
+
+```{math}
+:label: momentum-differential
+\frac{dp}{p} + \frac{1}{2}\gamma M^2 \frac{dV^2}{V^2} = 0
+```
+
+### Area-Velocity Relation
+
+Using Eq. {eq}`mass-flow-rate-differential` to eliminate the $dp/p$ term from Eq. {eq}`momentum-differential`, we find the **area-velocity relation**:
+
+```{math}
+:label: area-velocity-relation
+\frac{dA}{A} = \left(M^2 - 1\right) \frac{dV}{V}
+```
+
+This important equation gives us the relationship between Mach number, area change, and velocity change. We make a number of observations from this equation:
+
+1. If $M\rightarrow 0$, this tells us that the product of the area and velocity is a constant, which is the continuity equation for incompressible flow.
+2. If $M < 1$, the first time on the right-hand side of Eq. {eq}`area-velocity-relation` is negative. This means that if we want the velocity to increase ($dV > 0$), then $dA$ must be negative and the area must decrease. The opposite is true if we want velocity to decrease, the area must increase.
+3. On the other hand, if $M > 1$, the first time on the right-hand side of Eq. {eq}`area-velocity-relation` is positive. This means that if we want the velocity to increase ($dV > 0$), then $dA$ must be positive and the area must increase. The opposite is true if we want velocity to decrease, the area must decrease.
+4. If $M = 1$, the area must be constant ($dA = 0$). We can prove that for flow to accelerate from subsonic to supersonic, or to decelerate flow from supersonic to subsonic, this area must be a **minimum**.
+
+### Area-Mach Number Relation
+
+Now let's return to the nozzle. We will consider a **converging-diverging** nozzle, since we know that we want to accelerate the flow from subsonic in the combustion chamber to supersonic exit velocity. From the thrust equation, Eq. {eq}`rocket-momentum`, we know that the thrust is proportional to the nozzle exit velocity, so higher exit velocities will provide more thrust.
+
+The location of the smallest area in the nozzle is called the **throat**. Since the area is at a minimum at this location, the slope must be zero, $dA = 0$. Therefore, the Mach number $M = 1$, and this defines the **characteristic area**, $A^*$.
+
+Let's apply the conservation equations from a point upstream of the throat to the throat. Then:
+
+```{math}
+\rho V A = \rho^* V^* A^* \Rightarrow \frac{A}{A^*} = \frac{\rho^*}{\rho} \frac{a^*}{V}
+```
+
+Next, multiply and divide the right side by $\rho_t$. This gives us the relationship of $\rho_t/\rho$ and $\rho^*/\rho_t$, which we have developed previously. Finally, using Eq. {eq}`mach-to-m-star`, we find:
+
+```{math}
+:label: area-mach-relation
+\left(\frac{A}{A^*}\right)^2 = \frac{1}{M^2}\left[\frac{2}{\gamma + 1}\left(1 + \frac{\gamma - 1}{2}M^2\right)\right]^{\frac{\gamma + 1}{\gamma - 1}}
+```
+
+This is the **area-Mach number relation** and it is a critically important equation to understand nozzle flows.
