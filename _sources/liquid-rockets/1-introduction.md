@@ -16,7 +16,7 @@ Other common fuels include **monopropellants** such as [hydrazine](https://en.wi
 ```{note}
 For an hilarious and insightful read about the early history of rocket fuel development, check out _Ignition_ by John D. Clark. You can buy a new printing of it, but it's old enough that it's in the public domain and you can find [PDFs and epubs of _Ignition_ online](https://archive.org/details/ignition_201612). Sample quote:
 
-> If, however, this coat is melted or scrubbed off, and has no chance to reform, the operator is confronted with the problem of coping with a metal-fluorine fire. For dealing with this situation, I have always recommended a good pair of running shoes. John D. Clark, _Ignition_, pg. 74. {cite}`clark2018ignition`
+> If, however, this coat is melted or scrubbed off, and has no chance to reform, the operator is confronted with the problem of coping with a metal-fluorine fire. For dealing with this situation, I have always recommended a good pair of running shoes. John D. Clark, _Ignition_, pg. 74. {cite}`Clark1972`
 ```
 
 ## Rocket Motor Components
