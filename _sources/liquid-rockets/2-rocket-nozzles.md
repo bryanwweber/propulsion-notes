@@ -696,6 +696,7 @@ Since the shock wave reduces the Mach number to subsonic values, the remainder o
 :tags: [remove-input]
 
 from bokeh.models import ColumnDataSource, CustomJS, Slider, Dropdown
+from textwrap import dedent
 
 shock_location = 4
 shock_areas = A_ratio[(x >= 0)]
@@ -703,17 +704,67 @@ shock_location_idx = np.argmin(np.abs(shock_areas - shock_location)) + len(x[x <
 x_shock_loc = x[shock_location_idx]
 y_shock_loc = y[shock_location_idx]
 
-source = ColumnDataSource(data=dict(x=[x_shock_loc, x_shock_loc], y=[y_shock_loc, -y_shock_loc]))
-nozzle = ColumnDataSource(data=dict(x=x[(x >= 0)].tolist(), y=y[(x >= 0)].tolist(), A=shock_areas.tolist()))
-callback = CustomJS(args=dict(source=source,nozzle=nozzle), code="""
-    var data = source.data;
-    var noz = nozzle.data;
-    var nozzle_x = noz['x'];
-    var nozzle_y = noz['y'];
-    var nozzle_A = noz['A'];
+shock_upstream_mask = (A_ratio < shock_location) | (x < 0)
+shock_downstream_mask = (A_ratio > shock_location) & (x > 0)
+
+# From compressible flow calculator
+# Calculate M_1 from A_shock/A^* = shock_location
+# Calculate M_2 from normal shock at M_1
+# Calculate A2_A2star from M_2
+A2_A2star = 1.38259004
+Ae_A2star = epsilon / shock_location * A2_A2star
+
+new_A_ratio = y[shock_downstream_mask]**2 * Ae_A2star / (r_e**2)
+
+M_downstream_shock = np.array([optimize.brentq(area_ratio, 0.01, 0.99, args=(A,)) for A in new_A_ratio])
+M_shock = np.hstack((M_sup[shock_upstream_mask], M_downstream_shock))
+
+# Calculate p_t2/p_t1 from normal shock at M_1
+pt2_pt1 = 0.34564750
+# p_2/p_t1 = p_2/p_t2 * p_t2/p_t1
+p_ratio_downstream_shock = (1 + (gamma - 1)/2 * M_downstream_shock**2)**(-gamma/(gamma - 1)) * pt2_pt1
+p_ratio_shock = np.hstack((p_ratio_sup[shock_upstream_mask], p_ratio_downstream_shock))
+
+shock = ColumnDataSource(
+    data=dict(
+        x=[x_shock_loc, x_shock_loc],
+        y=[y_shock_loc, -y_shock_loc]
+    )
+)
+nozzle = ColumnDataSource(
+    data=dict(
+        x=x[(x >= 0)].tolist(),
+        y=y[(x >= 0)].tolist(),
+        A=shock_areas.tolist()
+    )
+)
+
+shock_data = ColumnDataSource(
+    data=dict(
+        x=x.tolist(),
+        M=M_shock.tolist(),
+        M_sup=M_sup.tolist(),
+        p_ratio_sup=p_ratio_sup.tolist(),
+        p_ratio=p_ratio_shock.tolist(),
+    )
+)
+
+update_shock_location = CustomJS(
+    args=dict(
+        shock=shock,
+        nozzle=nozzle,
+        g=gamma,
+        e=epsilon,
+        r_e=r_e,
+        shock_data=shock_data,
+    ),
+    code=dedent("""\
+    var nozzle_x = nozzle.data['x'];
+    var nozzle_y = nozzle.data['y'];
+    var nozzle_A = nozzle.data['A'];
     var f = parseFloat(cb_obj.value);
-    var x = data['x'];
-    var y = data['y'];
+    var x = shock.data['x'];
+    var y = shock.data['y'];
     var val = 1e10;
     var min_i = 0;
     for (var i = 0; i < nozzle_A.length; i++) {
@@ -726,10 +777,88 @@ callback = CustomJS(args=dict(source=source,nozzle=nozzle), code="""
     x[1] = nozzle_x[min_i];
     y[0] = nozzle_y[min_i];
     y[1] = -nozzle_y[min_i];
-    source.change.emit();
-""")
-widget = Slider(start=0.1, end=9, value=shock_location, step=1e-4, title="Shock Location")
-widget.js_on_change('value', callback)
+
+    shock.change.emit();
+
+    function tt0(g,m) {
+        return Math.pow((1.+(g-1.)/2.*m*m),-1.)
+    }
+
+    function pp0(g,m) {
+        return Math.pow((1.+(g-1.)/2.*m*m),-g/(g-1.))
+    }
+
+    function rr0(g,m) {
+        return Math.pow((1.+(g-1.)/2.*m*m),-1./(g-1.))
+    }
+
+    function tts(g,m) {
+        return tt0(g,m)*(g/2. + .5)
+    }
+
+    function pps(g,m) {
+        return pp0(g,m)*Math.pow((g/2. + .5),g/(g-1.))
+    }
+
+    function rrs(g,m) {
+        return rr0(g,m)*Math.pow((g/2. + .5),1./(g-1.))
+    }
+
+    function aas(g,m) {
+        return 1./rrs(g,m)*Math.sqrt(1./tts(g,m))/m;
+    }
+
+    function m2(g,m1) {
+        return Math.sqrt((1. + .5 * (g - 1.) * m1 * m1) / (g * m1 * m1 - .5 * (g - 1.)))
+    }
+
+    var mnew=2.0;
+    var m=0.0;
+    var phi;
+    var s=(3. - g) / (1. + g);
+    while( Math.abs(mnew-m) > 0.000001) {
+        m=mnew;
+        phi=aas(g,m);
+        mnew=m - (phi - f) / (Math.pow(phi * m,s) - phi / m);
+    }
+    var M1 = mnew;
+    var M2 = m2(g,M1);
+    var p2p1=1.+2.*g/(g+1.)*(M1*M1-1.)
+    var p02p01=pp0(g,M1)/pp0(g,M2)*p2p1
+    var AAS2 = aas(g,M2);
+    var AeAs2 = e / f * AAS2;
+    var shock_M = shock_data.data['M'];
+    var shock_pratio = shock_data.data['p_ratio'];
+    var shock_M_sup = shock_data.data['M_sup'];
+    var shock_pratio_sup = shock_data.data['p_ratio_sup'];
+    var extra_elements = shock_M.length - nozzle_y.length;
+    var shock_data_index;
+    var A_ratio2;
+    var temp_A_ratio = AeAs2 / Math.pow(r_e, 2);
+    for (var i = 0; i < nozzle_y.length; i++) {
+        shock_data_index = i + extra_elements;
+        if (i <= min_i) {
+            shock_M[shock_data_index] = shock_M_sup[shock_data_index];
+            shock_pratio[shock_data_index] = shock_pratio_sup[shock_data_index];
+        } else {
+            A_ratio2 = Math.pow(nozzle_y[i], 2) * temp_A_ratio;
+            mnew=0.00001;
+            m=0.0;
+            while( Math.abs(mnew-m) > 0.000001) {
+                m=mnew;
+                phi=aas(g,m);
+                mnew=m - (phi - A_ratio2) / (Math.pow(phi * m,s) - phi / m);
+            }
+            shock_M[shock_data_index] = mnew;
+            shock_pratio[shock_data_index] = p02p01 * pp0(g,mnew);
+        }
+    }
+    shock_data.change.emit()
+    """)
+)
+
+widget = Slider(start=1, end=9, value=shock_location, step=1e-4, title="Shock Location")
+widget.js_on_change('value', update_shock_location)
 
 p9 = figure(
     title=f"Convergent-Divergent Nozzle, Isentropic Subsonic Flow, 𝛾={gamma}",
@@ -746,7 +875,7 @@ p9.xaxis.major_label_overrides = {0: "Throat"}
 
 p9.line(x, y)
 p9.line(x, -y)
-p9.line("x", "y", source=source, line_width=4)
+p9.line("x", "y", source=shock, line_width=4)
 
 p10 = figure(
     # x_axis_label="Area Ratio, A/A*",
@@ -765,30 +894,10 @@ p10.xaxis.major_label_text_color = None
 p10.xaxis.ticker = [0.0]
 p10.yaxis.ticker = [1.0]
 
-shock_upstream_mask = (A_ratio < shock_location) | (x < 0)
-shock_downstream_mask = (A_ratio > shock_location) & (x > 0)
-
-# From compressible flow calculator
-# Calculate M_1 from A_shock/A^* = shock_location
-# Calculate M_2 from normal shock at M_1
-# Calculate A2_A2star from M_2
-A2_A2star = 1.38259004
-Ae_A2star = epsilon / shock_location * A2_A2star
-
-new_A_ratio = y[shock_downstream_mask]**2 * Ae_A2star / (r_e**2)
-
-M_downstream_shock = np.array([optimize.brentq(area_ratio, 0.01, 0.99, args=(A,)) for A in new_A_ratio])
-M_shock = np.hstack((M_sup[shock_upstream_mask], M_downstream_shock))
-p10.line(x, M_shock, legend_label="Shock in Nozzle", color=next(colors))
+p10.line('x', 'M', source=shock_data, legend_label="Shock in Nozzle", color=next(colors))
 p10.line(x, M_sub, legend_label="Isentropic Deceleration", color=next(colors))
 p10.line(x, M_sup, legend_label="Isentropic Acceleration", color=next(colors))
 p10.legend.location = "center_right"
-
-# Calculate p_t2/p_t1 from normal shock at M_1
-pt2_pt1 = 0.34564750
-# p_2/p_t1 = p_2/p_t2 * p_t2/p_t1
-p_ratio_downstream_shock = (1 + (gamma - 1)/2 * M_downstream_shock**2)**(-gamma/(gamma - 1)) * pt2_pt1
-p_ratio_shock = np.hstack((p_ratio_sup[shock_upstream_mask], p_ratio_downstream_shock))
 
 colors = itertools.cycle(palette[10])
 p11 = figure(
@@ -804,13 +913,13 @@ p11.xaxis.minor_tick_line_color = None
 p11.xaxis.major_label_text_color = None
 p11.xaxis.ticker = [0.0]
 p11.yaxis.ticker = [1.0, (2 / (gamma + 1))**(gamma / (gamma - 1))]
-p11.line(x, p_ratio_shock, legend_label="Shock in Nozzle", color=next(colors))
+p11.line('x', 'p_ratio', source=shock_data, legend_label="Shock in Nozzle", color=next(colors))
 p11.line(x, p_ratio_sub, legend_label="Isentropic Deceleration", color=next(colors))
 p11.line(x, p_ratio_sup, legend_label="Isentropic Acceleration", color=next(colors))
 p11.legend.location = "center_right"
 
-# show(column(widget, p9, p10, p11))
-show(column(p9, p10, p11))
+show(column(widget, p9, p10, p11))
+# show(column(p9, p10, p11))
 ```
 
 This condition of the nozzle is called **overexpanded** because the flow in the nozzle expands to a pressure below the outside pressure, and requires a shock wave to increase the pressure. If you could cut off the nozzle just upstream of the shock wave, you would have a perfectly expanded nozzle. However, since the nozzle is longer than that, the flow tries to continue expanding and can't.
@@ -931,13 +1040,18 @@ where $\lambda$ is a correction factor that accounts for the angle of the exhaus
 
 For an expansion angle of 10°, the thrust loss is about 1% while for 20° it is about 3%. Typical conical nozzles have expansion angles of about 15°. Keep in mind the scale of these nozzles. 1% sounds like small loss, until you're talking about hundreds-of-thousands of pounds of thrust, and then a 1% loss can make a big difference in the payload capacity.
 
+For instance, the sea-level thrust of the [Falcon 9 Full Thrust model](https://en.wikipedia.org/wiki/Falcon_9_Full_Thrust) is approximately 1.71 million pounds of thrust and its payload capacity is approximately 50,000 pounds. A 1% reduction in the thrust would lead to a loss of 17,100 pounds of thrust, on the same order of magnitude as the payload mass!
+
 #### Bell Nozzles
 
 Conical nozzles have the advantage of being very simple to analyze and build. However, they inherently suffer from thrust loss due to the angularity of the flow. In addition, achieving large area ratios to accelerate the flow requires a long nozzle length, which makes conical nozzles heavy.
 
 To overcome these problems, and achieve parallel flow at the exit in a shorter distance, we can design a reflexive nozzle profile. This nozzle has a rapid expansion immediately after the throat followed by a slower expansion to give nearly parallel flow at the exit, $\alpha\approx 0$. The rapid expansion permits a shorter nozzle and the slow expansion turns the flow while avoiding oblique shock waves.
 
-This kind of nozzle is called a **bell nozzle** due to the shape it takes on.
+This kind of nozzle is called a **bell nozzle**, because the rapid expansion and slow turn look like a bell. The bell nozzle is shown schematically in {numref}`rocket-engine`, repeated here for reference.
+
+```{image} ../images/rocket-engine.svg
+```
 
 ### Choked Mass Flow Rate
 
