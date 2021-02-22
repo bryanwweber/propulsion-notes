@@ -14,6 +14,12 @@
   chapters:
   - file: liquid-rockets/1-introduction
   - file: liquid-rockets/2-rocket-nozzles
+- part: Compressible Flow
+  chapters:
+  - file: compressible-flow/1-introduction
+  - file: compressible-flow/2-properties-of-compressible-flow
+  - file: compressible-flow/3-the-mach-number
+  - file: compressible-flow/4-quasi-1d-flow
 - part: Bibliography
   chapters:
   - file: bibliography

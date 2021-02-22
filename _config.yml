@@ -11,9 +11,6 @@ latex:
   latex_documents:
     targetname: book.tex
 
-parse:
-  myst_extended_syntax: true
-
 repository:
   url: https://github.com/bryanwweber/propulsion-notes
   branch: main
