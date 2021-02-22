@@ -1,0 +1,490 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Properties of Compressible Flow &#8212; Notes for Propulsion</title>
+    
+  <link rel="stylesheet" href="../_static/css/index.f658d18f9b420779cfdf24aa0a7e2d77.css">
+
+    
+  <link rel="stylesheet"
+    href="../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    
+      
+  <link rel="stylesheet"
+    href="../_static/vendor/open-sans_all/1.44.1/index.css">
+  <link rel="stylesheet"
+    href="../_static/vendor/lato_latin-ext/1.44.1/index.css">
+
+    
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/sphinx-book-theme.40e2e510f6b7d1648584402491bb10fe.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" />
+    
+  <link rel="preload" as="script" href="../_static/js/index.d3f166471bb80abb5163.js">
+
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/togglebutton.js"></script>
+    <script src="../_static/clipboard.min.js"></script>
+    <script src="../_static/copybutton.js"></script>
+    <script >var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="../_static/sphinx-book-theme.d31b09fe5c1d09cb49b26a786de4a05d.js"></script>
+    <script async="async" src="https://unpkg.com/thebelab@latest/lib/index.js"></script>
+    <script >
+        const thebe_selector = ".thebe"
+        const thebe_selector_input = "pre"
+        const thebe_selector_output = ".output"
+    </script>
+    <script async="async" src="../_static/sphinx-thebe.js"></script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/x-mathjax-config">MathJax.Hub.Config({"TeX": {"Macros": {"vector": ["\\vec{#1}", 1], "uvec": ["\\hat{#1}", 1], "mag": ["\\lVert#1\\rVert", 1], "cross": "\\times", "unit": ["#1~\\mathrm{#2}", 2], "pf": ["\\overline{#1}", 1], "mat": ["\\left[\\mathbf{#1}\\right]", 1], "Isp": "I_{\\text{sp}}"}}, "tex2jax": {"inlineMath": [["\\(", "\\)"]], "displayMath": [["\\[", "\\]"]], "processRefs": false, "processEnvironments": false}})</script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="The Mach Number" href="3-the-mach-number.html" />
+    <link rel="prev" title="Compressible Flow" href="1-introduction.html" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="en" />
+
+
+
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
+    
+        <div class="navbar-brand-box">
+<a class="navbar-brand text-wrap" href="../index.html">
+  
+  
+  <h1 class="site-logo" id="site-title">Notes for Propulsion</h1>
+  
+</a>
+</div><form class="bd-search d-flex align-items-center" action="../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form>
+<nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
+    <ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../intro.html">
+   Notes for Propulsion
+  </a>
+ </li>
+</ul>
+<p class="caption collapsible-parent">
+ <span class="caption-text">
+  Review
+ </span>
+</p>
+<ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../review/1-introduction.html">
+   Introduction
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../review/2-conservation-equations.html">
+   Conservation Equations
+  </a>
+ </li>
+</ul>
+<p class="caption collapsible-parent">
+ <span class="caption-text">
+  Overfiew of Flow Devices
+ </span>
+</p>
+<ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../overview-of-flow-devices/1-introduction.html">
+   Overview of Flow Devices
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../overview-of-flow-devices/2-no-heat-addition.html">
+   Flow Machines with No Heat Addition
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../overview-of-flow-devices/3-no-net-power.html">
+   Flow Machines with No Net Power Input
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../overview-of-flow-devices/4-the-rocket.html">
+   The Rocket
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../overview-of-flow-devices/5-combined-heat-and-power.html">
+   Combined Heat and Power Addition: The Turbofan
+  </a>
+ </li>
+</ul>
+<p class="caption collapsible-parent">
+ <span class="caption-text">
+  Liquid Propellant Rocket Engines
+ </span>
+</p>
+<ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../liquid-rockets/1-introduction.html">
+   Liquid Propellant Rocket Engines
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../liquid-rockets/2-rocket-nozzles.html">
+   Design of Rocket Nozzles
+  </a>
+ </li>
+</ul>
+<p class="caption collapsible-parent">
+ <span class="caption-text">
+  Compressible Flow
+ </span>
+</p>
+<ul class="current nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="1-introduction.html">
+   Compressible Flow
+  </a>
+ </li>
+ <li class="toctree-l1 current active">
+  <a class="current reference internal" href="#">
+   Properties of Compressible Flow
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="3-the-mach-number.html">
+   The Mach Number
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="4-quasi-1d-flow.html">
+   Quasi-One-Dimensional Nozzle Flow
+  </a>
+ </li>
+</ul>
+<p class="caption collapsible-parent">
+ <span class="caption-text">
+  Bibliography
+ </span>
+</p>
+<ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../bibliography.html">
+   Bibliography
+  </a>
+ </li>
+</ul>
+
+</nav> <!-- To handle the deprecated key -->
+
+<div class="navbar_extra_footer">
+  Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+</div>
+
+</div>
+
+
+          
+
+
+          
+<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
+    
+    <div class="row topbar fixed-top container-xl">
+    <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show">
+    </div>
+    <div class="col pl-2 topbar-main">
+        
+        <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
+            data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
+            aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
+            title="Toggle navigation" data-toggle="tooltip" data-placement="left">
+            <i class="fas fa-bars"></i>
+            <i class="fas fa-arrow-left"></i>
+            <i class="fas fa-arrow-up"></i>
+        </button>
+        
+        
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
+            class="fas fa-download"></i></button>
+
+    <div class="dropdown-buttons">
+        <!-- ipynb file if we had a myst markdown file -->
+        
+        <!-- Download raw file -->
+        <a class="dropdown-buttons" href="../_sources/compressible-flow/2-properties-of-compressible-flow.md"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
+                data-placement="left">.md</button></a>
+        <!-- Download PDF via print -->
+        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
+            onClick="window.print()" data-toggle="tooltip" data-placement="left">.pdf</button>
+    </div>
+</div>
+
+        <!-- Source interaction buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Connect with source repository"><i class="fab fa-github"></i></button>
+    <div class="dropdown-buttons sourcebuttons">
+        <a class="repository-button"
+            href="https://github.com/bryanwweber/propulsion-notes"><button type="button" class="btn btn-secondary topbarbtn"
+                data-toggle="tooltip" data-placement="left" title="Source repository"><i
+                    class="fab fa-github"></i>repository</button></a>
+        <a class="issues-button"
+            href="https://github.com/bryanwweber/propulsion-notes/issues/new?title=Issue%20on%20page%20%2Fcompressible-flow/2-properties-of-compressible-flow.html&body=Your%20issue%20content%20here."><button
+                type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
+                title="Open an issue"><i class="fas fa-lightbulb"></i>open issue</button></a>
+        <a class="edit-button" href="https://github.com/bryanwweber/propulsion-notes/edit/main/compressible-flow/2-properties-of-compressible-flow.md"><button
+                type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
+                title="Edit this page"><i class="fas fa-pencil-alt"></i>suggest edit</button></a>
+    </div>
+</div>
+
+
+        <!-- Full screen (wrap in <a> to have style consistency -->
+        <a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
+                data-placement="bottom" onclick="toggleFullScreen()" aria-label="Fullscreen mode"
+                title="Fullscreen mode"><i
+                    class="fas fa-expand"></i></button></a>
+
+        <!-- Launch buttons -->
+
+    </div>
+
+    <!-- Table of contents -->
+    <div class="d-none d-md-block col-md-2 bd-toc show">
+        
+        <div class="tocsection onthispage pt-5 pb-3">
+            <i class="fas fa-list"></i> Contents
+        </div>
+        <nav id="bd-toc-nav">
+            <ul class="nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#stagnation-state">
+   Stagnation State
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#equation-of-state">
+   Equation of State
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#caloric-equations-of-state">
+   Caloric Equations of State
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#static-and-stagnation-property-ratios">
+   Static and Stagnation Property Ratios
+  </a>
+ </li>
+</ul>
+
+        </nav>
+        
+    </div>
+</div>
+    <div id="main-content" class="row">
+        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
+        
+              <div>
+                
+  <div class="section" id="properties-of-compressible-flow">
+<h1>Properties of Compressible Flow<a class="headerlink" href="#properties-of-compressible-flow" title="Permalink to this headline">¶</a></h1>
+<p>In this section, we introduce the idea of <strong>static</strong> and <strong>stagnation</strong> properties, as well as equations to determine how the properties are related to each other.</p>
+<div class="section" id="stagnation-state">
+<h2>Stagnation State<a class="headerlink" href="#stagnation-state" title="Permalink to this headline">¶</a></h2>
+<p>For flowing fluids, we define two conditions at which we can evaluate properties:</p>
+<ol class="simple">
+<li><p><strong>Static</strong>: What you would measure if you moved along with the flow</p></li>
+<li><p><strong>Stagnation</strong>: What you would measure if you slowed the fluid to a stop in an adiabatic and reversible (isentropic) process. Also known as the <strong>total</strong> state, with the subscript <span class="math notranslate nohighlight">\(t\)</span>.</p></li>
+</ol>
+<p>For most purposes, we will assume the fluid upstream of the nozzle inlet is at <strong>nearly zero velocity</strong>. This means that the upstream temperature and pressure are at the <strong>stagnation</strong> conditions, which is a very important state for the analysis of nozzles.</p>
+<p>When the fluid is stationary, the static and stagnation properties are equal, by definition. The objective of the nozzle is to produce high velocity flow at the exit using the high stagnation pressure and temperature upstream of the nozzle.</p>
+<div class="admonition attention">
+<p class="admonition-title">Attention</p>
+<p>The word <em>total</em> in <em>total pressure</em> or <em>total temperature</em> has nothing to do with a sum over several states or locations. It is a <em>total</em> in the sense that it accounts for the sum of the <strong>static property</strong> and the portion of that property due to the <strong>velocity of the flow</strong>.</p>
+<p>For instance, consider a flow with static temperature <span class="math notranslate nohighlight">\(T\)</span> and velocity <span class="math notranslate nohighlight">\(V\)</span>. The specific kinetic energy (kinetic energy per unit mass) is then <span class="math notranslate nohighlight">\(V^2/2\)</span>. If we isentropically slow the fluid to a stop, the kinetic energy will be converted internal energy of the fluid. This is because the process is isentropic, so no energy is lost by heat transfer and no potential to do work is lost by irreversibilities.</p>
+<p>The temperature is directly proportional to the internal energy of an ideal gas, so increasing the internal energy also increases the temperature. This is the definition of the total temperature. It is measuring the contribution from the static temperature which was in the fluid to begin with, and the result of converting the kinetic energy of the fluid to internal energy. Similar things happen for the pressure, density, and enthalpy.</p>
+<p>So we can define <em>both</em> the static properties (no subscript) and the total properties (<span class="math notranslate nohighlight">\(t\)</span> subscript) at <em>every</em> axial location in the flow. In general, both static and total properties will change as a function of axial location in the flow. For the special case of <em>isentropic</em> flow, the total properties will be constant throughout the flow domain, even though the static properties may change (quite significantly in some cases).</p>
+<p>Finally, the static and total properties will in general be different from each other at every axial location in the flow. However, for the special case of very low velocity (<span class="math notranslate nohighlight">\(V\approx 0\)</span>), the specific kinetic energy is also very low, so we assume the static and total properties are equal.</p>
+</div>
+<p>As implied by the definition of the stagnation state, isentropic processes will be very important for our analysis. The isentropic process usually functions as an ideal <em>best case</em> scenario for the analysis.</p>
+</div>
+<div class="section" id="equation-of-state">
+<h2>Equation of State<a class="headerlink" href="#equation-of-state" title="Permalink to this headline">¶</a></h2>
+<p>Before continuing to discuss isentropic processes, we must discuss how to evaluate flow properties. We will assume that all of our flows are <strong>ideal</strong> gases, that follow the ideal gas law:</p>
+<div class="math notranslate nohighlight" id="equation-ideal-gas-law">
+<span class="eqno">(46)<a class="headerlink" href="#equation-ideal-gas-law" title="Permalink to this equation">¶</a></span>\[p = \frac{\rho R_u T}{W}\]</div>
+<p>where <span class="math notranslate nohighlight">\(p\)</span>, <span class="math notranslate nohighlight">\(\rho\)</span>, and <span class="math notranslate nohighlight">\(T\)</span> are the static pressure, density, and temperature, <span class="math notranslate nohighlight">\(R_u\)</span> is the <a class="reference external" href="https://en.wikipedia.org/wiki/Gas_constant">universal gas constant</a>, and <span class="math notranslate nohighlight">\(W\)</span> is the molecular weight. We will represent most equations in the log-differential form, as:</p>
+<div class="math notranslate nohighlight" id="equation-ideal-gas-differential">
+<span class="eqno">(47)<a class="headerlink" href="#equation-ideal-gas-differential" title="Permalink to this equation">¶</a></span>\[\frac{dp}{p} = \frac{d\rho}{\rho} + \frac{dT}{T} - \frac{dW}{W}\]</div>
+<p>Note that the for flows undergoing chemical reaction, the change in molecular weight may be significant. We will ignore this effect in the beginning of our analysis, but return to relax that assumption later.</p>
+</div>
+<div class="section" id="caloric-equations-of-state">
+<h2>Caloric Equations of State<a class="headerlink" href="#caloric-equations-of-state" title="Permalink to this headline">¶</a></h2>
+<p>The ideal gas law gives the relationship among <span class="math notranslate nohighlight">\(p\)</span>, <span class="math notranslate nohighlight">\(\rho\)</span>, and <span class="math notranslate nohighlight">\(T\)</span> for an ideal gas. In addition to these properties, we need definitions of the internal energy, enthalpy, and entropy of the flow.</p>
+<p>In an ideal gas, the internal energy, <span class="math notranslate nohighlight">\(u\)</span>, and the enthalpy, <span class="math notranslate nohighlight">\(h = u + pv\)</span>, are functions of temperature and composition only.</p>
+<p>We define three other properties, which are also functions of temperature and composition only:</p>
+<ol class="simple">
+<li><p><strong>Specific heat at constant pressure</strong>: <span class="math notranslate nohighlight">\(c_p = dh/dT\)</span></p></li>
+<li><p><strong>Specific heat at constant volume</strong>: <span class="math notranslate nohighlight">\(c_v = du/dT\)</span></p></li>
+<li><p><strong>Ratio of specific heats</strong>: <span class="math notranslate nohighlight">\(\gamma = c_p/c_v\)</span></p></li>
+</ol>
+<p>The specific heats represent the amount of energy/enthalpy input required to change the temperature of the gas by one degree. Using these definitions, we can determine the change in enthalpy:</p>
+<div class="math notranslate nohighlight" id="equation-ideal-gas-delta-h">
+<span class="eqno">(48)<a class="headerlink" href="#equation-ideal-gas-delta-h" title="Permalink to this equation">¶</a></span>\[dh = c_p dT \quad \Rightarrow \quad \int_{h_1}^{h_2} dh = \int_{T_1}^{T_2} c_p dT \quad \Rightarrow \quad \Delta h = c_p \Delta T\]</div>
+<p>where the last equation assumes <em>constant specific heat</em>. As a shortcut, we will often assume that <span class="math notranslate nohighlight">\(T_1 = h_1 = 0\)</span> and write:</p>
+<div class="math notranslate nohighlight">
+\[h = c_p T\]</div>
+<p>Similarly, we can write the change in internal energy:</p>
+<div class="math notranslate nohighlight" id="equation-ideal-gas-delta-u">
+<span class="eqno">(49)<a class="headerlink" href="#equation-ideal-gas-delta-u" title="Permalink to this equation">¶</a></span>\[du = c_v dT \quad \Rightarrow \quad \int_{u_1}^{u_2} du = \int_{T_1}^{T_2} c_v dT \quad \Rightarrow \quad \Delta u = c_v \Delta T\]</div>
+<p>where the last equation assumes <em>constant specific heat</em>. As a shortcut, we will often assume that <span class="math notranslate nohighlight">\(T_1 = u_1 = 0\)</span> and write:</p>
+<div class="math notranslate nohighlight">
+\[u = c_v T\]</div>
+<div class="admonition attention">
+<p class="admonition-title">Attention</p>
+<p><strong>Note</strong>: The <em>constant pressure</em> or <em>constant volume</em> in the name of the specific heats has absolutely nothing to do with the types of processes to which the properties can be applied. It is an artifact of the definition of the specific heats. If you want the gory details, expand the box below.</p>
+<details class="sphinx-bs dropdown card mb-3">
+<summary class="summary-title card-header">
+<svg viewBox="0 0 36 24" width="36" height="16" xmlns="http://www.w3.org/2000/svg"
+    class="octicon no-title" aria-hidden="true">
+  <g xmlns="http://www.w3.org/2000/svg" class="jp-icon3">
+    <circle cx="0" cy="12" r="6"></circle>
+    <circle cx="18" cy="12" r="6"></circle>
+    <circle cx="36" cy="12" r="6"></circle>
+  </g>
+</svg><div class="summary-down docutils">
+<svg version="1.1" width="24" height="24" class="octicon octicon-chevron-down" viewBox="0 0 24 24" aria-hidden="true"><path fill-rule="evenodd" d="M5.22 8.72a.75.75 0 000 1.06l6.25 6.25a.75.75 0 001.06 0l6.25-6.25a.75.75 0 00-1.06-1.06L12 14.44 6.28 8.72a.75.75 0 00-1.06 0z"></path></svg></div>
+<div class="summary-up docutils">
+<svg version="1.1" width="24" height="24" class="octicon octicon-chevron-up" viewBox="0 0 24 24" aria-hidden="true"><path fill-rule="evenodd" d="M18.78 15.28a.75.75 0 000-1.06l-6.25-6.25a.75.75 0 00-1.06 0l-6.25 6.25a.75.75 0 101.06 1.06L12 9.56l5.72 5.72a.75.75 0 001.06 0z"></path></svg></div>
+</summary><div class="summary-content card-body docutils">
+<p class="card-text">For a general substance, the enthalpy and internal energy are functions of <em>two</em> independent, intensive properties, plus the composition. Therefore, the specific heats must be defined by <strong>partial derivatives</strong>. For example, the enthalpy of a pure substance (constant composition) is a natural function of <span class="math notranslate nohighlight">\(T\)</span> and <span class="math notranslate nohighlight">\(p\)</span>, <span class="math notranslate nohighlight">\(h = h(T, p)\)</span>. To calculate the total derivative of <span class="math notranslate nohighlight">\(h\)</span>, we must take the partial derivative with respect to both properties:</p>
+<div class="math notranslate nohighlight">
+\[dh = \left(\frac{\partial h}{\partial T}\right)_{p} dT + \left(\frac{\partial h}{\partial p}\right)_{T} dp\]</div>
+</div>
+</details><p>where the subscript <span class="math notranslate nohighlight">\(p\)</span> or <span class="math notranslate nohighlight">\(T\)</span> indicates that the derivative is taken while mathematically holding that property constant.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>
+</pre></div>
+</div>
+</div>
+<p>For an ideal gas, the specific heats are related to the specific gas constant:</p>
+<div class="math notranslate nohighlight" id="equation-cp-cv-r">
+<span class="eqno">(50)<a class="headerlink" href="#equation-cp-cv-r" title="Permalink to this equation">¶</a></span>\[c_p - c_v = \frac{R_u}{W} = R\]</div>
+<p>Equation <a class="reference internal" href="#equation-cp-cv-r">(50)</a> shows that <span class="math notranslate nohighlight">\(c_p &gt; c_v\)</span> and therefore that <span class="math notranslate nohighlight">\(\gamma &gt; 1.0\)</span>. It also allows us to determine a value for <span class="math notranslate nohighlight">\(c_p\)</span> or <span class="math notranslate nohighlight">\(c_v\)</span> given <span class="math notranslate nohighlight">\(\gamma\)</span>:</p>
+<div class="math notranslate nohighlight">
+\[\begin{aligned}
+c_p &amp;= \frac{\gamma R}{\gamma - 1} &amp; c_v &amp;= \frac{R}{\gamma - 1}
+\end{aligned}\]</div>
+<p>Finally, the entropy is defined from the Gibbs relations:</p>
+<div class="math notranslate nohighlight" id="equation-gibbs-relations">
+<span class="eqno">(51)<a class="headerlink" href="#equation-gibbs-relations" title="Permalink to this equation">¶</a></span>\[\begin{aligned}
+T ds &amp;= du + p dv &amp; T ds &amp;= dh - v dp
+\end{aligned}\]</div>
+<p>Integrating these relationships, we find:</p>
+<div class="math notranslate nohighlight" id="equation-entropy">
+<span class="eqno">(52)<a class="headerlink" href="#equation-entropy" title="Permalink to this equation">¶</a></span>\[\Delta s = \int_{T_1}^{T_2} c_v \frac{dT}{T} + R \ln\frac{\rho_1}{\rho_2} = \int_{T_1}^{T_2} c_p \frac{dT}{T} - R \ln\frac{p_2}{p_1}\]</div>
+<p>and for constant specific heats:</p>
+<div class="math notranslate nohighlight" id="equation-constant-specific-heat-entropy">
+<span class="eqno">(53)<a class="headerlink" href="#equation-constant-specific-heat-entropy" title="Permalink to this equation">¶</a></span>\[\Delta s = c_v \ln\frac{T_2}{T_1} + R \ln\frac{\rho_1}{\rho_2} = c_p \ln\frac{T_2}{T_1} - R \ln\frac{p_2}{p_1}\]</div>
+</div>
+<div class="section" id="static-and-stagnation-property-ratios">
+<h2>Static and Stagnation Property Ratios<a class="headerlink" href="#static-and-stagnation-property-ratios" title="Permalink to this headline">¶</a></h2>
+<p>First, we imagine a process which isentropically slows the flow from the current velocity, where the static pressure is <span class="math notranslate nohighlight">\(p\)</span>, to a stop, where the static pressure is equal to the total pressure, <span class="math notranslate nohighlight">\(p_t\)</span>. Likewise, the temperature changes from the static temperature <span class="math notranslate nohighlight">\(T\)</span> to the total temperature <span class="math notranslate nohighlight">\(T_t\)</span> as a result of this process and the density changes from the static density <span class="math notranslate nohighlight">\(\rho\)</span> to the total density <span class="math notranslate nohighlight">\(\rho_t\)</span>.</p>
+<p>For any isentropic process of an ideal gas with constant specific heats, we can use Eq. <a class="reference internal" href="#equation-constant-specific-heat-entropy">(53)</a> to show that the pressure and density have the following relationship <span id="id1">[<a class="reference internal" href="../bibliography.html#id5"><span>Hal18</span></a>]</span>:</p>
+<div class="math notranslate nohighlight" id="equation-p-rho-isentropic">
+<span class="eqno">(54)<a class="headerlink" href="#equation-p-rho-isentropic" title="Permalink to this equation">¶</a></span>\[\frac{p_t}{p} = \left(\frac{\rho_t}{\rho}\right)^{\gamma}\]</div>
+<p>Plugging in Eq. <a class="reference internal" href="#equation-ideal-gas-law">(46)</a> on the right side of Eq. <a class="reference internal" href="#equation-p-rho-isentropic">(54)</a> gives:</p>
+<div class="math notranslate nohighlight" id="equation-p-t-isentropic">
+<span class="eqno">(55)<a class="headerlink" href="#equation-p-t-isentropic" title="Permalink to this equation">¶</a></span>\[\frac{T_t}{T} = \left(\frac{p_t}{p}\right)^{(\gamma - 1)/\gamma}\]</div>
+<p>and plugging it in on the left side of Eq. <a class="reference internal" href="#equation-p-rho-isentropic">(54)</a> gives:</p>
+<div class="math notranslate nohighlight" id="equation-t-rho-isentropic">
+<span class="eqno">(56)<a class="headerlink" href="#equation-t-rho-isentropic" title="Permalink to this equation">¶</a></span>\[\frac{T_t}{T} = \left(\frac{\rho_t}{\rho}\right)^{\gamma - 1}\]</div>
+</div>
+</div>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./compressible-flow"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+        </div>
+    </div>
+    
+    
+    <div class='prev-next-bottom'>
+        
+    <a class='left-prev' id="prev-link" href="1-introduction.html" title="previous page">Compressible Flow</a>
+    <a class='right-next' id="next-link" href="3-the-mach-number.html" title="next page">The Mach Number</a>
+
+    </div>
+    <footer class="footer mt-5 mt-md-0">
+    <div class="container">
+      <p>
+        
+          By Bryan Weber<br/>
+        
+          <div class="extra_footer">
+            <p xmlns:dct="http://purl.org/dc/terms/" xmlns:cc="http://creativecommons.org/ns#" class="license-text"><a rel="cc:attributionURL" property="dct:title" href="https://bryanwweber.github.io/propulsion-notes">Notes for Propulsion</a> by <span property="cc:attributionName">Bryan Weber</span> is licensed under <a rel="license" href="https://creativecommons.org/licenses/by-sa/4.0">CC BY-SA 4.0<img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/cc.svg?ref=chooser-v1" /><img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/by.svg?ref=chooser-v1" /><img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/sa.svg?ref=chooser-v1" /></a></p>
+
+          </div>
+      </p>
+    </div>
+  </footer>
+</main>
+
+
+      </div>
+    </div>
+
+    
+  <script src="../_static/js/index.d3f166471bb80abb5163.js"></script>
+
+
+    
+  </body>
+</html>

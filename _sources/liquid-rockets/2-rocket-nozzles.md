@@ -1,963 +1,25 @@
----
-jupytext:
-  formats: md:myst
-  text_representation:
-    extension: .md
-    format_name: myst
-kernelspec:
-  display_name: Python 3
-  language: python
-  name: python3
----
-
-```{code-cell}
-:tags: [remove-input]
-
-import itertools
-
-from bokeh.io import show, output_notebook
-from bokeh.plotting import figure
-from bokeh.palettes import Category10 as palette
-from bokeh.models import Span, PrintfTickFormatter
-from bokeh.layouts import column
-
-import numpy as np
-from scipy import optimize
-
-output_notebook(hide_banner=True)
-opts = dict(plot_width=500, plot_height=400, min_border=0)
-colors = itertools.cycle(palette[10])
-```
-
-# Rocket Nozzles
+# Design of Rocket Nozzles
 
 The nozzle is the most important component of the rocket engine. The nozzle converts high pressure, and ideally high temperature, gases into low pressure gases with much higher velocity by changing the cross-sectional area of the flow. This momentum transfer then provides the thrust force on the spacecraft.
 
 In principle, nozzles can function with any source of high pressure fluid upstream. As we'll see, the higher the upstream pressure and temperature, the higher the performance of the nozzle. However, this ability to be very flexible and still provide thrust is why nozzles are the most important component.
 
-For most purposes, we will assume the upstream flow is at **nearly zero velocity**. This means that the upstream temperature and pressure are at the **stagnation** conditions, which is a very important state for the analysis of nozzles.
+Nearly all rocket nozzles are of the **converging-diverging** type. This means that the flow at the exit of the nozzle is supersonic and it must be treated using compressible flow relations. These equations are derived in a {ref}`separate chapter all about compressible flow <compressible-flow-introduction>`.
 
-## Stagnation State
+We will now investigate the major factors influencing the design of a rocket nozzle and how to analyze the performance of a given nozzle. To help understand the qualitative behavior of design changes and the inherent tradeoffs, we would like to reduce the problem to an analysis of dimensionless parameters. First, we will discuss the various shape of nozzle designs before returning to some equations.
 
-For flowing fluids, we define two conditions at which we can evaluate properties:
+## Nozzle Shapes
 
-1. **Static**: What you would measure if you moved along with the flow
-2. **Stagnation**: What you would measure if you slowed the fluid to a stop in an adiabatic and reversible (isentropic) process. Also known as the **total** state, with the subscript $t$.
-
-When the fluid is stationary, the static and stagnation properties are equal, by definition. The objective of the nozzle is to produce high velocity flow at the exit using the high stagnation pressure and temperature upstream of the nozzle.
-
-```{attention}
-The word _total_ in _total pressure_ or _total temperature_ has nothing to do with a sum over several states or locations. It is a _total_ in the sense that it accounts for the sum of the **static property** and the portion of that property due to the **velocity of the flow**.
-
-For instance, consider a flow with static temperature $T$ and velocity $V$. The specific kinetic energy (kinetic energy per unit mass) is then $V^2/2$. If we isentropically slow the fluid to a stop, the kinetic energy will be converted internal energy of the fluid. This is because the process is isentropic, so no energy is lost by heat transfer and no potential to do work is lost by irreversibilities.
-
-The temperature is directly proportional to the internal energy of an ideal gas, so increasing the internal energy also increases the temperature. This is the definition of the total temperature. It is measuring the contribution from the static temperature which was in the fluid to begin with, and the result of converting the kinetic energy of the fluid to internal energy. Similar things happen for the pressure, density, and enthalpy.
-
-So we can define _both_ the static properties (no subscript) and the total properties ($t$ subscript) at _every_ axial location in the flow. In general, both static and total properties will change as a function of axial location in the flow. For the special case of _isentropic_ flow, the total properties will be constant throughout the flow domain, even though the static properties may change (quite significantly in some cases).
-
-Finally, the static and total properties will in general be different from each other at every axial location in the flow. However, for the special case of very low velocity ($V\approx 0$), the specific kinetic energy is also very low, so we assume the static and total properties are equal.
-```
-
-As implied by the definition of the stagnation state, isentropic processes will be very important for our analysis. The isentropic process usually functions as an ideal _best case_ scenario for the analysis.
-
-## Equation of State
-
-Before continuing to discuss isentropic processes, we must discuss how to evaluate flow properties. We will assume that all of our flows are **ideal** gases, that follow the ideal gas law:
-
-```{math}
-:label: ideal-gas-law
-p = \frac{\rho R_u T}{W}
-```
-
-where $p$, $\rho$, and $T$ are the static pressure, density, and temperature, $R_u$ is the [universal gas constant](https://en.wikipedia.org/wiki/Gas_constant), and $W$ is the molecular weight. We will represent most equations in the log-differential form, as:
-
-```{math}
-:label: ideal-gas-differential
-\frac{dp}{p} = \frac{d\rho}{\rho} + \frac{dT}{T} - \frac{dW}{W}
-```
-
-Note that the for flows undergoing chemical reaction, the change in molecular weight may be significant. We will ignore this effect in the beginning of our analysis, but return to relax that assumption later.
-
-## Speed of Sound
-
-The speed of sound is the speed at which an infinitesimal pressure disturbance propagates through a fluid. The disturbance is of such a small magnitude that the process that the gas goes through is reversible, and the process is adiabatic. Therefore, sound waves are isentropic processes.
-
-The speed of sound is defined by the differential:
-
-```{math}
-:label: speed-of-sound-definition
-a^2 = \left(\frac{\partial p}{\partial \rho}\right)_{s}
-```
-
-where $a$ is the speed of sound and the subscript $s$ indicates the partial derivative is to be taken for a constant entropy process.
-
-The entropy of the ideal gas can be determined from the second Gibbs relation:
-
-```{math}
-:label: second-gibbs
-ds = c_p \frac{dT}{T} - \frac{dp}{\rho T}
-```
-
-where $s$ is the entropy and $c_p$ is the specific heat at constant pressure. Introducing Eq. {eq}`ideal-gas-differential`, we find:
-
-```{math}
-:label: entropy-differential
-\frac{ds}{c_v} = \frac{dp}{p} - \gamma \frac{d\rho}{\rho} + \gamma \frac{dW}{W}
-```
-
-where $c_v$ is the specific heat at constant pressure and $\gamma$ is the ratio of specific heats:
-
-```{math}
-:label: ratio-of-specific-heats
-\gamma = \frac{c_p}{c_v}
-```
-
-Note that $\gamma$, $c_p$, and $c_v$ are functions of the temperature and composition in general. The specific heats are related to each other by the gas constant as well:
-
-```{math}
-:label: specific-heat-relationship
-c_p - c_v = \frac{R_u}{W}
-```
-
-Using Eqs. {eq}`ratio-of-specific-heats` and {eq}`specific-heat-relationship`, we can find $c_p$, $c_v$, or $\gamma$ given any two of them.
-
-If we assume the change in molecular weight is zero, and the process is isentropic, then we can relate the pressure to the density as follows:
-
-```{math}
-\frac{dp}{p} = \gamma \frac{d\rho}{\rho}
-```
-
-or
-
-```{math}
-\frac{dp}{d\rho} = \frac{\gamma p}{\rho}
-```
-
-Note that this differential is specifically and only for an isentropic process of an ideal gas, but it meets the definition of the speed of sound earlier. Plugging in Eq. {eq}`ideal-gas-law`, we find:
-
-```{math}
-:label: speed-of-sound
-a = \sqrt{\gamma \frac{R_u}{W} T}
-```
-
-In differential form, this is:
-
-```{math}
-:label: speed-of-sound-differential
-\frac{da}{a} = \frac{1}{2}\left(\frac{d\gamma}{\gamma} + \frac{dT}{T} - \frac{dW}{W}\right)
-```
-
-## Mach Number
-
-The Mach number is defined as the ratio of the current speed to the speed of sound:
-
-```{math}
-:label: mach-number
-M = \frac{V}{a}
-```
-
-In differential form, it is more convenient to work with the square of the Mach number, to cancel some of the fractions from the speed of sound:
-
-```{math}
-:label: mach-number-differential
-\frac{dM^2}{M^2} = \frac{dV^2}{V^2} + \frac{dW}{W} - \frac{d\gamma}{\gamma} - \frac{dT}{T}
-```
-
-By definition, flows with Mach number $M < 1$ are called **subsonic**, flows with $M > 1$ are called **supersonic**, and flows with $M = 1$ are called **sonic**. In addition, the range $0.8 < M < 1.2$ is usually called **transonic** and $M > 5$ is usually called **hypersonic**.
-
-(relations-for-compressible-flow)=
-## Relations for Compressible Flow
-
-The flow through rocket nozzles is compressible in general. It will be convenient to relate the static and stagnation properties to each other and to the Mach number. In addition, we will define a set of properties when the Mach number $M = 1$, called the characteristic properties. In all of the following equations, we will assume that the process is isentropic and that the ratio of specific heats $\gamma$ is constant.
-
-### Static and Stagnation Property Ratios
-
-First, we imagine a process which isentropically slows the flow from the current velocity, where the static pressure is $p$, to a stop, where the static pressure is equal to the total pressure, $p_t$. Likewise, the temperature changes from the static temperature $T$ to the total temperature $T_t$ as a result of this process and the density changes from the static density $\rho$ to the total density $\rho_t$.
-
-For any isentropic process of an ideal gas, we can show that the pressure and density have the following relationship {cite}`Hall2018`:
-
-```{math}
-:label: p-rho-isentropic
-\frac{p_t}{p} = \left(\frac{\rho_t}{\rho}\right)^{\gamma}
-```
-
-Plugging in Eq. {eq}`ideal-gas-law` on the right side of Eq. {eq}`p-rho-isentropic` gives:
-
-```{math}
-:label: p-T-isentropic
-\frac{T_t}{T} = \left(\frac{p_t}{p}\right)^{(\gamma - 1)/\gamma}
-```
-
-and plugging it in on the left side of Eq. {eq}`p-rho-isentropic` gives:
-
-```{math}
-:label: T-rho-isentropic
-\frac{T_t}{T} = \left(\frac{\rho_t}{\rho}\right)^{\gamma - 1}
-```
-
-### Relationships to the Mach Number
-
-Next, we would like a way to relate the property ratios to the Mach number. The reason we want this is because we can determine the Mach number at any axial location in the flow. Thus, if we have a relationship between the static properties, total properties, and Mach number, we can find any property at any axial location.
-
-We start from the definition of the enthalpy:
-
-```{math}
-:label: enthalpy
-h = c_p T
-```
-
-where $h$ is the enthalpy. Then, the conservation of energy for this flow is given by:
-
-```{math}
-h_t + V_{t}^2/2 = h + V^2/2
-```
-
-where $V_{t}$ is zero by definition. Plugging in Eqs. {eq}`speed-of-sound`, {eq}`mach-number`, and {eq}`enthalpy`, we find:
-
-```{math}
-:label: isentropic-temperature-mach
-\frac{T_t}{T} = 1 + \frac{\gamma - 1}{2}M^2
-```
-
-Using Eqs. {eq}`p-T-isentropic` and {eq}`T-rho-isentropic`, we can also find:
-
-```{math}
-:label: isentropic-pressure-mach
-\frac{p_t}{p} = \left(1 + \frac{\gamma - 1}{2}M^2\right)^{\frac{\gamma}{\gamma - 1}}
-```
-
-and
-
-```{math}
-:label: isentropic-density-mach
-\frac{\rho_t}{\rho} = \left(1 + \frac{\gamma - 1}{2}M^2\right)^{\frac{1}{\gamma - 1}}
-```
-
-We can also define the stagnation speed of sound, based on the stagnation temperature:
-
-```{math}
-:label: a-t-definition
-a_t = \sqrt{\gamma R T_t}
-```
-
-or we can relate this to the local flow conditions by using the energy equation {cite}`Anderson2003` (Ch. 3.5):
-
-```{math}
-:label: stagnation-speed-of-sound
-\frac{a_t^2}{\gamma - 1} = \frac{a^2}{\gamma - 1} + \frac{V^2}{2}
-```
-
-where $a$, $\gamma$, and $V$ are found at the local axial location.
-
-### Characteristic Properties
-
-Another important set of reference properties are called the **characteristic properties**, related to the sonic condition rather than the stagnation condition. The characteristic properties are defined by another imaginary isentropic process that takes the flow from its current velocity to a Mach number $M = 1$. If the flow is supersonic, this will means slowing it down; if it is subsonic, it will be accelerated.
-
-Since this process is adiabatic, we can imagine that this process will change the static temperature. The static temperature reached when $M = 1$ is defined as the **characteristic temperature**, $T^*$. Then, the **characteristic speed of sound** is:
-
-```{math}
-:label: a-star-definition
-a^* = \sqrt{\gamma R T^*}
-```
-
-and the **characteristic Mach number**:
-
-```{math}
-:label: characteristic-mach-number
-M^* = \frac{V}{a^*}
-```
-
-In general, $M^*\neq M$, where $M$ is the actual Mach number at a given axial location in the flow. For the special case when $M^* = 1$, then $M = 1$ as well.
-
-Like the stagnation properties, the characteristic properties are defined for every point in the flow, given the Mach number and static temperature. If the flow is isentropic throughout, then the values for $T^*$ and $a^*$ will be constant throughout the flow.
-
-We can show {cite}`Anderson2003` (Ch. 3.5) that the characteristic speed of sound is given by:
-
-```{math}
-:label: characteristic-speed-of-sound
-\left(a^*\right)^2 \frac{\gamma + 1}{2\left(\gamma - 1\right)} = \frac{a^2}{\gamma - 1} + \frac{V^2}{2}
-```
-
-where $a$, $V$, and $\gamma$ are calculated at the local flow conditions. From this, we can also determine the characteristic Mach number and temperature. Eq. {eq}`characteristic-speed-of-sound` can also be divided by $V^2$ to give a relationship between $M$ and $M^*$:
-
-```{math}
-:label: mach-to-m-star
-M^2 = \frac{2}{\left[\left(\gamma + 1\right)/\left(M^*\right)^2\right] - \left(\gamma - 1\right)}
-```
-
-From this equation, we can see the following relationships:
-
-* $M^* = 1$ if $M = 1$
-* $M^* < 1$ if $M < 1$
-* $M^* > 1$ if $M > 1$
-* $M^*\rightarrow \sqrt{\left(\gamma + 1\right)/\left(\gamma - 1\right)}$ if $M\rightarrow\infty$
-
-### Ratios of Characteristic Properties
-
-Similar to the ratios of total and static properties, we will find it useful to have ratios related to the characteristic properties. Starting from the characteristic speed of sound, Eq. {eq}`characteristic-speed-of-sound`, and dividing by the stagnation speed of sound, Eq. {eq}`stagnation-speed-of-sound`, we find:
-
-```{math}
-:label: a-star-over-a-t
-\frac{a^*}{a_t} = \sqrt{\frac{2}{\gamma + 1}}
-```
-
-From the definition of the speed of sound, we can also write:
-
-```{math}
-:label: T-star-over-T-t
-\frac{T^*}{T_t} = \frac{2}{\gamma + 1}
-```
-
-Finally, we can use the relationships of stagnation pressure and density with the Mach number, Eqs. {eq}`isentropic-pressure-mach` and {eq}`isentropic-density-mach`, noting that for the characteristic conditions $M = 1$, to write:
-
-```{math}
-:label: p-star-over-p-t
-\frac{p^*}{p_t} = \left(\frac{2}{\gamma + 1}\right)^{\frac{\gamma}{\gamma - 1}}
-```
-
-and
-
-```{math}
-:label: rho-star-over-rho-t
-\frac{\rho^*}{\rho_t} = \left(\frac{2}{\gamma + 1}\right)^{\frac{1}{\gamma - 1}}
-```
-
-## Quasi-One-Dimensional Nozzle Flow
-
-Let's now consider a simple nozzle with varying cross-sectional area. We will neglect the influence of skin friction and heat transfer at the nozzle wall, so that the only way that the flow may change is due to the area change. In this nozzle, the flow is adiabatic and reversible, so the entropy is constant.
-
-### Mass Conservation
-
-In steady flow, the mass flow rate is given by the integral relationship:
-
-```{math}
-\int \rho \left(\vec{V}\cdot\hat{n}\right) dA = 0
-```
-
-If we further simplify to quasi-one-dimensional flow, and define the $z$ axis as the flow direction, then the mass flow rate is:
-
-```{math}
-:label: one-d-mass-flow-rate
-\dot{m}(z) = \rho(z) A(z) V(z) = \text{const}
-```
-
-where $\dot{m}(z)$ is a constant, and the density, area, or velocity may change as a function of axial location. In differential form, this becomes:
-
-```{math}
-:label: mass-flow-rate-differential
-\frac{d\dot{m}}{\dot{m}} = 0 =\frac{d\rho}{\rho} + \frac{dV}{V} + \frac{dA}{A}
-```
-
-At a given station, or axial ($z$) location, the mass flow rate can be related to the local flow conditions by using Eqs. {eq}`ideal-gas-law` and {eq}`speed-of-sound`:
-
-```{math}
-\dot{m} = p A M\sqrt{\frac{\gamma}{R T}}
-```
-
-where $R = R_u / W$. Using the results from {ref}`relations-for-compressible-flow`, we can write the mass flow rate as:
-
-```{math}
-:label: mass-flow-rate-mach-number
-\dot{m} = \frac{p_t A}{\sqrt{T_t}}\sqrt{\frac{\gamma}{R}}M\left(1 + \frac{\gamma - 1}{2}M^2\right)^{\frac{-\left(\gamma + 1\right)}{2\left(\gamma - 1\right)}}
-```
-
-### Momentum Equation
-
-The integral form of the momentum equation for a control volume around the nozzle is:
-
-```{math}
-\int_{A} \left(\rho \vec{V}\cdot\hat{n}\right)\vec{V} dA = 0
-```
-
-because we are neglecting friction and drag. In the log differential form, this becomes:
-
-```{math}
-\frac{dp}{p} + \frac{1}{2}\frac{\rho}{p}\frac{dV^2}{V^2} = 0
-```
-
-Replacing $\rho/p$ from the ideal gas law, Eq. {eq}`ideal-gas-law` and multiplying and dividing the second term by $a^2$, we can write:
-
-```{math}
-:label: momentum-differential
-\frac{dp}{p} + \frac{1}{2}\gamma M^2 \frac{dV^2}{V^2} = 0
-```
-
-### Area-Velocity Relation
-
-Using Eq. {eq}`mass-flow-rate-differential` to eliminate the $dp/p$ term from Eq. {eq}`momentum-differential`, we find the **area-velocity relation**:
-
-```{math}
-:label: area-velocity-relation
-\frac{dA}{A} = \left(M^2 - 1\right) \frac{dV}{V}
-```
-
-This important equation gives us the relationship between Mach number, area change, and velocity change. We make a number of observations from this equation:
-
-1. If $M\rightarrow 0$, this tells us that the product of the area and velocity is a constant, which is the continuity equation for incompressible flow.
-2. If $M < 1$, the first time on the right-hand side of Eq. {eq}`area-velocity-relation` is negative. This means that if we want the velocity to increase ($dV > 0$), then $dA$ must be negative and the area must decrease. The opposite is also true; if we want velocity to decrease, the area must increase.
-3. On the other hand, if $M > 1$, the first time on the right-hand side of Eq. {eq}`area-velocity-relation` is positive. This means that if we want the velocity to increase ($dV > 0$), then $dA$ must be positive and the area must increase. The opposite is also true; if we want velocity to decrease, the area must decrease.
-4. If $M = 1$, the area must be constant ($dA = 0$). We can prove that for flow to accelerate from subsonic to supersonic, or to decelerate flow from supersonic to subsonic, this area must be a **minimum**.
-
-### Area-Mach Number Relation
-
-Now let's return to the nozzle. We will consider a **converging-diverging** nozzle, since we know that we want to accelerate the flow from subsonic in the combustion chamber to supersonic exit velocity. From the thrust equation, Eq. {eq}`rocket-momentum`, we know that the thrust is proportional to the nozzle exit velocity, so higher exit velocities will provide more thrust.
-
-The location of the smallest area in the nozzle is called the **throat**. Since the area is at a minimum at this location, the slope must be zero, $dA = 0$. Therefore, the Mach number $M = 1$, and this defines the **characteristic area**, $A^*$.
-
-Let's apply the conservation equations from a point upstream of the throat to the throat. Then:
-
-```{math}
-\rho V A = \rho^* V^* A^* \Rightarrow \frac{A}{A^*} = \frac{\rho^*}{\rho} \frac{a^*}{V}
-```
-
-Next, multiply and divide the right side by $\rho_t$. This gives us the relationship of $\rho_t/\rho$ and $\rho^*/\rho_t$, which we have developed previously. Finally, using Eq. {eq}`mach-to-m-star`, we find:
-
-```{math}
-:label: area-mach-relation
-\left(\frac{A}{A^*}\right)^2 = \frac{1}{M^2}\left[\frac{2}{\gamma + 1}\left(1 + \frac{\gamma - 1}{2}M^2\right)\right]^{\frac{\gamma + 1}{\gamma - 1}}
-```
-
-This is the **area-Mach number relation** and it is a critically important equation to understand nozzle flows. To help understand why, we will inspect the figure below.
-
-```{code-cell}
-:tags: [remove-input]
-
-p1 = figure(
-    x_axis_label="Area Ratio, A/A*",
-    y_axis_label="Mach Number, M",
-    title="Area-Mach Number Relation",
-    y_axis_type="log",
-    x_range=(0, 10), y_range=(0.05, 4.25),
-    **opts
-)
-mach_number = np.hstack((np.logspace(-2, 0), np.linspace(1, 5)))
-gamma = 1.4
-first_term = 2 / (gamma + 1)
-second_term = 1 + (gamma - 1)/2 * mach_number**2
-power = (gamma + 1) / (gamma - 1)
-area_ratio = np.sqrt(1/mach_number**2 * (first_term * second_term)**(power))
-p1.line(area_ratio, mach_number, line_width=2)
-p1.add_layout(Span(location=1.0, dimension="width"))
-p1.add_layout(Span(location=1.0, dimension="height"))
-p1.yaxis[0].formatter = PrintfTickFormatter(format="%2f")
-show(p1)
-```
-
-From the graph, we can see two things immediately:
-
-1. There are no solutions for $A/A^*$ less than 1.0. In other words, for isentropic flow, the area at any cross section must be greater than or equal to the characteristic area.
-2. There are two values of $M$ that correspond to a given $A/A^*$ value, a subsonic and a supersonic solution. The only exception is at the point (1.0, 1.0), where the area is minimum and the flow is exactly sonic.
-
-Assume that a convergent-divergent nozzle looks like the figure below. At the inlet, the area ratio goes to infinity, such that the Mach number goes to zero and the conditions are stagnated. The Mach number cannot be identically zero, because then there'd be no flow. In the case of isentropic flow through the nozzle, the flow will be accelerated through the subsonic Mach numbers, to the sonic condition at the throat, and then continue accelerating to supersonic Mach numbers.
-
-The static pressure and temperature will also experience continuous decreases over the nozzle. At the inlet, the ratio of the static property to the stagnation property is one. At the throat, the ratios take on the values of the static property over the characteristic property.
-
-```{code-cell}
-:tags: [remove-input]
-gamma = 1.4
-opts["plot_height"] = 300
-p2 = figure(
-    title=f"Convergent-Divergent Nozzle, Isentropic Acceleration, 𝛾={gamma}",
-    y_range=(-4.1, 4.1),
-    **opts
-)
-p2.outline_line_width = 0
-p2.axis.visible = False
-p2.xaxis.major_tick_line_color = None
-p2.xaxis.minor_tick_line_color = None
-p2.xaxis.ticker = [0.0]
-p2.ygrid.grid_line_color = None
-p2.xaxis.major_label_overrides = {0: "Throat"}
-
-r_t = 1
-epsilon = 9
-r_e = r_t * np.sqrt(epsilon)
-theta_n = np.radians(35)
-theta_e = np.radians(0.0)
-
-r_upstream = 1.5 * r_t
-upstream_center = r_t + r_upstream
-x_upstream = np.linspace(-r_upstream + 0.01, 0, 200)
-y_upstream = -np.sqrt(r_upstream**2 - x_upstream**2) + upstream_center
-
-r_downstream = 0.382 * r_t
-downstream_center = r_t + r_downstream
-downstream_stop = r_downstream*np.cos(np.radians(270) + theta_n)
-x_downstream = np.linspace(0, downstream_stop, 200)
-y_downstream = -np.sqrt(r_downstream**2 - x_downstream**2) + downstream_center
-
-x_n, y_n = x_downstream[-1], y_downstream[-1]
-L = r_e / np.tan(np.radians(15))
-l = r_t / np.tan(np.radians(15))
-L_n = L - l
-x_e, y_e = x_n + L_n, r_e
-
-A = np.array([[x_n**2, x_n, 1.0], [x_e**2, x_e, 1.0], [2 * x_e, 1.0, 0.0]])
-b = np.array([y_n, y_e, np.tan(theta_e)])
-a, b, c = np.linalg.solve(A, b)
-
-x_bell = np.linspace(x_n, x_e, 200)
-y_bell = a * x_bell**2 + b * x_bell + c
-
-x = np.hstack((x_upstream, x_downstream, x_bell))
-y = np.hstack((y_upstream, y_downstream, y_bell))
-p2.line(x, y)
-p2.line(x, -y)
-
-A_t = np.pi * r_t**2
-
-A_ratio = np.pi * y**2 / A_t
-
-def area_ratio(M, A_ratio):
-    first_term = 2 / (gamma + 1)
-    power = (gamma + 1) / (gamma - 1)
-    second_term = 1 + (gamma - 1) / 2 * M**2
-    return 1 / M**2 * (first_term * second_term)**(power) - A_ratio**2
-
-M_upstream = optimize.root(
-    area_ratio,
-    x0=np.linspace(0.15, 1.0, x_upstream.shape[0]),
-    args=(A_ratio[:x_upstream.shape[0]],)
-)
-M_downstream_sup = optimize.root(
-    area_ratio,
-    x0=np.linspace(1.0, 5.0, x_downstream.shape[0] + x_bell.shape[0]),
-    args=(A_ratio[x_upstream.shape[0]:])
-)
-
-M_sup= np.hstack((M_upstream.x, M_downstream_sup.x))
-
-p3 = figure(
-    # x_axis_label="Area Ratio, A/A*",
-    y_axis_label="Mach Number, M",
-    # title="Area-Mach Number Relation",
-    # y_axis_type="log",
-    # x_range=(0, 10), y_range=(0.05, 4.25),
-    y_range=(0, 4.1),
-    x_range=p2.x_range,
-    **opts
-)
-p3.outline_line_width = 0
-p3.xaxis.major_tick_line_color = None
-p3.xaxis.minor_tick_line_color = None
-p3.xaxis.major_label_text_color = None
-p3.xaxis.ticker = [0.0]
-p3.yaxis.ticker = [1.0]
-p3.line(x, M_sup)
-
-p_ratio_sup = (1 + (gamma - 1)/2 * M_sup**2)**(-gamma/(gamma - 1))
-p4 = figure(
-    # x_axis_label="Area Ratio, A/A*",
-    y_axis_label="p/p_t",
-    # title="Area-Mach Number Relation",
-    y_axis_type="log",
-    y_range=(0.008, 1.1),
-    x_range=p2.x_range,
-    **opts
-)
-p4.outline_line_width = 0
-p4.xaxis.major_tick_line_color = None
-p4.xaxis.minor_tick_line_color = None
-p4.xaxis.major_label_text_color = None
-p4.xaxis.ticker = [0.0]
-p4.yaxis.ticker = [1.0, (2 / (gamma + 1))**(gamma / (gamma - 1))]
-p4.line(x, p_ratio_sup)
-
-T_ratio_sup = (1 + (gamma - 1)/2 * M_sup**2)**(-1)
-p5 = figure(
-    # x_axis_label="Area Ratio, A/A*",
-    y_axis_label="T/T_t",
-    # title="Area-Mach Number Relation",
-    y_axis_type="log",
-    # x_range=(0, 10), y_range=(0.05, 4.25),
-    y_range=(0.2, 1.1),
-    x_range=p2.x_range,
-    **opts
-)
-p5.outline_line_width = 0
-p5.xaxis.major_tick_line_color = None
-p5.xaxis.minor_tick_line_color = None
-p5.xaxis.major_label_text_color = None
-p5.xaxis.ticker = [0.0]
-p5.yaxis.ticker = [1.0, (2 / (gamma + 1))]
-p5.line(x, T_ratio_sup)
-
-show(column(p2, p3, p4, p5))
-```
-
-```{note}
-There is exactly one value of the pressure ratio $p_e/p_t$ that gives an isentropic acceleration from subsonic to supersonic flow. Under these conditions, the static pressure outside the nozzle must be equal to the static pressure of the flow at the exit plane.
-
-The particular value of $p_e/p_t$ that gives isentropic acceleration depends on the expansion ratio of the nozzle, $A_e/A^*$.
-```
-
-### Effect of Pressure Ratio
-
-So, what happens when the pressure ratio over the nozzle is not equal to the value that gives isentropic acceleration? There are a few different cases. The trivial case is that the outlet pressure is equal to the inlet pressure and there is no flow. Not super useful.
-
-Now, imagine reducing the pressure ratio slightly, say to 0.9999. The flow accelerates in the converging section, but for this nozzle it _does not reach $M=1$ at the throat_. If the flow does not reach sonic velocity at the throat, the diverging section acts as a diffuser according to Eq. {eq}`area-velocity-relation`, and the flow is subsonic throughout.
-
-Next, imagine that we continue to reduce the pressure ratio. Eventually, the pressure ratio will be at some value such that the sonic velocity is reached in the throat. However, the static pressure at the throat, given by Eq. {eq}`p-star-over-p-t`, is lower than the static pressure at the exit. Therefore, the diverging section must act as a diffuser and increase the pressure until the outlet.
-
-This second case is shown in the figure below.
-
-```{code-cell}
-:tags: [remove-input]
-gamma = 1.4
-opts["plot_height"] = 300
-p6 = figure(
-    title=f"Convergent-Divergent Nozzle, Isentropic Subsonic Flow, 𝛾={gamma}",
-    y_range=(-4.1, 4.1),
-    **opts
-)
-p6.outline_line_width = 0
-p6.axis.visible = False
-p6.xaxis.major_tick_line_color = None
-p6.xaxis.minor_tick_line_color = None
-p6.xaxis.ticker = [0.0]
-p6.ygrid.grid_line_color = None
-p6.xaxis.major_label_overrides = {0: "Throat"}
-
-p6.line(x, y)
-p6.line(x, -y)
-
-M_downstream_sub = optimize.root(
-    area_ratio,
-    x0=np.linspace(0.01, 0.001, x_downstream.shape[0] + x_bell.shape[0]),
-    args=(A_ratio[x_upstream.shape[0]:])
-)
-
-M_sub = np.hstack((M_upstream.x, M_downstream_sub.x))
-
-p7 = figure(
-    # x_axis_label="Area Ratio, A/A*",
-    y_axis_label="Mach Number, M",
-    # title="Area-Mach Number Relation",
-    # y_axis_type="log",
-    # x_range=(0, 10), y_range=(0.05, 4.25),
-    y_range=(0, 2.1),
-    x_range=p6.x_range,
-    **opts
-)
-p7.outline_line_width = 0
-p7.xaxis.major_tick_line_color = None
-p7.xaxis.minor_tick_line_color = None
-p7.xaxis.major_label_text_color = None
-p7.xaxis.ticker = [0.0]
-p7.yaxis.ticker = [1.0]
-p7.line(x, M_sub)
-
-p_ratio_sub = (1 + (gamma - 1)/2 * M_sub**2)**(-gamma/(gamma - 1))
-p8 = figure(
-    # x_axis_label="Area Ratio, A/A*",
-    y_axis_label="p/p_t",
-    # title="Area-Mach Number Relation",
-    # y_axis_type="log",
-    y_range=(0, 1.1),
-    x_range=p6.x_range,
-    **opts
-)
-p8.outline_line_width = 0
-p8.xaxis.major_tick_line_color = None
-p8.xaxis.minor_tick_line_color = None
-p8.xaxis.major_label_text_color = None
-p8.xaxis.ticker = [0.0]
-p8.yaxis.ticker = [1.0, (2 / (gamma + 1))**(gamma / (gamma - 1))]
-p8.line(x, p_ratio_sub)
-
-show(column(p6, p7, p8))
-```
-
-Notice that the Mach number reaches exactly 1.0 at the throat, and the static pressure reaches the value specified by Eq. {eq}`p-star-over-p-t` at the throat. For this particular nozzle, the required pressure ratio to reach sonic flow at the throat is very close to one, approximately $p_e/p_t = 0.997$. The larger the expansion ratio from throat to exit, the smaller the required pressure difference to produce sonic flow at the throat.
-
-We can calculate the mass flow rate in the nozzle from the continuity equation. It is most convenient to calculate the mass flow rate at the throat:
-
-```{math}
-\dot{m} = \rho^* A^* V^* = \rho^* A^* a^*
-```
-
-Now imagine reducing the exit pressure of the nozzle below the value required to obtain sonic flow at the throat. The pressure change is communicated to the rest of the flow by pressure waves that travel at the speed of sound. When the flow reaches the sonic velocity at the throat, downstream pressure changes can no longer be communicated through the throat into the converging section.
-
-Therefore, once sonic flow is reached at the throat, the flow conditions, including the pressure, density, and temperature are fixed no matter what the exit pressure is. Likewise, the conditions in the converging section are fixed (assuming the stagnation conditions are fixed).
-
-From the continuity equation, we see that this results in the mass flow rate becoming constant, regardless of downstream pressure changes! This condition is called **choked flow**. Under this condition, the only way to change the mass flow rate is to change the upstream conditions in the combustion chamber.
-
-Nonetheless, we can continue to change the exit static pressure, for instance, if the nozzle is attached to a rocket ascending through the atmosphere. What happens to the flow in the nozzle in this case?
-
-Remember that the pressure of the flow exiting the nozzle must eventually come to equilibrium with the surrounding pressure. As we change the surrounding pressure, these changes are communicated into the nozzle by sound waves. Once the flow is sonic at the throat, the changes are only communicated partway through the nozzle.
-
-At some location in the nozzle, the velocity of the flow balances the upstream motion of the sound waves. At that location, which depends on the pressure ratio, the sound waves coalesce into a [**normal shock wave**](https://en.wikipedia.org/wiki/Shock_wave#Normal_shocks). A shock wave is an infinitesimally thin region where the flow undergoes an **irreversible** process.
-
-Across the shock wave, the static pressure and temperature are _increased_ and the Mach number is _decreased_ to a subsonic value. The irreversible nature of the process means that the total pressure is _decreased_ and the value of $A^*$ changes across the shock wave as well.
-
-Since the shock wave reduces the Mach number to subsonic values, the remainder of the diverging section downstream of the shock wave functions as a diffuser. This increases the static pressure further until it matches the conditions outside of the exit. An example of this situation is shown in the figure below.
-
-```{code-cell}
-:tags: [remove-input]
-
-from bokeh.models import ColumnDataSource, CustomJS, Slider, Dropdown
-from textwrap import dedent
-
-shock_location = 4
-shock_areas = A_ratio[(x >= 0)]
-shock_location_idx = np.argmin(np.abs(shock_areas - shock_location)) + len(x[x < 0])
-x_shock_loc = x[shock_location_idx]
-y_shock_loc = y[shock_location_idx]
-
-shock_upstream_mask = (A_ratio < shock_location) | (x < 0)
-shock_downstream_mask = (A_ratio > shock_location) & (x > 0)
-
-# From compressible flow calculator
-# Calculate M_1 from A_shock/A^* = shock_location
-# Calculate M_2 from normal shock at M_1
-# Calculate A2_A2star from M_2
-A2_A2star = 1.38259004
-Ae_A2star = epsilon / shock_location * A2_A2star
-
-new_A_ratio = y[shock_downstream_mask]**2 * Ae_A2star / (r_e**2)
-
-M_downstream_shock = np.array([optimize.brentq(area_ratio, 0.01, 0.99, args=(A,)) for A in new_A_ratio])
-M_shock = np.hstack((M_sup[shock_upstream_mask], M_downstream_shock))
-
-# Calculate p_t2/p_t1 from normal shock at M_1
-pt2_pt1 = 0.34564750
-# p_2/p_t1 = p_2/p_t2 * p_t2/p_t1
-p_ratio_downstream_shock = (1 + (gamma - 1)/2 * M_downstream_shock**2)**(-gamma/(gamma - 1)) * pt2_pt1
-p_ratio_shock = np.hstack((p_ratio_sup[shock_upstream_mask], p_ratio_downstream_shock))
-
-shock = ColumnDataSource(
-    data=dict(
-        x=[x_shock_loc, x_shock_loc],
-        y=[y_shock_loc, -y_shock_loc]
-    )
-)
-nozzle = ColumnDataSource(
-    data=dict(
-        x=x[(x >= 0)].tolist(),
-        y=y[(x >= 0)].tolist(),
-        A=shock_areas.tolist()
-    )
-)
-
-shock_data = ColumnDataSource(
-    data=dict(
-        x=x.tolist(),
-        M=M_shock.tolist(),
-        M_sup=M_sup.tolist(),
-        p_ratio_sup=p_ratio_sup.tolist(),
-        p_ratio=p_ratio_shock.tolist(),
-    )
-)
-
-update_shock_location = CustomJS(
-    args=dict(
-        shock=shock,
-        nozzle=nozzle,
-        g=gamma,
-        e=epsilon,
-        r_e=r_e,
-        shock_data=shock_data,
-    ),
-    code=dedent("""\
-    var nozzle_x = nozzle.data['x'];
-    var nozzle_y = nozzle.data['y'];
-    var nozzle_A = nozzle.data['A'];
-    var f = parseFloat(cb_obj.value);
-    var x = shock.data['x'];
-    var y = shock.data['y'];
-    var val = 1e10;
-    var min_i = 0;
-    for (var i = 0; i < nozzle_A.length; i++) {
-        if (Math.abs(f - nozzle_A[i]) <= val) {
-            min_i = i;
-            val = Math.abs(f - nozzle_A[i]);
-        }
-    }
-    x[0] = nozzle_x[min_i];
-    x[1] = nozzle_x[min_i];
-    y[0] = nozzle_y[min_i];
-    y[1] = -nozzle_y[min_i];
-
-    shock.change.emit();
-
-    function tt0(g,m) {
-        return Math.pow((1.+(g-1.)/2.*m*m),-1.)
-    }
-
-    function pp0(g,m) {
-        return Math.pow((1.+(g-1.)/2.*m*m),-g/(g-1.))
-    }
-
-    function rr0(g,m) {
-        return Math.pow((1.+(g-1.)/2.*m*m),-1./(g-1.))
-    }
-
-    function tts(g,m) {
-        return tt0(g,m)*(g/2. + .5)
-    }
-
-    function pps(g,m) {
-        return pp0(g,m)*Math.pow((g/2. + .5),g/(g-1.))
-    }
-
-    function rrs(g,m) {
-        return rr0(g,m)*Math.pow((g/2. + .5),1./(g-1.))
-    }
-
-    function aas(g,m) {
-        return 1./rrs(g,m)*Math.sqrt(1./tts(g,m))/m;
-    }
-
-    function m2(g,m1) {
-        return Math.sqrt((1. + .5 * (g - 1.) * m1 * m1) / (g * m1 * m1 - .5 * (g - 1.)))
-    }
-
-    var mnew=2.0;
-    var m=0.0;
-    var phi;
-    var s=(3. - g) / (1. + g);
-    while( Math.abs(mnew-m) > 0.000001) {
-        m=mnew;
-        phi=aas(g,m);
-        mnew=m - (phi - f) / (Math.pow(phi * m,s) - phi / m);
-    }
-    var M1 = mnew;
-    var M2 = m2(g,M1);
-    var p2p1=1.+2.*g/(g+1.)*(M1*M1-1.)
-    var p02p01=pp0(g,M1)/pp0(g,M2)*p2p1
-    var AAS2 = aas(g,M2);
-    var AeAs2 = e / f * AAS2;
-    var shock_M = shock_data.data['M'];
-    var shock_pratio = shock_data.data['p_ratio'];
-    var shock_M_sup = shock_data.data['M_sup'];
-    var shock_pratio_sup = shock_data.data['p_ratio_sup'];
-    var extra_elements = shock_M.length - nozzle_y.length;
-    var shock_data_index;
-    var A_ratio2;
-    var temp_A_ratio = AeAs2 / Math.pow(r_e, 2);
-    for (var i = 0; i < nozzle_y.length; i++) {
-        shock_data_index = i + extra_elements;
-        if (i <= min_i) {
-            shock_M[shock_data_index] = shock_M_sup[shock_data_index];
-            shock_pratio[shock_data_index] = shock_pratio_sup[shock_data_index];
-        } else {
-            A_ratio2 = Math.pow(nozzle_y[i], 2) * temp_A_ratio;
-            mnew=0.00001;
-            m=0.0;
-            while( Math.abs(mnew-m) > 0.000001) {
-                m=mnew;
-                phi=aas(g,m);
-                mnew=m - (phi - A_ratio2) / (Math.pow(phi * m,s) - phi / m);
-            }
-            shock_M[shock_data_index] = mnew;
-            shock_pratio[shock_data_index] = p02p01 * pp0(g,mnew);
-        }
-    }
-    shock_data.change.emit()
-    """)
-)
-
-widget = Slider(start=1, end=9, value=shock_location, step=1e-4, title="Shock Location")
-widget.js_on_change('value', update_shock_location)
-
-p9 = figure(
-    title=f"Convergent-Divergent Nozzle, Isentropic Subsonic Flow, 𝛾={gamma}",
-    y_range=(-4.1, 4.1),
-    **opts
-)
-p9.outline_line_width = 0
-p9.axis.visible = False
-p9.xaxis.major_tick_line_color = None
-p9.xaxis.minor_tick_line_color = None
-p9.xaxis.ticker = [0.0]
-p9.ygrid.grid_line_color = None
-p9.xaxis.major_label_overrides = {0: "Throat"}
-
-p9.line(x, y)
-p9.line(x, -y)
-p9.line("x", "y", source=shock, line_width=4)
-
-p10 = figure(
-    # x_axis_label="Area Ratio, A/A*",
-    y_axis_label="Mach Number, M",
-    # title="Area-Mach Number Relation",
-    # y_axis_type="log",
-    # x_range=(0, 10), y_range=(0.05, 4.25),
-    y_range=(0, 4.1),
-    x_range=p9.x_range,
-    **opts
-)
-p10.outline_line_width = 0
-p10.xaxis.major_tick_line_color = None
-p10.xaxis.minor_tick_line_color = None
-p10.xaxis.major_label_text_color = None
-p10.xaxis.ticker = [0.0]
-p10.yaxis.ticker = [1.0]
-
-p10.line('x', 'M', source=shock_data, legend_label="Shock in Nozzle", color=next(colors))
-p10.line(x, M_sub, legend_label="Isentropic Deceleration", color=next(colors))
-p10.line(x, M_sup, legend_label="Isentropic Acceleration", color=next(colors))
-p10.legend.location = "center_right"
-
-colors = itertools.cycle(palette[10])
-p11 = figure(
-    y_axis_label="p/p_t",
-    # y_axis_type="log",
-    y_range=(0, 1.1),
-    x_range=p9.x_range,
-    **opts
-)
-p11.outline_line_width = 0
-p11.xaxis.major_tick_line_color = None
-p11.xaxis.minor_tick_line_color = None
-p11.xaxis.major_label_text_color = None
-p11.xaxis.ticker = [0.0]
-p11.yaxis.ticker = [1.0, (2 / (gamma + 1))**(gamma / (gamma - 1))]
-p11.line('x', 'p_ratio', source=shock_data, legend_label="Shock in Nozzle", color=next(colors))
-p11.line(x, p_ratio_sub, legend_label="Isentropic Deceleration", color=next(colors))
-p11.line(x, p_ratio_sup, legend_label="Isentropic Acceleration", color=next(colors))
-p11.legend.location = "center_right"
-
-show(column(widget, p9, p10, p11))
-# show(column(p9, p10, p11))
-```
-
-This condition of the nozzle is called **overexpanded** because the flow in the nozzle expands to a pressure below the outside pressure, and requires a shock wave to increase the pressure. If you could cut off the nozzle just upstream of the shock wave, you would have a perfectly expanded nozzle. However, since the nozzle is longer than that, the flow tries to continue expanding and can't.
-
-As the downstream pressure decreases further, the shock moves further and further downstream. Eventually, the normal shock will stand exactly at the exit. The pressure ratio that produces this situation is still larger than the pressure ratio that gives isentropic acceleration throughout the nozzle.
-
-Thus, we can still continue reducing the outside pressure and there will continue to be an irreversible shock that is required to adjust the exit pressure to the outside pressure. When the outside pressure is lower than the pressure that gives a normal shock at the exit, the shock will become angled into an [**oblique shock**](https://en.wikipedia.org/wiki/Oblique_shock).
-
-Oblique shock waves cause the flow to turn, which then requires a [**Prandtl-Meyer expansion fan**](https://en.wikipedia.org/wiki/Prandtl%E2%80%93Meyer_expansion_fan) to turn back to the direction of flight. This pattern repeats in a phenomenon called a [**shock diamond**](https://en.wikipedia.org/wiki/Shock_diamond).
-
-```{figure} ../images/Lockheed_Martin_F-22A_Raptor_JSOH.jpg
----
-width: 75%
-align: center
----
-F-22A Raptor fighter jet with shock diamonds visible in the engine exhaust. Credit: [Wikimedia](https://commons.wikimedia.org/wiki/File:Lockheed_Martin_F-22A_Raptor_JSOH.jpg) under the [CC-BY-SA 2.0](https://creativecommons.org/licenses/by-sa/2.0) license.
-```
-
-Finally, continued reduction of the exterior pressure will result in the ratio $p_e/p_t$ dropping below the value for isentropic acceleration. In this case, the flow is called **underexpanded** because the pressure of the flow at the exit plane is higher than the exterior pressure, and it could have been expanded more to match the outside pressure.
-
-To match the exterior pressure, the flow must exit the nozzle through a series of expansion waves to reduce the pressure. These expansion waves turn the flow and to straighten the flow again requires oblique shock waves. Thus, the pattern for underexpanded flow is the same as for overexpanded flow, but it starts with the expansion wave instead of the shock wave.
-
-## Design of Rocket Nozzles
-
-We will now investigate the major factors influencing the design of a rocket nozzle and how to analyze the performance of a given nozzle. To help understand the qualitative behavior of design changes and the inherent tradeoffs, we would like to reduce the problem to an analysis of dimensionless parameters.
-
-### Nozzle Shapes
-
-The flow upstream of the nozzle throat is constant when the flow reaches the sonic velocity at the throat, independent of any downstream changes. Therefore, the nozzle exit conditions are primarily determined by the shape of the nozzle after the throat.
+The flow properties upstream of the nozzle throat are fixed when the flow reaches the sonic velocity at the throat, independent of any downstream changes. Therefore, the nozzle exit conditions are primarily determined by the shape of the nozzle after the throat.
 
 In designing a nozzle, we have two primary goals:
 
 1. Produce a high-velocity flow parallel to the nozzle axis
 2. Have as low a weight as possible
 
-Since the nozzle is essentially a thin shell, the weight is proportional to the nozzle surface area. Therefore, minimizing the surface area will give the lowest weight. In addition, a smaller surface area will reduce the effects of frictional drag on the surface and heat loading.
+Since the nozzle is essentially a thin shell, the weight is proportional to the nozzle surface area. Therefore, minimizing the surface area will give the lowest weight. In addition, a smaller surface area will reduce the effects of frictional drag on the surface and heat loading. Thus, the primary goal of a rocket nozzle is to have the optimal area expansion in the smallest length, without introducing irreversibilities.
 
-#### Conical Nozzle
+### Conical Nozzle
 
 The simplest possible design of a nozzle is a [frustum](https://en.wikipedia.org/wiki/Frustum) of a cone. The parameters of the cone are shown in Fig. {numref}`conical-nozzle`.
 
@@ -1042,7 +104,7 @@ For an expansion angle of 10°, the thrust loss is about 1% while for 20° it is
 
 For instance, the sea-level thrust of the [Falcon 9 Full Thrust model](https://en.wikipedia.org/wiki/Falcon_9_Full_Thrust) is approximately 1.71 million pounds of thrust and its payload capacity is approximately 50,000 pounds. A 1% reduction in the thrust would lead to a loss of 17,100 pounds of thrust, on the same order of magnitude as the payload mass!
 
-#### Bell Nozzles
+### Bell Nozzles
 
 Conical nozzles have the advantage of being very simple to analyze and build. However, they inherently suffer from thrust loss due to the angularity of the flow. In addition, achieving large area ratios to accelerate the flow requires a long nozzle length, which makes conical nozzles heavy.
 
@@ -1053,9 +115,43 @@ This kind of nozzle is called a **bell nozzle**, because the rapid expansion and
 ```{image} ../images/rocket-engine.svg
 ```
 
-### Choked Mass Flow Rate
+The design of bell nozzles has been well studied since the middle of the 20th century. G.V.R. Rao {cite}`Rao1958,Rao1961` developed a methodology to optimize the thrust from bell nozzles that results in nozzles about 75% the length of conical nozzles with the same $A_e/A_{\text{th}}$ ratio.
 
-We showed in the last section that the choked mass flow rate is the maximum mass flow rate that a nozzle can pass. In terms of the nozzle and flow properties, we can write the maximum mass flow rate from Eq. {eq}`mass-flow-rate-mach-number` by setting $M = M^* = 1$:
+### Plug Nozzles
+
+In an effort to further reduce the nozzle length, several alternative designs have been developed although not applied in practice. The primary of these alternatives is called the **plug nozzle**.
+
+In a plug nozzle, the diverging section is removed and a plug is placed into the center of the converging section. The plug extends past the end of the converging section. The flow reaches sonic velocity at the end of the converging section and continues expanding after leaving the converging section due to the shape of the plug.
+
+The advantage of plug nozzles is that they are less sensitive to the ambient pressure. Bell nozzles are very sensitive to the ambient pressure; as we saw, off-design pressure ratios can lead to shock wave formation, which results in a loss of thrust.
+
+The disadvantage of plug nozzles is that they are more difficult to manufacture, which is probably why they haven't been put into practice.
+
+### Extendable Nozzles
+
+One final design that has been proposed to alleviate problems with ambient pressure changes is an [extendable nozzle](https://en.wikipedia.org/wiki/Expanding_nozzle). Lower ambient pressures require a longer nozzle to avoid underexpansion. The diverging portion of a bell nozzle is split into two pieces, and the lower piece is able to move in the axial direction. At high altitudes, the lower portion is moved into place mechanically to extend the nozzle.
+
+An extendable nozzle was proposed for the Space Shuttle, but scrapped due to cost considerations.
+
+## Nozzle Design Equations
+
+The thrust from a rocket nozzle is ideally given by Eq. {eq}`rocket-momentum`. This assumes that the exit pressure is matched to the ambient pressure. If the pressures do not match, we must add an additional term to the thrust equation to account for the pressure difference:
+
+```{math}
+:label: rocket-thrust
+F = \dot{m} V_e + A_e \left(p_e - p_0\right)
+```
+
+As we can see in Eq. {eq}`rocket-thrust`, there are two primary terms that make up the thrust:
+
+1. **Momentum thrust**: $\dot{m} V_e$ is due to the change in momentum of the fluid
+2. **Pressure thrust**: $A_e \left(p_e - p_0\right)$ is due to the pressure difference from the ambient
+
+We note that the mass flow rate for a converging-diverging nozzle is fixed at the choked flow value, so only the exit velocity can be changed by changing the downstream conditions. When the exit pressure is larger than the ambient pressure, the pressure thrust is positive but the exit velocity and the momentum thrust are low. When the exit pressure is less than the ambient pressure, the pressure thrust is negative but the exit velocity and momentum thrust are high. Since momentum thrust and pressure thrust are inversely proportional, the maximum total thrust occurs when the nozzle is perfectly expanded, $p_e = p_0$.
+
+## Nozzle Mass Flow Rate
+
+We showed in the {ref}`nozzle flow section <choked-mass-flow-rate>` that the choked mass flow rate is the ideal maximum mass flow rate that a nozzle can pass. In terms of the nozzle and flow properties, we can write the maximum mass flow rate from Eq. {eq}`mass-flow-rate-mach-number` by setting $M = M^* = 1$:
 
 ```{math}
 :label: choked-mass-flow-rate
@@ -1077,3 +173,119 @@ The combustion chamber pressure is essentially determined by the design of the p
 Note that increasing the chamber pressure, throat area, ratio of specific heats, or the molecular weight, or reducing the chamber temperature will give a higher mass flow rate.
 
 In addition, we can estimate the design mass flow rate by the design of the propellant pumps and the volume of propellant carried on board the rocket. With these parameters all determined, the throat area of the nozzle is fixed.
+
+## Nozzle Discharge Coefficient
+
+Now we would like to characterize the performance of a real nozzle relative to the ideal case. In the ideal flow, we assume quasi-1-dimensional, steady, isentropic, constant-specific-heat-ratio and constant-composition flow. In a real flow, the flow may be 3-dimensional, unsteady, non-isentropic, and have varying specific heat ratio and composition.
+
+To characterize the performance of the real nozzle, we define the **nozzle discharge coefficient**:
+
+```{math}
+c_d = \frac{\dot{m}}{\dot{m}_i}
+```
+
+where $\dot{m}$ is the real mass flow rate and $\dot{m}_i$ is the ideal mass flow rate. In general, the actual mass flow rate can be measured from flow meters on the propellant pumps. In addition, the combustion chamber pressure and the throat area can be easily measured, so that we can define a **mass flow rate coefficient**:
+
+```{math}
+:label: nozzle-mass-flow-rate-coefficient
+c_m = \frac{\dot{m}}{p_c A_{\text{th}}}
+```
+
+Equation {eq}`nozzle-mass-flow-rate-coefficient` says that the mass flow rate is directly proportional to the chamber pressure and throat area, with the proportionality constant depending on factors such as the chamber temperature and combustion products. The dimensions of $c_m$ are inverse velocity.
+
+The ideal mass flow rate is given by Eq. {eq}`choked-mass-flow-rate`, which can be rearranged to be:
+
+```{math}
+:label: ideal-nozzle-mass-flow-rate
+\dot{m}_i = \frac{p_c A_{\text{th}}}{\frac{1}{\Gamma_c}\sqrt{\frac{R_u T_c}{W_c}}}
+```
+
+where $p_c$, $T_c$, and $W_c$ are the pressure, temperature, and molecular weight in the combustion chamber, and $\Gamma_c$ is a combination term involving the (constant) specific heat ratio:
+
+```{math}
+\Gamma_c = \sqrt{\gamma_c}\left(\frac{2}{\gamma_c + 1}\right)^{\frac{\gamma_c + 1}{2\left(\gamma_c - 1\right)}}
+```
+
+where $\gamma_c$ is the specific heat ratio in the combustion chamber. The bottom of the fraction in Eq. {eq}`ideal-nozzle-mass-flow-rate` has dimensions of velocity, so it can be used to define a **characteristic velocity** of the nozzle:
+
+```{math}
+:label: nozzle-characteristic-velocity
+c^* = \frac{1}{\Gamma_c}\sqrt{\frac{R_u T_c}{W_c}}
+```
+
+This velocity characterizes the effectiveness of the combustion products to produce thrust from the nozzle. The characteristic velocity is large when $T_c$ is large, or $\gamma_c$ or $W_c$ are small.
+
+For the case of LH2/LOX combustion, the combustion temperature is approximately 3,900 K, the products' molecular weight is approximately 13 kg/kmol, and the ratio of specific heats is approximately 1.16. This gives a characteristic velocity of about 2,500 m/s.
+
+For the case of RP1/LOX combustion, the combustion temperature is about 3,700 K, the products' molecular weight is approximately 23 kg/kmol, and the ratio of specific heats is approximately 1.14. This gives a characteristic velocity of about 1,800 m/s.
+
+These values give an approximate range typical of most propellants, 1,500 m/s < $c^*$ < 2,500 m/s.
+
+With this definition of the characteristic velocity, we can rewrite the ideal mass flow rate:
+
+```{math}
+:label: ideal-mass-flow-rate-characteristic-velocity
+\dot{m}_i = \frac{p_c A_{\text{th}}}{c^*}
+```
+
+Combining Eqs. {eq}`nozzle-mass-flow-rate-coefficient` and {eq}`ideal-mass-flow-rate-characteristic-velocity`, we find that the discharge coefficient becomes:
+
+```{math}
+:label: nozzle-discharge-coefficient
+c_d = c_m c^*
+```
+
+In this equation, both $c_m$ and $c^*$ are essentially functions of the propellant combination, so that the discharge coefficient is mostly a function of the propellant combination.
+
+For most nozzles, the discharge coefficient is very close to one. This means that the mass flow rate coefficient is nearly inversely proportional to the characteristic velocity. We will see later that the characteristic velocity of the nozzle can be used in other calculations, so being able to approximate it by measuring the actual mass flow rate of the nozzle, as well as the chamber pressure and throat area is very useful.
+
+```{note}
+**Note:** Interestingly, the discharge coefficient can be larger than 1! This unusual situation can occur because the actual mass flow rate is larger than the ideal case due to varying temperature, pressure, and composition in the converging portion of the nozzle.
+
+Nonetheless, in early design stages before experimental data are available, it is reasonable to assume $c_d = 1$.
+```
+
+## Nozzle Velocity Coefficient
+
+Measuring the true exit velocity of the combustion products from the nozzle is very difficult. Therefore, we would like to find a method to estimate the true velocity from other known information. As before, we are interested in a dimensionless coefficient that can be used to describe the velocity variation from the ideal.
+
+We can define the isentropic efficiency of the nozzle as:
+
+```{math}
+:label: nozzle-isentropic-efficiency
+\eta_n = \frac{h_c - h_e}{h_c - h_{e,i}} = \frac{V_e^2}{V_{e,i}^2}
+```
+
+where $h_c = h_t$ is the enthalpy in the combustion chamber, equal to the stagnation enthalpy, $h_e$ is the true exit enthalpy, and $h_{e,i}$ is the ideal exit enthalpy. The isentropic nozzle efficiency is restricted to be between 0 and 1, since $h_e < h_{e,i}$.
+
+From the energy equation, the difference in the enthalpy over the nozzle is equal to the square of the change in velocity, so we can define the isentropic efficiency in terms of the velocity as well. This suggests a definition for the **nozzle velocity coefficient**:
+
+```{math}
+:label: nozzle-velocity-coefficient
+c_V = \frac{V_e}{V_{e,i}} = \sqrt{\eta_n}
+```
+
+$c_V$ is also restricted to lie between 0 and 1. For well-designed nozzles, $c_V$ is typically in excess of 0.95.
+
+Whereas $c_m$, $c^*$, and $c_d$ are related to the choice of propellant, $c_V$ is related to the design of the nozzle. The reason for this is because the isentropic efficiency is essentially determined by the increase in entropy of the flow over the nozzle. Better designed nozzles that minimize the effect of the boundary layer and avoid shock waves have smaller entropy increases, and therefore higher values of $c_V$.
+
+### Nozzle Thrust Coefficient
+
+We have now reached the point where we can relate both of our design variables, the choice of propellant and the design of the nozzle, to the thrust produced by the rocket. The thrust of the rocket is given by Eq. {eq}`rocket-thrust`. Using the discharge coefficient, Eq. {eq}`nozzle-discharge-coefficient`, and the velocity coefficient, Eq. {eq}`nozzle-velocity-coefficient`, we can rewrite the thrust equation in terms of the ideal exit velocity and mass flow rate:
+
+```{math}
+F = \lambda c_d c_V \dot{m}_i V_{e,i} + A_e\left(p_e - p_0\right)
+```
+
+Further plugging in for the ideal mass flow rate and ideal exit velocity, we find:
+
+```{math}
+F = \lambda c_d c_V \Gamma_c p_c A_{\text{th}} \sqrt{\frac{2\gamma_c}{\gamma_c - 1}\left[1 - \left(\frac{p_e}{p_c}\right)^{\frac{\gamma_c - 1}{\gamma_c}}\right]} + A_e \left(p_e - p_0\right)
+```
+
+This equation can be divided by the chamber pressure and throat area to define the **nozzle thrust coefficient**:
+
+```{math}
+:label: nozzle-thrust-coefficient
+c_F = \frac{F}{p_c A_{\text{th}}} = \lambda c_d c_V \Gamma_c \sqrt{\frac{2\gamma_c}{\gamma_c - 1}\left[1 - \left(\frac{p_e}{p_c}\right)^{\frac{\gamma_c - 1}{\gamma_c}}\right]} + \frac{A_e}{A_{\text{th}}} \left(\frac{p_e}{p_c} - \frac{p_0}{p_c}\right)
+```
