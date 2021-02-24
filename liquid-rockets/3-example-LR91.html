@@ -1,0 +1,562 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Example: LR91 Rocket Motor &#8212; Notes for Propulsion</title>
+    
+  <link rel="stylesheet" href="../_static/css/index.f658d18f9b420779cfdf24aa0a7e2d77.css">
+
+    
+  <link rel="stylesheet"
+    href="../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    
+      
+  <link rel="stylesheet"
+    href="../_static/vendor/open-sans_all/1.44.1/index.css">
+  <link rel="stylesheet"
+    href="../_static/vendor/lato_latin-ext/1.44.1/index.css">
+
+    
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/sphinx-book-theme.40e2e510f6b7d1648584402491bb10fe.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" />
+    
+  <link rel="preload" as="script" href="../_static/js/index.d3f166471bb80abb5163.js">
+
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/togglebutton.js"></script>
+    <script src="../_static/clipboard.min.js"></script>
+    <script src="../_static/copybutton.js"></script>
+    <script >var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="../_static/sphinx-book-theme.d31b09fe5c1d09cb49b26a786de4a05d.js"></script>
+    <script async="async" src="https://unpkg.com/thebelab@latest/lib/index.js"></script>
+    <script >
+        const thebe_selector = ".thebe"
+        const thebe_selector_input = "pre"
+        const thebe_selector_output = ".output"
+    </script>
+    <script async="async" src="../_static/sphinx-thebe.js"></script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/x-mathjax-config">MathJax.Hub.Config({"TeX": {"Macros": {"vector": ["\\vec{#1}", 1], "uvec": ["\\hat{#1}", 1], "mag": ["\\lVert#1\\rVert", 1], "cross": "\\times", "unit": ["#1~\\mathrm{#2}", 2], "pf": ["\\overline{#1}", 1], "mat": ["\\left[\\mathbf{#1}\\right]", 1], "Isp": "I_{\\text{sp}}"}}, "tex2jax": {"inlineMath": [["\\(", "\\)"]], "displayMath": [["\\[", "\\]"]], "processRefs": false, "processEnvironments": false}})</script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Compressible Flow" href="../compressible-flow/1-introduction.html" />
+    <link rel="prev" title="Design of Rocket Nozzles" href="2-rocket-nozzles.html" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="en" />
+
+
+
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
+    
+        <div class="navbar-brand-box">
+<a class="navbar-brand text-wrap" href="../index.html">
+  
+  
+  <h1 class="site-logo" id="site-title">Notes for Propulsion</h1>
+  
+</a>
+</div><form class="bd-search d-flex align-items-center" action="../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form>
+<nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
+    <ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../intro.html">
+   Notes for Propulsion
+  </a>
+ </li>
+</ul>
+<p class="caption collapsible-parent">
+ <span class="caption-text">
+  Review
+ </span>
+</p>
+<ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../review/1-introduction.html">
+   Introduction
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../review/2-conservation-equations.html">
+   Conservation Equations
+  </a>
+ </li>
+</ul>
+<p class="caption collapsible-parent">
+ <span class="caption-text">
+  Overfiew of Flow Devices
+ </span>
+</p>
+<ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../overview-of-flow-devices/1-introduction.html">
+   Overview of Flow Devices
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../overview-of-flow-devices/2-no-heat-addition.html">
+   Flow Machines with No Heat Addition
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../overview-of-flow-devices/3-no-net-power.html">
+   Flow Machines with No Net Power Input
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../overview-of-flow-devices/4-the-rocket.html">
+   The Rocket
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../overview-of-flow-devices/5-combined-heat-and-power.html">
+   Combined Heat and Power Addition: The Turbofan
+  </a>
+ </li>
+</ul>
+<p class="caption collapsible-parent">
+ <span class="caption-text">
+  Liquid Propellant Rocket Engines
+ </span>
+</p>
+<ul class="current nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="1-introduction.html">
+   Liquid Propellant Rocket Engines
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="2-rocket-nozzles.html">
+   Design of Rocket Nozzles
+  </a>
+ </li>
+ <li class="toctree-l1 current active">
+  <a class="current reference internal" href="#">
+   Example: LR91 Rocket Motor
+  </a>
+ </li>
+</ul>
+<p class="caption collapsible-parent">
+ <span class="caption-text">
+  Compressible Flow
+ </span>
+</p>
+<ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../compressible-flow/1-introduction.html">
+   Compressible Flow
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../compressible-flow/2-properties-of-compressible-flow.html">
+   Properties of Compressible Flow
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../compressible-flow/3-the-mach-number.html">
+   The Mach Number
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../compressible-flow/4-quasi-1d-flow.html">
+   Quasi-One-Dimensional Nozzle Flow
+  </a>
+ </li>
+</ul>
+<p class="caption collapsible-parent">
+ <span class="caption-text">
+  Bibliography
+ </span>
+</p>
+<ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../bibliography.html">
+   Bibliography
+  </a>
+ </li>
+</ul>
+
+</nav> <!-- To handle the deprecated key -->
+
+<div class="navbar_extra_footer">
+  Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+</div>
+
+</div>
+
+
+          
+
+
+          
+<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
+    
+    <div class="row topbar fixed-top container-xl">
+    <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show">
+    </div>
+    <div class="col pl-2 topbar-main">
+        
+        <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
+            data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
+            aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
+            title="Toggle navigation" data-toggle="tooltip" data-placement="left">
+            <i class="fas fa-bars"></i>
+            <i class="fas fa-arrow-left"></i>
+            <i class="fas fa-arrow-up"></i>
+        </button>
+        
+        
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
+            class="fas fa-download"></i></button>
+
+    <div class="dropdown-buttons">
+        <!-- ipynb file if we had a myst markdown file -->
+        <a class="dropdown-buttons"
+            href="../_sources/liquid-rockets/3-example-LR91.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Download notebook file" data-toggle="tooltip"
+                data-placement="left">.ipynb</button></a>
+        <!-- Download raw file -->
+        <a class="dropdown-buttons" href="../_sources/liquid-rockets/3-example-LR91.md"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
+                data-placement="left">.md</button></a>
+        <!-- Download PDF via print -->
+        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
+            onClick="window.print()" data-toggle="tooltip" data-placement="left">.pdf</button>
+    </div>
+</div>
+
+        <!-- Source interaction buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Connect with source repository"><i class="fab fa-github"></i></button>
+    <div class="dropdown-buttons sourcebuttons">
+        <a class="repository-button"
+            href="https://github.com/bryanwweber/propulsion-notes"><button type="button" class="btn btn-secondary topbarbtn"
+                data-toggle="tooltip" data-placement="left" title="Source repository"><i
+                    class="fab fa-github"></i>repository</button></a>
+        <a class="issues-button"
+            href="https://github.com/bryanwweber/propulsion-notes/issues/new?title=Issue%20on%20page%20%2Fliquid-rockets/3-example-LR91.html&body=Your%20issue%20content%20here."><button
+                type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
+                title="Open an issue"><i class="fas fa-lightbulb"></i>open issue</button></a>
+        <a class="edit-button" href="https://github.com/bryanwweber/propulsion-notes/edit/main/liquid-rockets/3-example-LR91.md"><button
+                type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
+                title="Edit this page"><i class="fas fa-pencil-alt"></i>suggest edit</button></a>
+    </div>
+</div>
+
+
+        <!-- Full screen (wrap in <a> to have style consistency -->
+        <a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
+                data-placement="bottom" onclick="toggleFullScreen()" aria-label="Fullscreen mode"
+                title="Fullscreen mode"><i
+                    class="fas fa-expand"></i></button></a>
+
+        <!-- Launch buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
+    <div class="dropdown-buttons">
+        
+        <a class="binder-button" href="https://mybinder.org/v2/gh/bryanwweber/propulsion-notes/main?urlpath=tree/liquid-rockets/3-example-LR91.md"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip"
+                data-placement="left"><img class="binder-button-logo"
+                    src="../_static/images/logo_binder.svg"
+                    alt="Interact on binder">Binder</button></a>
+        
+        
+        
+        
+    </div>
+</div>
+
+    </div>
+
+    <!-- Table of contents -->
+    <div class="d-none d-md-block col-md-2 bd-toc show">
+        
+        <div class="tocsection onthispage pt-5 pb-3">
+            <i class="fas fa-list"></i> Contents
+        </div>
+        <nav id="bd-toc-nav">
+            <ul class="nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#solution">
+   Solution
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#engineering-model">
+     Engineering Model
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#procedure">
+     Procedure
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#work">
+     Work
+    </a>
+   </li>
+  </ul>
+ </li>
+</ul>
+
+        </nav>
+        
+    </div>
+</div>
+    <div id="main-content" class="row">
+        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
+        
+              <div>
+                
+  <div class="section" id="example-lr91-rocket-motor">
+<h1>Example: LR91 Rocket Motor<a class="headerlink" href="#example-lr91-rocket-motor" title="Permalink to this headline">¶</a></h1>
+<!-- This is based on Example 2.1 from Ward, Aerospace Propulsion Systems -->
+<p>The <a class="reference external" href="https://en.wikipedia.org/wiki/LR91">LR91 rocket motor</a> uses the liquid bipropellants <a class="reference external" href="https://en.wikipedia.org/wiki/Dinitrogen_tetroxide#Use_as_a_rocket_propellant">nitrogen tetroxide (N2O4)</a> and <a class="reference external" href="https://en.wikipedia.org/wiki/Aerozine_50">Aerozine 50</a> (a 50/50 mixture by weight of <a class="reference external" href="https://en.wikipedia.org/wiki/Hydrazine">hydrazine</a> and <a class="reference external" href="https://en.wikipedia.org/wiki/Unsymmetrical_dimethylhydrazine">unsymmetrical dimethyl hydrazine</a>). Assume that the LR91 is an ideal rocket motor with nozzle expansion ratio of <span class="math notranslate nohighlight">\(\varepsilon\)</span> = 49.2, chamber pressure of <span class="math notranslate nohighlight">\(p_c\)</span> = 5.6 MPa, chamber temperature of <span class="math notranslate nohighlight">\(T_c\)</span> = 3,400 K. The exhaust gas products of combustion have a ratio of specific heats <span class="math notranslate nohighlight">\(\gamma\)</span> = 1.3 and a gas constant of <span class="math notranslate nohighlight">\(R\)</span> = 390.4 J/(kg K). The nozzle exit diameter is <span class="math notranslate nohighlight">\(d_e\)</span> = 1.6 m. Determine:</p>
+<p>a. the altitude at which the nozzle is designed for optimal expansion (<span class="math notranslate nohighlight">\(p_e = p_0\)</span>), in km and ft
+b. the nozzle throat diameter (<span class="math notranslate nohighlight">\(d_{\text{th}}\)</span>), in cm and in.
+c. the mass flow rate (<span class="math notranslate nohighlight">\(\dot{m}\)</span>), in kg/s and lb/s
+d. the ideal thrust at the optimal altitude, in kN and lbf</p>
+<div class="section" id="solution">
+<h2>Solution<a class="headerlink" href="#solution" title="Permalink to this headline">¶</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pint</span> <span class="kn">import</span> <span class="n">UnitRegistry</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">scipy</span> <span class="kn">import</span> <span class="n">optimize</span>
+<span class="kn">from</span> <span class="nn">ambiance</span> <span class="kn">import</span> <span class="n">Atmosphere</span>
+
+<span class="n">units</span> <span class="o">=</span> <span class="n">UnitRegistry</span><span class="p">()</span>
+
+<span class="n">T_c</span> <span class="o">=</span> <span class="mi">3400</span> <span class="o">*</span> <span class="n">units</span><span class="o">.</span><span class="n">K</span>
+<span class="n">p_c</span> <span class="o">=</span> <span class="mf">5.6</span> <span class="o">*</span> <span class="n">units</span><span class="o">.</span><span class="n">MPa</span>
+<span class="n">d_e</span> <span class="o">=</span> <span class="mf">1.6</span> <span class="o">*</span> <span class="n">units</span><span class="o">.</span><span class="n">m</span>
+<span class="n">epsilon</span> <span class="o">=</span> <span class="mf">49.2</span> <span class="o">*</span> <span class="n">units</span><span class="o">.</span><span class="n">dimensionless</span>
+<span class="n">gamma</span> <span class="o">=</span> <span class="mf">1.3</span> <span class="o">*</span> <span class="n">units</span><span class="o">.</span><span class="n">dimensionless</span>
+<span class="n">W</span> <span class="o">=</span> <span class="mf">21.30</span> <span class="o">*</span> <span class="n">units</span><span class="o">.</span><span class="n">kg</span> <span class="o">/</span> <span class="n">units</span><span class="o">.</span><span class="n">kmol</span>
+<span class="n">R</span> <span class="o">=</span> <span class="n">units</span><span class="o">.</span><span class="n">molar_gas_constant</span> <span class="o">/</span> <span class="n">W</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="engineering-model">
+<h3>Engineering Model<a class="headerlink" href="#engineering-model" title="Permalink to this headline">¶</a></h3>
+<ol class="simple">
+<li><p>Ideal rocket motor, all processes are isentropic</p></li>
+<li><p>Expansion in the nozzle is optimized, so <span class="math notranslate nohighlight">\(p_e = p_0\)</span></p></li>
+<li><p>The specific heat ratio and molecular weight are constant</p></li>
+</ol>
+</div>
+<div class="section" id="procedure">
+<h3>Procedure<a class="headerlink" href="#procedure" title="Permalink to this headline">¶</a></h3>
+<p>To determine the altitude, we need to determine the ambient pressure around the rocket motor. With the ambient pressure, we can look up or find the altitude in standard atmospheric tables.</p>
+<p>Since we are looking for the optimal expansion, we can find the ambient pressure by finding the exit pressure of the nozzle, since they are equal. The exit pressure of the nozzle is going to be found from the isentropic equations for compressible flow, since we are assuming this is an ideal nozzle.</p>
+<p>The isentropic equations for compressible flow require the exit Mach number, which we will find from the expansion ratio. Likewise, the nozzle throat diameter is determined by the expansion ratio and the exit diameter.</p>
+<p>Finally, the mass flow rate can be found from the maximum flow rate equations, the exit velocity from the exit Mach number, and the ideal thrust by multiplying these two quantities.</p>
+</div>
+<div class="section" id="work">
+<h3>Work<a class="headerlink" href="#work" title="Permalink to this headline">¶</a></h3>
+<p>We have two ways of solving for the exit Mach number from the expansion ratio. One is to use the area-Mach-number relation, Eq. <a class="reference internal" href="../compressible-flow/4-quasi-1d-flow.html#equation-area-mach-relation">(94)</a>, which we have seen before. The other is to introduce a quantity called the <strong><em>X</em>-function</strong>, defined as:</p>
+<div class="math notranslate nohighlight" id="equation-x-function">
+<span class="eqno">(55)<a class="headerlink" href="#equation-x-function" title="Permalink to this equation">¶</a></span>\[X = M \sqrt{\gamma} \left[1 + \frac{\gamma - 1}{2} M^2\right]^{\frac{-\left(\gamma + 1\right)}{2\left(\gamma - 1\right)}}\]</div>
+<p>Notice that the <span class="math notranslate nohighlight">\(X\)</span>-function is equivalent to the <span class="math notranslate nohighlight">\(\Gamma\)</span> (Gamma) function we defined in Eq. <a class="reference internal" href="2-rocket-nozzles.html#equation-gamma-function">(40)</a> when <span class="math notranslate nohighlight">\(M = 1\)</span>. Whether you use the area-Mach-number relation, or the <span class="math notranslate nohighlight">\(X\)</span>-function, you’ll get the same answer for <span class="math notranslate nohighlight">\(M\)</span> at the end.</p>
+<p>In terms of the <span class="math notranslate nohighlight">\(X\)</span>-function, the ideal maximum mass flow rate can be written as:</p>
+<div class="math notranslate nohighlight">
+\[\dot{m} = \frac{p_t A X}{\sqrt{R T_t}}\]</div>
+<p>Since the mass flow rate in the nozzle must be constant, we can plug in the throat quantities and the exit quantities and equate them. The total pressure and temperature are constant, since the nozzle process is isentropic. In addition, at the throat, the Mach number is one, so <span class="math notranslate nohighlight">\(X_{\text{th}} = \Gamma\)</span>.</p>
+<div class="math notranslate nohighlight">
+\[\frac{p_{t} A_{\text{th}} \Gamma}{\sqrt{R T_t}} = \frac{p_t A_e X_e}{\sqrt{R T_t}}\]</div>
+<p>From this equation, the gas constant, total pressure, and total temperature will cancel, leaving:</p>
+<div class="math notranslate nohighlight">
+\[X_e = \frac{1}{\varepsilon}\Gamma = \frac{1}{\varepsilon}\left[\sqrt{\gamma}\left(\frac{2}{\gamma + 1}\right)^{\frac{\gamma + 1}{2\left(\gamma - 1\right)}}\right]\]</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">X_e</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">/</span> <span class="n">epsilon</span> <span class="o">*</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">gamma</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="mi">2</span> <span class="o">/</span> <span class="p">(</span><span class="n">gamma</span> <span class="o">+</span> <span class="mi">1</span><span class="p">))</span><span class="o">**</span><span class="p">((</span><span class="n">gamma</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span><span class="o">/</span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="p">(</span><span class="n">gamma</span> <span class="o">-</span> <span class="mi">1</span><span class="p">))))</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>This gives <span class="math notranslate nohighlight">\(X_e\)</span> = <span class="pasted-text">0.0136</span>. Then, the exit Mach number is found from Eq. <a class="reference internal" href="#equation-x-function">(55)</a>. This function is transcendental in <span class="math notranslate nohighlight">\(M_e\)</span>, so we use the <code class="docutils literal notranslate"><span class="pre">scipy.optimize.brentq()</span></code> root finding method.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">X_function</span><span class="p">(</span><span class="n">M</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">gamma</span><span class="p">):</span>
+    <span class="n">power</span> <span class="o">=</span> <span class="o">-</span><span class="p">(</span><span class="n">gamma</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="p">(</span><span class="n">gamma</span> <span class="o">-</span> <span class="mi">1</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">M</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">gamma</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="p">(</span><span class="n">gamma</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">/</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">M</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span><span class="o">**</span><span class="p">(</span><span class="n">power</span><span class="p">)</span> <span class="o">-</span> <span class="n">X</span>
+<span class="n">M_e</span> <span class="o">=</span> <span class="n">optimize</span><span class="o">.</span><span class="n">brentq</span><span class="p">(</span>
+    <span class="n">X_function</span><span class="p">,</span> 
+    <span class="mf">1.1</span><span class="p">,</span>
+    <span class="mf">10.0</span><span class="p">,</span>
+    <span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="n">X_e</span><span class="o">.</span><span class="n">magnitude</span><span class="p">,</span> <span class="n">gamma</span><span class="o">.</span><span class="n">magnitude</span><span class="p">)</span>
+<span class="p">)</span> <span class="o">*</span> <span class="n">units</span><span class="o">.</span><span class="n">dimensionless</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>This gives an exit Mach number of <span class="math notranslate nohighlight">\(M_e\)</span> = <span class="pasted-text">5.07</span>. Next, we can determine the ratio of the stagnation to the static pressure at the exit from Eq. <a class="reference internal" href="../compressible-flow/3-the-mach-number.html#equation-isentropic-pressure-mach">(77)</a>:</p>
+<div class="math notranslate nohighlight">
+\[\frac{p_t}{p_e} = \frac{p_c}{p_0} = \left(1 + \frac{\gamma - 1}{2} M_e^2\right)^{\frac{\gamma}{\gamma - 1}}\]</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pc_p0</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="p">(</span><span class="n">gamma</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">/</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">M_e</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span><span class="o">**</span><span class="p">(</span><span class="n">gamma</span> <span class="o">/</span> <span class="p">(</span><span class="n">gamma</span> <span class="o">-</span> <span class="mi">1</span><span class="p">))</span>
+<span class="n">p_0</span> <span class="o">=</span> <span class="p">(</span><span class="n">p_c</span> <span class="o">/</span> <span class="n">pc_p0</span><span class="p">)</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="s2">&quot;Pa&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>This gives a pressure ratio of <span class="pasted-text">938.4786</span> and an ambient pressure of <span class="pasted-text">5967.10 Pa</span>. Then, we can use <code class="docutils literal notranslate"><span class="pre">ambiance</span></code> to determine the altitude:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">atmos</span> <span class="o">=</span> <span class="n">Atmosphere</span><span class="o">.</span><span class="n">from_pressure</span><span class="p">(</span><span class="n">p_0</span><span class="o">.</span><span class="n">magnitude</span><span class="p">)</span>
+<span class="n">h</span> <span class="o">=</span> <span class="n">atmos</span><span class="o">.</span><span class="n">h</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="n">units</span><span class="o">.</span><span class="n">m</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Finally, the altitude is <span class="math notranslate nohighlight">\(h\)</span> = <span class="pasted-text">19.51 km</span> = <span class="pasted-text">64021 ft</span>.</p>
+<p>The throat diameter is found from the expansion ratio and the known exit diameter:</p>
+<div class="math notranslate nohighlight">
+\[\frac{A_e}{A_{\text{th}}} = \frac{d_e^2}{d_{\text{th}}^2} \Rightarrow d_{\text{th}} = d_e\sqrt{\frac{1}{\varepsilon}}\]</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">d_th</span> <span class="o">=</span> <span class="n">d_e</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">1</span> <span class="o">/</span> <span class="n">epsilon</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>The diameter is <span class="math notranslate nohighlight">\(d_{\text{th}}\)</span> = <span class="pasted-text">22.8 cm</span> = <span class="pasted-text">9.0 in</span>. Then, the mass flow rate can be determined from the exit conditions:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">A_e</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="n">d_e</span><span class="o">**</span><span class="mi">2</span> <span class="o">/</span> <span class="mi">4</span>
+<span class="n">mdot</span> <span class="o">=</span> <span class="n">p_c</span> <span class="o">*</span> <span class="n">A_e</span> <span class="o">*</span> <span class="n">X_e</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">R</span> <span class="o">*</span> <span class="n">T_c</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>The mass flow rate is <span class="math notranslate nohighlight">\(\dot{m}\)</span> = <span class="pasted-text">132.6 kg/s</span> = <span class="pasted-text">292.2 lb/s</span>. Finally, we can find the exit velocity in a few ways. Let’s compute the speed of sound from the static temperature at the exit, and then use the Mach number to find the exit velocity.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">Tt_Te</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">+</span> <span class="p">(</span><span class="n">gamma</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">/</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">M_e</span><span class="o">**</span><span class="mi">2</span>
+<span class="n">T_e</span> <span class="o">=</span> <span class="n">T_c</span><span class="o">/</span><span class="n">Tt_Te</span>
+<span class="n">a_e</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">gamma</span> <span class="o">*</span> <span class="n">R</span> <span class="o">*</span> <span class="n">T_e</span><span class="p">)</span>
+<span class="n">V_e</span> <span class="o">=</span> <span class="n">M_e</span> <span class="o">*</span> <span class="n">a_e</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>The exit static temperature is <span class="math notranslate nohighlight">\(T_e\)</span> = <span class="pasted-text">700.7 K</span>, the speed of sound is <span class="math notranslate nohighlight">\(a_e\)</span> = <span class="pasted-text">596.30 m/s</span>, and the exit velocity is <span class="math notranslate nohighlight">\(V_e\)</span> = <span class="pasted-text">3021.89 m/s</span>. Finally, the thrust is computed from Eq. <a class="reference internal" href="2-rocket-nozzles.html#equation-rocket-thrust">(36)</a>, using the fact that the exit pressure is matched to the ambient.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">F</span> <span class="o">=</span> <span class="n">mdot</span> <span class="o">*</span> <span class="n">V_e</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>The thrust is <span class="math notranslate nohighlight">\(F\)</span> = <span class="pasted-text">400.55 kN</span> = <span class="pasted-text">90048.15 lbf</span>. Alternately, we can calculate the thrust using the ideal thrust coefficient, given by Eq. <a class="reference internal" href="2-rocket-nozzles.html#equation-ideal-nozzle-thrust-coefficient">(48)</a>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">Gamma</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">gamma</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="mi">2</span> <span class="o">/</span> <span class="p">(</span><span class="n">gamma</span> <span class="o">+</span> <span class="mi">1</span><span class="p">))</span><span class="o">**</span><span class="p">((</span><span class="n">gamma</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span><span class="o">/</span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="p">(</span><span class="n">gamma</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)))</span>
+<span class="n">p_e</span> <span class="o">=</span> <span class="n">p_0</span>
+<span class="n">pe_pc</span> <span class="o">=</span> <span class="p">(</span><span class="n">p_e</span> <span class="o">/</span> <span class="n">p_c</span><span class="p">)</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="s2">&quot;dimensionless&quot;</span><span class="p">)</span>
+<span class="n">c_fi</span> <span class="o">=</span> <span class="n">Gamma</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">gamma</span> <span class="o">/</span> <span class="p">(</span><span class="n">gamma</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">pe_pc</span><span class="o">**</span><span class="p">((</span><span class="n">gamma</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">/</span> <span class="n">gamma</span><span class="p">)))</span>
+<span class="n">A_th</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="n">d_th</span><span class="o">**</span><span class="mi">2</span> <span class="o">/</span> <span class="mi">4</span>
+<span class="n">F_alt</span> <span class="o">=</span> <span class="n">A_th</span> <span class="o">*</span> <span class="n">p_c</span> <span class="o">*</span> <span class="n">c_fi</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>With this approach, the thrust is <span class="math notranslate nohighlight">\(F\)</span> = <span class="pasted-text">400.55 kN</span>, equivalent to the first approach. This provides a good check that our work is correct and consistent.</p>
+</div>
+</div>
+</div>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./liquid-rockets"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+        </div>
+    </div>
+    
+    
+    <div class='prev-next-bottom'>
+        
+    <a class='left-prev' id="prev-link" href="2-rocket-nozzles.html" title="previous page">Design of Rocket Nozzles</a>
+    <a class='right-next' id="next-link" href="../compressible-flow/1-introduction.html" title="next page">Compressible Flow</a>
+
+    </div>
+    <footer class="footer mt-5 mt-md-0">
+    <div class="container">
+      <p>
+        
+          By Bryan Weber<br/>
+        
+          <div class="extra_footer">
+            <p xmlns:dct="http://purl.org/dc/terms/" xmlns:cc="http://creativecommons.org/ns#" class="license-text"><a rel="cc:attributionURL" property="dct:title" href="https://bryanwweber.github.io/propulsion-notes">Notes for Propulsion</a> by <span property="cc:attributionName">Bryan Weber</span> is licensed under <a rel="license" href="https://creativecommons.org/licenses/by-sa/4.0">CC BY-SA 4.0<img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/cc.svg?ref=chooser-v1" /><img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/by.svg?ref=chooser-v1" /><img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/sa.svg?ref=chooser-v1" /></a></p>
+
+          </div>
+      </p>
+    </div>
+  </footer>
+</main>
+
+
+      </div>
+    </div>
+
+    
+  <script src="../_static/js/index.d3f166471bb80abb5163.js"></script>
+
+
+    
+  </body>
+</html>

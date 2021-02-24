@@ -52,6 +52,7 @@ F = \frac{2\dot{m}}{V_e}\left[Q - \left(h_e - h_i\right)\right] = 2 \rho_e A_e \
 
 where $h_i$ is the initial enthalpy of the reactants. From these equations, we see that the thrust is independent of the flight velocity, $V_0$.
 
+(intro-specific-impulse)=
 ## Fuel Efficiency and Specific Impulse
 
 Rockets use a different fuel efficiency metric than jet engines. The TSFC for a jet engine is the ratio of the propellant carried on board the aircraft to the thrust produced. The bulk of the mass flow in the engine is available for free from the environment, captured simply by the motion of the aircraft.
@@ -80,7 +81,7 @@ Therefore, the units of specific impulse in the SI system are m/s, and the funda
 \Isp = \frac{F}{\dot{m}} \left\lvert\frac{1g\cdot\text{lbm}}{\text{lbf}}\right\rvert \frac{1}{1g} = \frac{V_e}{g}
 ```
 
-Therefore, the units of specific impulse in the English system are seconds, and this is the typical parameter quoted for rocket engines. You can see that the definitions differ by $g$, the standard gravitational acceleration, 32.174 ft/s<sup>2</sup> in English units and 9.81 m/s<sup>2</sup> in SI units.
+Therefore, the units of specific impulse in the English system are seconds, and this is the typical parameter quoted for rocket engines. You can see that the definitions differ by $g$, the standard gravitational acceleration, 32.174 ft/s{superscript}`2` in English units and 9.81 m/s{superscript}`2` in SI units.
 
 For a jet engine, we can also define a specific impulse, which is essentially the inverse of the TSFC. However, because the consumable quantity is only the fuel flow in the jet engine, the specific impulse of jet engines tends to be much higher than rockets.
 

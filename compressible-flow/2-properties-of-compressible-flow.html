@@ -157,6 +157,11 @@
    Design of Rocket Nozzles
   </a>
  </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../liquid-rockets/3-example-LR91.html">
+   Example: LR91 Rocket Motor
+  </a>
+ </li>
 </ul>
 <p class="caption collapsible-parent">
  <span class="caption-text">
@@ -341,10 +346,10 @@
 <h2>Equation of State<a class="headerlink" href="#equation-of-state" title="Permalink to this headline">¶</a></h2>
 <p>Before continuing to discuss isentropic processes, we must discuss how to evaluate flow properties. We will assume that all of our flows are <strong>ideal</strong> gases, that follow the ideal gas law:</p>
 <div class="math notranslate nohighlight" id="equation-ideal-gas-law">
-<span class="eqno">(46)<a class="headerlink" href="#equation-ideal-gas-law" title="Permalink to this equation">¶</a></span>\[p = \frac{\rho R_u T}{W}\]</div>
+<span class="eqno">(56)<a class="headerlink" href="#equation-ideal-gas-law" title="Permalink to this equation">¶</a></span>\[p = \frac{\rho R_u T}{W}\]</div>
 <p>where <span class="math notranslate nohighlight">\(p\)</span>, <span class="math notranslate nohighlight">\(\rho\)</span>, and <span class="math notranslate nohighlight">\(T\)</span> are the static pressure, density, and temperature, <span class="math notranslate nohighlight">\(R_u\)</span> is the <a class="reference external" href="https://en.wikipedia.org/wiki/Gas_constant">universal gas constant</a>, and <span class="math notranslate nohighlight">\(W\)</span> is the molecular weight. We will represent most equations in the log-differential form, as:</p>
 <div class="math notranslate nohighlight" id="equation-ideal-gas-differential">
-<span class="eqno">(47)<a class="headerlink" href="#equation-ideal-gas-differential" title="Permalink to this equation">¶</a></span>\[\frac{dp}{p} = \frac{d\rho}{\rho} + \frac{dT}{T} - \frac{dW}{W}\]</div>
+<span class="eqno">(57)<a class="headerlink" href="#equation-ideal-gas-differential" title="Permalink to this equation">¶</a></span>\[\frac{dp}{p} = \frac{d\rho}{\rho} + \frac{dT}{T} - \frac{dW}{W}\]</div>
 <p>Note that the for flows undergoing chemical reaction, the change in molecular weight may be significant. We will ignore this effect in the beginning of our analysis, but return to relax that assumption later.</p>
 </div>
 <div class="section" id="caloric-equations-of-state">
@@ -359,29 +364,23 @@
 </ol>
 <p>The specific heats represent the amount of energy/enthalpy input required to change the temperature of the gas by one degree. Using these definitions, we can determine the change in enthalpy:</p>
 <div class="math notranslate nohighlight" id="equation-ideal-gas-delta-h">
-<span class="eqno">(48)<a class="headerlink" href="#equation-ideal-gas-delta-h" title="Permalink to this equation">¶</a></span>\[dh = c_p dT \quad \Rightarrow \quad \int_{h_1}^{h_2} dh = \int_{T_1}^{T_2} c_p dT \quad \Rightarrow \quad \Delta h = c_p \Delta T\]</div>
+<span class="eqno">(58)<a class="headerlink" href="#equation-ideal-gas-delta-h" title="Permalink to this equation">¶</a></span>\[dh = c_p dT \quad \Rightarrow \quad \int_{h_1}^{h_2} dh = \int_{T_1}^{T_2} c_p dT \quad \Rightarrow \quad \Delta h = c_p \Delta T\]</div>
 <p>where the last equation assumes <em>constant specific heat</em>. As a shortcut, we will often assume that <span class="math notranslate nohighlight">\(T_1 = h_1 = 0\)</span> and write:</p>
 <div class="math notranslate nohighlight">
 \[h = c_p T\]</div>
 <p>Similarly, we can write the change in internal energy:</p>
 <div class="math notranslate nohighlight" id="equation-ideal-gas-delta-u">
-<span class="eqno">(49)<a class="headerlink" href="#equation-ideal-gas-delta-u" title="Permalink to this equation">¶</a></span>\[du = c_v dT \quad \Rightarrow \quad \int_{u_1}^{u_2} du = \int_{T_1}^{T_2} c_v dT \quad \Rightarrow \quad \Delta u = c_v \Delta T\]</div>
+<span class="eqno">(59)<a class="headerlink" href="#equation-ideal-gas-delta-u" title="Permalink to this equation">¶</a></span>\[du = c_v dT \quad \Rightarrow \quad \int_{u_1}^{u_2} du = \int_{T_1}^{T_2} c_v dT \quad \Rightarrow \quad \Delta u = c_v \Delta T\]</div>
 <p>where the last equation assumes <em>constant specific heat</em>. As a shortcut, we will often assume that <span class="math notranslate nohighlight">\(T_1 = u_1 = 0\)</span> and write:</p>
 <div class="math notranslate nohighlight">
 \[u = c_v T\]</div>
 <div class="admonition attention">
 <p class="admonition-title">Attention</p>
-<p><strong>Note</strong>: The <em>constant pressure</em> or <em>constant volume</em> in the name of the specific heats has absolutely nothing to do with the types of processes to which the properties can be applied. It is an artifact of the definition of the specific heats. If you want the gory details, expand the box below.</p>
+<p><strong>Note</strong>: The <em>constant pressure</em> or <em>constant volume</em> in the name of the specific heats has absolutely nothing to do with the types of processes to which the properties can be applied. It is an artifact of the definition of the specific heats. The only thing you need to remember about the specific heats is that <span class="math notranslate nohighlight">\(c_p\)</span> is associated with enthalpy and <span class="math notranslate nohighlight">\(c_v\)</span> is associated with internal energy.</p>
+<p>If you want the gory details, expand the box below.</p>
 <details class="sphinx-bs dropdown card mb-3">
 <summary class="summary-title card-header">
-<svg viewBox="0 0 36 24" width="36" height="16" xmlns="http://www.w3.org/2000/svg"
-    class="octicon no-title" aria-hidden="true">
-  <g xmlns="http://www.w3.org/2000/svg" class="jp-icon3">
-    <circle cx="0" cy="12" r="6"></circle>
-    <circle cx="18" cy="12" r="6"></circle>
-    <circle cx="36" cy="12" r="6"></circle>
-  </g>
-</svg><div class="summary-down docutils">
+Gory Details<div class="summary-down docutils">
 <svg version="1.1" width="24" height="24" class="octicon octicon-chevron-down" viewBox="0 0 24 24" aria-hidden="true"><path fill-rule="evenodd" d="M5.22 8.72a.75.75 0 000 1.06l6.25 6.25a.75.75 0 001.06 0l6.25-6.25a.75.75 0 00-1.06-1.06L12 14.44 6.28 8.72a.75.75 0 00-1.06 0z"></path></svg></div>
 <div class="summary-up docutils">
 <svg version="1.1" width="24" height="24" class="octicon octicon-chevron-up" viewBox="0 0 24 24" aria-hidden="true"><path fill-rule="evenodd" d="M18.78 15.28a.75.75 0 000-1.06l-6.25-6.25a.75.75 0 00-1.06 0l-6.25 6.25a.75.75 0 101.06 1.06L12 9.56l5.72 5.72a.75.75 0 001.06 0z"></path></svg></div>
@@ -389,44 +388,45 @@
 <p class="card-text">For a general substance, the enthalpy and internal energy are functions of <em>two</em> independent, intensive properties, plus the composition. Therefore, the specific heats must be defined by <strong>partial derivatives</strong>. For example, the enthalpy of a pure substance (constant composition) is a natural function of <span class="math notranslate nohighlight">\(T\)</span> and <span class="math notranslate nohighlight">\(p\)</span>, <span class="math notranslate nohighlight">\(h = h(T, p)\)</span>. To calculate the total derivative of <span class="math notranslate nohighlight">\(h\)</span>, we must take the partial derivative with respect to both properties:</p>
 <div class="math notranslate nohighlight">
 \[dh = \left(\frac{\partial h}{\partial T}\right)_{p} dT + \left(\frac{\partial h}{\partial p}\right)_{T} dp\]</div>
+<p class="card-text">where the subscript <span class="math notranslate nohighlight">\(p\)</span> or <span class="math notranslate nohighlight">\(T\)</span> indicates that the derivative is taken while mathematically holding that property constant.</p>
+<p class="card-text">Then, we <em>define</em> the first partial derivative as the specific heat at constant pressure. The second partial derivative isn’t as useful, so it doesn’t get a special name.</p>
+<p class="card-text">Similarly, the internal energy is a natural function of the temperature and specific volume, <span class="math notranslate nohighlight">\(u = u(T, v)\)</span>, so the total derivative is:</p>
+<div class="math notranslate nohighlight">
+\[du = \left(\frac{\partial u}{\partial T}\right)_{v} dT + \left(\frac{\partial u}{\partial v}\right)_{T} dv\]</div>
+<p class="card-text">Again, we <em>define</em> the first partial derivative as the specific heat at constant volume and do not give a special name to the second partial derivative.</p>
+<p class="card-text">As you can see, the specific heats are named for their definitions in terms of partial derivatives, not in terms of any processes associated with the system.</p>
 </div>
-</details><p>where the subscript <span class="math notranslate nohighlight">\(p\)</span> or <span class="math notranslate nohighlight">\(T\)</span> indicates that the derivative is taken while mathematically holding that property constant.</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>
-</pre></div>
-</div>
-</div>
+</details></div>
 <p>For an ideal gas, the specific heats are related to the specific gas constant:</p>
 <div class="math notranslate nohighlight" id="equation-cp-cv-r">
-<span class="eqno">(50)<a class="headerlink" href="#equation-cp-cv-r" title="Permalink to this equation">¶</a></span>\[c_p - c_v = \frac{R_u}{W} = R\]</div>
-<p>Equation <a class="reference internal" href="#equation-cp-cv-r">(50)</a> shows that <span class="math notranslate nohighlight">\(c_p &gt; c_v\)</span> and therefore that <span class="math notranslate nohighlight">\(\gamma &gt; 1.0\)</span>. It also allows us to determine a value for <span class="math notranslate nohighlight">\(c_p\)</span> or <span class="math notranslate nohighlight">\(c_v\)</span> given <span class="math notranslate nohighlight">\(\gamma\)</span>:</p>
-<div class="math notranslate nohighlight">
-\[\begin{aligned}
-c_p &amp;= \frac{\gamma R}{\gamma - 1} &amp; c_v &amp;= \frac{R}{\gamma - 1}
-\end{aligned}\]</div>
+<span class="eqno">(60)<a class="headerlink" href="#equation-cp-cv-r" title="Permalink to this equation">¶</a></span>\[c_p - c_v = \frac{R_u}{W} = R\]</div>
+<p>Equation <a class="reference internal" href="#equation-cp-cv-r">(60)</a> shows that <span class="math notranslate nohighlight">\(c_p &gt; c_v\)</span> and therefore that <span class="math notranslate nohighlight">\(\gamma &gt; 1.0\)</span>. It also allows us to determine a value for <span class="math notranslate nohighlight">\(c_p\)</span> or <span class="math notranslate nohighlight">\(c_v\)</span> given <span class="math notranslate nohighlight">\(\gamma\)</span>:</p>
+<div class="math notranslate nohighlight" id="equation-cp-cv-relationships">
+<span class="eqno">(61)<a class="headerlink" href="#equation-cp-cv-relationships" title="Permalink to this equation">¶</a></span>\[c_p &amp;= \frac{\gamma R}{\gamma - 1} &amp; c_v &amp;= \frac{R}{\gamma - 1}\]</div>
 <p>Finally, the entropy is defined from the Gibbs relations:</p>
 <div class="math notranslate nohighlight" id="equation-gibbs-relations">
-<span class="eqno">(51)<a class="headerlink" href="#equation-gibbs-relations" title="Permalink to this equation">¶</a></span>\[\begin{aligned}
+<span class="eqno">(62)<a class="headerlink" href="#equation-gibbs-relations" title="Permalink to this equation">¶</a></span>\[\begin{aligned}
 T ds &amp;= du + p dv &amp; T ds &amp;= dh - v dp
 \end{aligned}\]</div>
 <p>Integrating these relationships, we find:</p>
 <div class="math notranslate nohighlight" id="equation-entropy">
-<span class="eqno">(52)<a class="headerlink" href="#equation-entropy" title="Permalink to this equation">¶</a></span>\[\Delta s = \int_{T_1}^{T_2} c_v \frac{dT}{T} + R \ln\frac{\rho_1}{\rho_2} = \int_{T_1}^{T_2} c_p \frac{dT}{T} - R \ln\frac{p_2}{p_1}\]</div>
+<span class="eqno">(63)<a class="headerlink" href="#equation-entropy" title="Permalink to this equation">¶</a></span>\[\Delta s = \int_{T_1}^{T_2} c_v \frac{dT}{T} + R \ln\frac{\rho_1}{\rho_2} = \int_{T_1}^{T_2} c_p \frac{dT}{T} - R \ln\frac{p_2}{p_1}\]</div>
 <p>and for constant specific heats:</p>
 <div class="math notranslate nohighlight" id="equation-constant-specific-heat-entropy">
-<span class="eqno">(53)<a class="headerlink" href="#equation-constant-specific-heat-entropy" title="Permalink to this equation">¶</a></span>\[\Delta s = c_v \ln\frac{T_2}{T_1} + R \ln\frac{\rho_1}{\rho_2} = c_p \ln\frac{T_2}{T_1} - R \ln\frac{p_2}{p_1}\]</div>
+<span class="eqno">(64)<a class="headerlink" href="#equation-constant-specific-heat-entropy" title="Permalink to this equation">¶</a></span>\[\Delta s = c_v \ln\frac{T_2}{T_1} + R \ln\frac{\rho_1}{\rho_2} = c_p \ln\frac{T_2}{T_1} - R \ln\frac{p_2}{p_1}\]</div>
 </div>
 <div class="section" id="static-and-stagnation-property-ratios">
 <h2>Static and Stagnation Property Ratios<a class="headerlink" href="#static-and-stagnation-property-ratios" title="Permalink to this headline">¶</a></h2>
 <p>First, we imagine a process which isentropically slows the flow from the current velocity, where the static pressure is <span class="math notranslate nohighlight">\(p\)</span>, to a stop, where the static pressure is equal to the total pressure, <span class="math notranslate nohighlight">\(p_t\)</span>. Likewise, the temperature changes from the static temperature <span class="math notranslate nohighlight">\(T\)</span> to the total temperature <span class="math notranslate nohighlight">\(T_t\)</span> as a result of this process and the density changes from the static density <span class="math notranslate nohighlight">\(\rho\)</span> to the total density <span class="math notranslate nohighlight">\(\rho_t\)</span>.</p>
-<p>For any isentropic process of an ideal gas with constant specific heats, we can use Eq. <a class="reference internal" href="#equation-constant-specific-heat-entropy">(53)</a> to show that the pressure and density have the following relationship <span id="id1">[<a class="reference internal" href="../bibliography.html#id5"><span>Hal18</span></a>]</span>:</p>
+<p>For any isentropic process of an ideal gas with constant specific heats, we can use Eq. <a class="reference internal" href="#equation-constant-specific-heat-entropy">(64)</a> to show that the pressure and density have the following relationship <span id="id1">[<a class="reference internal" href="../bibliography.html#id5"><span>Hal18</span></a>]</span>:</p>
 <div class="math notranslate nohighlight" id="equation-p-rho-isentropic">
-<span class="eqno">(54)<a class="headerlink" href="#equation-p-rho-isentropic" title="Permalink to this equation">¶</a></span>\[\frac{p_t}{p} = \left(\frac{\rho_t}{\rho}\right)^{\gamma}\]</div>
-<p>Plugging in Eq. <a class="reference internal" href="#equation-ideal-gas-law">(46)</a> on the right side of Eq. <a class="reference internal" href="#equation-p-rho-isentropic">(54)</a> gives:</p>
+<span class="eqno">(65)<a class="headerlink" href="#equation-p-rho-isentropic" title="Permalink to this equation">¶</a></span>\[\frac{p_t}{p} = \left(\frac{\rho_t}{\rho}\right)^{\gamma}\]</div>
+<p>Plugging in Eq. <a class="reference internal" href="#equation-ideal-gas-law">(56)</a> on the right side of Eq. <a class="reference internal" href="#equation-p-rho-isentropic">(65)</a> gives:</p>
 <div class="math notranslate nohighlight" id="equation-p-t-isentropic">
-<span class="eqno">(55)<a class="headerlink" href="#equation-p-t-isentropic" title="Permalink to this equation">¶</a></span>\[\frac{T_t}{T} = \left(\frac{p_t}{p}\right)^{(\gamma - 1)/\gamma}\]</div>
-<p>and plugging it in on the left side of Eq. <a class="reference internal" href="#equation-p-rho-isentropic">(54)</a> gives:</p>
+<span class="eqno">(66)<a class="headerlink" href="#equation-p-t-isentropic" title="Permalink to this equation">¶</a></span>\[\frac{T_t}{T} = \left(\frac{p_t}{p}\right)^{(\gamma - 1)/\gamma}\]</div>
+<p>and plugging it in on the left side of Eq. <a class="reference internal" href="#equation-p-rho-isentropic">(65)</a> gives:</p>
 <div class="math notranslate nohighlight" id="equation-t-rho-isentropic">
-<span class="eqno">(56)<a class="headerlink" href="#equation-t-rho-isentropic" title="Permalink to this equation">¶</a></span>\[\frac{T_t}{T} = \left(\frac{\rho_t}{\rho}\right)^{\gamma - 1}\]</div>
+<span class="eqno">(67)<a class="headerlink" href="#equation-t-rho-isentropic" title="Permalink to this equation">¶</a></span>\[\frac{T_t}{T} = \left(\frac{\rho_t}{\rho}\right)^{\gamma - 1}\]</div>
 </div>
 </div>
 

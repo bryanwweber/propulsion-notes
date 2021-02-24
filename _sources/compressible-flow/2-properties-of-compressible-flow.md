@@ -83,10 +83,12 @@ where the last equation assumes _constant specific heat_. As a shortcut, we will
 u = c_v T
 ```
 
-````{attention}
-**Note**: The _constant pressure_ or _constant volume_ in the name of the specific heats has absolutely nothing to do with the types of processes to which the properties can be applied. It is an artifact of the definition of the specific heats. If you want the gory details, expand the box below.
+`````{attention}
+**Note**: The _constant pressure_ or _constant volume_ in the name of the specific heats has absolutely nothing to do with the types of processes to which the properties can be applied. It is an artifact of the definition of the specific heats. The only thing you need to remember about the specific heats is that $c_p$ is associated with enthalpy and $c_v$ is associated with internal energy.
 
-```{dropdown}
+If you want the gory details, expand the box below.
+
+````{dropdown} Gory Details
 For a general substance, the enthalpy and internal energy are functions of _two_ independent, intensive properties, plus the composition. Therefore, the specific heats must be defined by **partial derivatives**. For example, the enthalpy of a pure substance (constant composition) is a natural function of $T$ and $p$, $h = h(T, p)$. To calculate the total derivative of $h$, we must take the partial derivative with respect to both properties:
 
 ```{math}
@@ -94,8 +96,20 @@ dh = \left(\frac{\partial h}{\partial T}\right)_{p} dT + \left(\frac{\partial h}
 ```
 
 where the subscript $p$ or $T$ indicates that the derivative is taken while mathematically holding that property constant.
+
+Then, we _define_ the first partial derivative as the specific heat at constant pressure. The second partial derivative isn't as useful, so it doesn't get a special name.
+
+Similarly, the internal energy is a natural function of the temperature and specific volume, $u = u(T, v)$, so the total derivative is:
+
+```{math}
+du = \left(\frac{\partial u}{\partial T}\right)_{v} dT + \left(\frac{\partial u}{\partial v}\right)_{T} dv
 ```
+
+Again, we _define_ the first partial derivative as the specific heat at constant volume and do not give a special name to the second partial derivative.
+
+As you can see, the specific heats are named for their definitions in terms of partial derivatives, not in terms of any processes associated with the system.
 ````
+`````
 
 For an ideal gas, the specific heats are related to the specific gas constant:
 
@@ -107,9 +121,8 @@ c_p - c_v = \frac{R_u}{W} = R
 Equation {eq}`cp-cv-R` shows that $c_p > c_v$ and therefore that $\gamma > 1.0$. It also allows us to determine a value for $c_p$ or $c_v$ given $\gamma$:
 
 ```{math}
-\begin{aligned}
+:label: cp-cv-relationships
 c_p &= \frac{\gamma R}{\gamma - 1} & c_v &= \frac{R}{\gamma - 1}
-\end{aligned}
 ```
 
 Finally, the entropy is defined from the Gibbs relations:

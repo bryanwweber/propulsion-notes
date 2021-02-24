@@ -56,7 +56,7 @@
     <script type="text/x-mathjax-config">MathJax.Hub.Config({"TeX": {"Macros": {"vector": ["\\vec{#1}", 1], "uvec": ["\\hat{#1}", 1], "mag": ["\\lVert#1\\rVert", 1], "cross": "\\times", "unit": ["#1~\\mathrm{#2}", 2], "pf": ["\\overline{#1}", 1], "mat": ["\\left[\\mathbf{#1}\\right]", 1], "Isp": "I_{\\text{sp}}"}}, "tex2jax": {"inlineMath": [["\\(", "\\)"]], "displayMath": [["\\[", "\\]"]], "processRefs": false, "processEnvironments": false}})</script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Compressible Flow" href="../compressible-flow/1-introduction.html" />
+    <link rel="next" title="Example: LR91 Rocket Motor" href="3-example-LR91.html" />
     <link rel="prev" title="Liquid Propellant Rocket Engines" href="1-introduction.html" />
 
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -157,6 +157,11 @@
    Design of Rocket Nozzles
   </a>
  </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="3-example-LR91.html">
+   Example: LR91 Rocket Motor
+  </a>
+ </li>
 </ul>
 <p class="caption collapsible-parent">
  <span class="caption-text">
@@ -234,7 +239,10 @@
 
     <div class="dropdown-buttons">
         <!-- ipynb file if we had a myst markdown file -->
-        
+        <a class="dropdown-buttons"
+            href="../_sources/liquid-rockets/2-rocket-nozzles.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Download notebook file" data-toggle="tooltip"
+                data-placement="left">.ipynb</button></a>
         <!-- Download raw file -->
         <a class="dropdown-buttons" href="../_sources/liquid-rockets/2-rocket-nozzles.md"><button type="button"
                 class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
@@ -273,6 +281,23 @@
                     class="fas fa-expand"></i></button></a>
 
         <!-- Launch buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
+    <div class="dropdown-buttons">
+        
+        <a class="binder-button" href="https://mybinder.org/v2/gh/bryanwweber/propulsion-notes/main?urlpath=tree/liquid-rockets/2-rocket-nozzles.md"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip"
+                data-placement="left"><img class="binder-button-logo"
+                    src="../_static/images/logo_binder.svg"
+                    alt="Interact on binder">Binder</button></a>
+        
+        
+        
+        
+    </div>
+</div>
 
     </div>
 
@@ -332,11 +357,21 @@
   </a>
   <ul class="nav section-nav flex-column">
    <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#nozzle-thrust-coefficient">
-     Nozzle Thrust Coefficient
+    <a class="reference internal nav-link" href="#nozzle-exit-velocity">
+     Nozzle Exit Velocity
     </a>
    </li>
   </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#nozzle-thrust-coefficient">
+   Nozzle Thrust Coefficient
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#specific-impulse">
+   Specific Impulse
+  </a>
  </li>
 </ul>
 
@@ -349,14 +384,311 @@
         
               <div>
                 
-  <div class="section" id="design-of-rocket-nozzles">
+  <div class="cell tag_remove-input docutils container">
+<div class="cell_output docutils container">
+<script type="application/javascript">
+(function(root) {
+  function now() {
+    return new Date();
+  }
+
+  var force = true;
+
+  if (typeof root._bokeh_onload_callbacks === "undefined" || force === true) {
+    root._bokeh_onload_callbacks = [];
+    root._bokeh_is_loading = undefined;
+  }
+
+  var JS_MIME_TYPE = 'application/javascript';
+  var HTML_MIME_TYPE = 'text/html';
+  var EXEC_MIME_TYPE = 'application/vnd.bokehjs_exec.v0+json';
+  var CLASS_NAME = 'output_bokeh rendered_html';
+
+  /**
+   * Render data to the DOM node
+   */
+  function render(props, node) {
+    var script = document.createElement("script");
+    node.appendChild(script);
+  }
+
+  /**
+   * Handle when an output is cleared or removed
+   */
+  function handleClearOutput(event, handle) {
+    var cell = handle.cell;
+
+    var id = cell.output_area._bokeh_element_id;
+    var server_id = cell.output_area._bokeh_server_id;
+    // Clean up Bokeh references
+    if (id != null && id in Bokeh.index) {
+      Bokeh.index[id].model.document.clear();
+      delete Bokeh.index[id];
+    }
+
+    if (server_id !== undefined) {
+      // Clean up Bokeh references
+      var cmd = "from bokeh.io.state import curstate; print(curstate().uuid_to_server['" + server_id + "'].get_sessions()[0].document.roots[0]._id)";
+      cell.notebook.kernel.execute(cmd, {
+        iopub: {
+          output: function(msg) {
+            var id = msg.content.text.trim();
+            if (id in Bokeh.index) {
+              Bokeh.index[id].model.document.clear();
+              delete Bokeh.index[id];
+            }
+          }
+        }
+      });
+      // Destroy server and session
+      var cmd = "import bokeh.io.notebook as ion; ion.destroy_server('" + server_id + "')";
+      cell.notebook.kernel.execute(cmd);
+    }
+  }
+
+  /**
+   * Handle when a new output is added
+   */
+  function handleAddOutput(event, handle) {
+    var output_area = handle.output_area;
+    var output = handle.output;
+
+    // limit handleAddOutput to display_data with EXEC_MIME_TYPE content only
+    if ((output.output_type != "display_data") || (!Object.prototype.hasOwnProperty.call(output.data, EXEC_MIME_TYPE))) {
+      return
+    }
+
+    var toinsert = output_area.element.find("." + CLASS_NAME.split(' ')[0]);
+
+    if (output.metadata[EXEC_MIME_TYPE]["id"] !== undefined) {
+      toinsert[toinsert.length - 1].firstChild.textContent = output.data[JS_MIME_TYPE];
+      // store reference to embed id on output_area
+      output_area._bokeh_element_id = output.metadata[EXEC_MIME_TYPE]["id"];
+    }
+    if (output.metadata[EXEC_MIME_TYPE]["server_id"] !== undefined) {
+      var bk_div = document.createElement("div");
+      bk_div.innerHTML = output.data[HTML_MIME_TYPE];
+      var script_attrs = bk_div.children[0].attributes;
+      for (var i = 0; i < script_attrs.length; i++) {
+        toinsert[toinsert.length - 1].firstChild.setAttribute(script_attrs[i].name, script_attrs[i].value);
+        toinsert[toinsert.length - 1].firstChild.textContent = bk_div.children[0].textContent
+      }
+      // store reference to server id on output_area
+      output_area._bokeh_server_id = output.metadata[EXEC_MIME_TYPE]["server_id"];
+    }
+  }
+
+  function register_renderer(events, OutputArea) {
+
+    function append_mime(data, metadata, element) {
+      // create a DOM node to render to
+      var toinsert = this.create_output_subarea(
+        metadata,
+        CLASS_NAME,
+        EXEC_MIME_TYPE
+      );
+      this.keyboard_manager.register_events(toinsert);
+      // Render to node
+      var props = {data: data, metadata: metadata[EXEC_MIME_TYPE]};
+      render(props, toinsert[toinsert.length - 1]);
+      element.append(toinsert);
+      return toinsert
+    }
+
+    /* Handle when an output is cleared or removed */
+    events.on('clear_output.CodeCell', handleClearOutput);
+    events.on('delete.Cell', handleClearOutput);
+
+    /* Handle when a new output is added */
+    events.on('output_added.OutputArea', handleAddOutput);
+
+    /**
+     * Register the mime type and append_mime function with output_area
+     */
+    OutputArea.prototype.register_mime_type(EXEC_MIME_TYPE, append_mime, {
+      /* Is output safe? */
+      safe: true,
+      /* Index of renderer in `output_area.display_order` */
+      index: 0
+    });
+  }
+
+  // register the mime type if in Jupyter Notebook environment and previously unregistered
+  if (root.Jupyter !== undefined) {
+    var events = require('base/js/events');
+    var OutputArea = require('notebook/js/outputarea').OutputArea;
+
+    if (OutputArea.prototype.mime_types().indexOf(EXEC_MIME_TYPE) == -1) {
+      register_renderer(events, OutputArea);
+    }
+  }
+
+  
+  if (typeof (root._bokeh_timeout) === "undefined" || force === true) {
+    root._bokeh_timeout = Date.now() + 5000;
+    root._bokeh_failed_load = false;
+  }
+
+  var NB_LOAD_WARNING = {'data': {'text/html':
+     "<div style='background-color: #fdd'>\n"+
+     "<p>\n"+
+     "BokehJS does not appear to have successfully loaded. If loading BokehJS from CDN, this \n"+
+     "may be due to a slow or bad network connection. Possible fixes:\n"+
+     "</p>\n"+
+     "<ul>\n"+
+     "<li>re-rerun `output_notebook()` to attempt to load from CDN again, or</li>\n"+
+     "<li>use INLINE resources instead, as so:</li>\n"+
+     "</ul>\n"+
+     "<code>\n"+
+     "from bokeh.resources import INLINE\n"+
+     "output_notebook(resources=INLINE)\n"+
+     "</code>\n"+
+     "</div>"}};
+
+  function display_loaded() {
+    var el = document.getElementById(null);
+    if (el != null) {
+      el.textContent = "BokehJS is loading...";
+    }
+    if (root.Bokeh !== undefined) {
+      if (el != null) {
+        el.textContent = "BokehJS " + root.Bokeh.version + " successfully loaded.";
+      }
+    } else if (Date.now() < root._bokeh_timeout) {
+      setTimeout(display_loaded, 100)
+    }
+  }
+
+
+  function run_callbacks() {
+    try {
+      root._bokeh_onload_callbacks.forEach(function(callback) {
+        if (callback != null)
+          callback();
+      });
+    } finally {
+      delete root._bokeh_onload_callbacks
+    }
+    console.debug("Bokeh: all callbacks have finished");
+  }
+
+  function load_libs(css_urls, js_urls, callback) {
+    if (css_urls == null) css_urls = [];
+    if (js_urls == null) js_urls = [];
+
+    root._bokeh_onload_callbacks.push(callback);
+    if (root._bokeh_is_loading > 0) {
+      console.debug("Bokeh: BokehJS is being loaded, scheduling callback at", now());
+      return null;
+    }
+    if (js_urls == null || js_urls.length === 0) {
+      run_callbacks();
+      return null;
+    }
+    console.debug("Bokeh: BokehJS not loaded, scheduling load and callback at", now());
+    root._bokeh_is_loading = css_urls.length + js_urls.length;
+
+    function on_load() {
+      root._bokeh_is_loading--;
+      if (root._bokeh_is_loading === 0) {
+        console.debug("Bokeh: all BokehJS libraries/stylesheets loaded");
+        run_callbacks()
+      }
+    }
+
+    function on_error(url) {
+      console.error("failed to load " + url);
+    }
+
+    for (let i = 0; i < css_urls.length; i++) {
+      const url = css_urls[i];
+      const element = document.createElement("link");
+      element.onload = on_load;
+      element.onerror = on_error.bind(null, url);
+      element.rel = "stylesheet";
+      element.type = "text/css";
+      element.href = url;
+      console.debug("Bokeh: injecting link tag for BokehJS stylesheet: ", url);
+      document.body.appendChild(element);
+    }
+
+    const hashes = {"https://cdn.bokeh.org/bokeh/release/bokeh-2.3.0.min.js": "HjagQp6T0/7bxYTAXbLotF1MLAGWmhkY5siA1Gc/pcEgvgRPtMsRn0gQtMwGKiw1", "https://cdn.bokeh.org/bokeh/release/bokeh-widgets-2.3.0.min.js": "ZEPPTjL+mdyqgIq+/pl9KTwzji8Kow2NnI3zWY8+sFinWP/SYJ80BnfeJsa45iYj", "https://cdn.bokeh.org/bokeh/release/bokeh-tables-2.3.0.min.js": "exLqv2ACDRIaV7ZK1iL8aGzGYQvKVuT3U2CT7FsQREBxRah6JrkVCoFy0koY1YqV"};
+
+    for (let i = 0; i < js_urls.length; i++) {
+      const url = js_urls[i];
+      const element = document.createElement('script');
+      element.onload = on_load;
+      element.onerror = on_error.bind(null, url);
+      element.async = false;
+      element.src = url;
+      if (url in hashes) {
+        element.crossOrigin = "anonymous";
+        element.integrity = "sha384-" + hashes[url];
+      }
+      console.debug("Bokeh: injecting script tag for BokehJS library: ", url);
+      document.head.appendChild(element);
+    }
+  };
+
+  function inject_raw_css(css) {
+    const element = document.createElement("style");
+    element.appendChild(document.createTextNode(css));
+    document.body.appendChild(element);
+  }
+
+  
+  var js_urls = ["https://cdn.bokeh.org/bokeh/release/bokeh-2.3.0.min.js", "https://cdn.bokeh.org/bokeh/release/bokeh-widgets-2.3.0.min.js", "https://cdn.bokeh.org/bokeh/release/bokeh-tables-2.3.0.min.js"];
+  var css_urls = [];
+  
+
+  var inline_js = [
+    function(Bokeh) {
+      Bokeh.set_log_level("info");
+    },
+    function(Bokeh) {
+    
+    
+    }
+  ];
+
+  function run_inline_js() {
+    
+    if (root.Bokeh !== undefined || force === true) {
+      
+    for (var i = 0; i < inline_js.length; i++) {
+      inline_js[i].call(root, root.Bokeh);
+    }
+    } else if (Date.now() < root._bokeh_timeout) {
+      setTimeout(run_inline_js, 100);
+    } else if (!root._bokeh_failed_load) {
+      console.log("Bokeh: BokehJS failed to load within specified timeout.");
+      root._bokeh_failed_load = true;
+    } else if (force !== true) {
+      var cell = $(document.getElementById(null)).parents('.cell').data().cell;
+      cell.output_area.append_execute_result(NB_LOAD_WARNING)
+    }
+
+  }
+
+  if (root._bokeh_is_loading === 0) {
+    console.debug("Bokeh: BokehJS loaded, going straight to plotting");
+    run_inline_js();
+  } else {
+    load_libs(css_urls, js_urls, function() {
+      console.debug("Bokeh: BokehJS plotting callback run at", now());
+      run_inline_js();
+    });
+  }
+}(window));</script></div>
+</div>
+<div class="section" id="design-of-rocket-nozzles">
 <h1>Design of Rocket Nozzles<a class="headerlink" href="#design-of-rocket-nozzles" title="Permalink to this headline">¶</a></h1>
 <p>The nozzle is the most important component of the rocket engine. The nozzle converts high pressure, and ideally high temperature, gases into low pressure gases with much higher velocity by changing the cross-sectional area of the flow. This momentum transfer then provides the thrust force on the spacecraft.</p>
 <p>In principle, nozzles can function with any source of high pressure fluid upstream. As we’ll see, the higher the upstream pressure and temperature, the higher the performance of the nozzle. However, this ability to be very flexible and still provide thrust is why nozzles are the most important component.</p>
 <p>Nearly all rocket nozzles are of the <strong>converging-diverging</strong> type. This means that the flow at the exit of the nozzle is supersonic and it must be treated using compressible flow relations. These equations are derived in a <a class="reference internal" href="../compressible-flow/1-introduction.html#compressible-flow-introduction"><span class="std std-ref">separate chapter all about compressible flow</span></a>.</p>
 <p>We will now investigate the major factors influencing the design of a rocket nozzle and how to analyze the performance of a given nozzle. To help understand the qualitative behavior of design changes and the inherent tradeoffs, we would like to reduce the problem to an analysis of dimensionless parameters. First, we will discuss the various shape of nozzle designs before returning to some equations.</p>
 <div class="section" id="nozzle-shapes">
-<h2>Nozzle Shapes<a class="headerlink" href="#nozzle-shapes" title="Permalink to this headline">¶</a></h2>
+<span id="id1"></span><h2>Nozzle Shapes<a class="headerlink" href="#nozzle-shapes" title="Permalink to this headline">¶</a></h2>
 <p>The flow properties upstream of the nozzle throat are fixed when the flow reaches the sonic velocity at the throat, independent of any downstream changes. Therefore, the nozzle exit conditions are primarily determined by the shape of the nozzle after the throat.</p>
 <p>In designing a nozzle, we have two primary goals:</p>
 <ol class="simple">
@@ -366,9 +698,9 @@
 <p>Since the nozzle is essentially a thin shell, the weight is proportional to the nozzle surface area. Therefore, minimizing the surface area will give the lowest weight. In addition, a smaller surface area will reduce the effects of frictional drag on the surface and heat loading. Thus, the primary goal of a rocket nozzle is to have the optimal area expansion in the smallest length, without introducing irreversibilities.</p>
 <div class="section" id="conical-nozzle">
 <h3>Conical Nozzle<a class="headerlink" href="#conical-nozzle" title="Permalink to this headline">¶</a></h3>
-<p>The simplest possible design of a nozzle is a <a class="reference external" href="https://en.wikipedia.org/wiki/Frustum">frustum</a> of a cone. The parameters of the cone are shown in Fig. <a class="reference internal" href="#id1"><span class="std std-numref">Fig. 9</span></a>.</p>
-<div class="figure align-default" id="id1">
-<img alt="../_images/conical-nozzle.svg" src="../_images/conical-nozzle.svg" /><p class="caption"><span class="caption-number">Fig. 9 </span><span class="caption-text">A conical nozzle</span><a class="headerlink" href="#id1" title="Permalink to this image">¶</a></p>
+<p>The simplest possible design of a nozzle is a <a class="reference external" href="https://en.wikipedia.org/wiki/Frustum">frustum</a> of a cone. The parameters of the cone are shown in Fig. <a class="reference internal" href="#id2"><span class="std std-numref">Fig. 9</span></a>.</p>
+<div class="figure align-default" id="id2">
+<img alt="../_images/conical-nozzle.svg" src="../_images/conical-nozzle.svg" /><p class="caption"><span class="caption-number">Fig. 9 </span><span class="caption-text">A conical nozzle</span><a class="headerlink" href="#id2" title="Permalink to this image">¶</a></p>
 </div>
 <p>The expansion angle of the cone is determined from the throat radius <span class="math notranslate nohighlight">\(r_{\text{th}}\)</span>, the exit radius <span class="math notranslate nohighlight">\(r_e\)</span> and the length <span class="math notranslate nohighlight">\(L\)</span> by:</p>
 <div class="math notranslate nohighlight" id="equation-conical-expansion-angle">
@@ -410,7 +742,7 @@
 <p>Conical nozzles have the advantage of being very simple to analyze and build. However, they inherently suffer from thrust loss due to the angularity of the flow. In addition, achieving large area ratios to accelerate the flow requires a long nozzle length, which makes conical nozzles heavy.</p>
 <p>To overcome these problems, and achieve parallel flow at the exit in a shorter distance, we can design a reflexive nozzle profile. This nozzle has a rapid expansion immediately after the throat followed by a slower expansion to give nearly parallel flow at the exit, <span class="math notranslate nohighlight">\(\alpha\approx 0\)</span>. The rapid expansion permits a shorter nozzle and the slow expansion turns the flow while avoiding oblique shock waves.</p>
 <p>This kind of nozzle is called a <strong>bell nozzle</strong>, because the rapid expansion and slow turn look like a bell. The bell nozzle is shown schematically in <a class="reference internal" href="1-introduction.html#rocket-engine"><span class="std std-numref">Fig. 8</span></a>, repeated here for reference.</p>
-<img alt="../_images/rocket-engine.svg" src="../_images/rocket-engine.svg" /><p>The design of bell nozzles has been well studied since the middle of the 20th century. G.V.R. Rao <span id="id2">[<a class="reference internal" href="../bibliography.html#id6"><span>Rao58</span></a>,<a class="reference internal" href="../bibliography.html#id7"><span>Rao61</span></a>]</span> developed a methodology to optimize the thrust from bell nozzles that results in nozzles about 75% the length of conical nozzles with the same <span class="math notranslate nohighlight">\(A_e/A_{\text{th}}\)</span> ratio.</p>
+<img alt="../_images/rocket-engine.svg" src="../_images/rocket-engine.svg" /><p>The design of bell nozzles has been well studied since the middle of the 20th century. G.V.R. Rao <span id="id3">[<a class="reference internal" href="../bibliography.html#id6"><span>Rao58</span></a>,<a class="reference internal" href="../bibliography.html#id7"><span>Rao61</span></a>]</span> developed a methodology to optimize the thrust from bell nozzles that results in nozzles about 75% the length of conical nozzles with the same <span class="math notranslate nohighlight">\(A_e/A_{\text{th}}\)</span> ratio.</p>
 </div>
 <div class="section" id="plug-nozzles">
 <h3>Plug Nozzles<a class="headerlink" href="#plug-nozzles" title="Permalink to this headline">¶</a></h3>
@@ -439,7 +771,7 @@
 </div>
 <div class="section" id="nozzle-mass-flow-rate">
 <h2>Nozzle Mass Flow Rate<a class="headerlink" href="#nozzle-mass-flow-rate" title="Permalink to this headline">¶</a></h2>
-<p>We showed in the <a class="reference internal" href="../compressible-flow/4-quasi-1d-flow.html#choked-mass-flow-rate"><span class="std std-ref">nozzle flow section</span></a> that the choked mass flow rate is the ideal maximum mass flow rate that a nozzle can pass. In terms of the nozzle and flow properties, we can write the maximum mass flow rate from Eq. <a class="reference internal" href="../compressible-flow/4-quasi-1d-flow.html#equation-mass-flow-rate-mach-number">(80)</a> by setting <span class="math notranslate nohighlight">\(M = M^* = 1\)</span>:</p>
+<p>We showed in the <a class="reference internal" href="../compressible-flow/4-quasi-1d-flow.html#choked-mass-flow-rate"><span class="std std-ref">nozzle flow section</span></a> that the choked mass flow rate is the ideal maximum mass flow rate that a nozzle can pass. In terms of the nozzle and flow properties, we can write the maximum mass flow rate from Eq. <a class="reference internal" href="../compressible-flow/4-quasi-1d-flow.html#equation-mass-flow-rate-mach-number">(91)</a> by setting <span class="math notranslate nohighlight">\(M = M^* = 1\)</span>:</p>
 <div class="math notranslate nohighlight" id="equation-choked-mass-flow-rate">
 <span class="eqno">(37)<a class="headerlink" href="#equation-choked-mass-flow-rate" title="Permalink to this equation">¶</a></span>\[\dot{m}_{\text{max}} = \dot{m}^* = \frac{p_c}{\sqrt{T_c}} A_{\text{th}} \sqrt{\frac{\gamma}{R}} \left(\frac{\gamma + 1}{2}\right)^{\frac{-\left(\gamma + 1\right)}{2\left(\gamma - 1\right)}}\]</div>
 <p>where <span class="math notranslate nohighlight">\(p_c\)</span> and <span class="math notranslate nohighlight">\(T_c\)</span> are the combustion chamber pressure and temperature, assumed to be the stagnation conditions, and <span class="math notranslate nohighlight">\(A_{\text{th}} = A^*\)</span> is the throat area.</p>
@@ -469,21 +801,21 @@
 <div class="math notranslate nohighlight" id="equation-ideal-nozzle-mass-flow-rate">
 <span class="eqno">(39)<a class="headerlink" href="#equation-ideal-nozzle-mass-flow-rate" title="Permalink to this equation">¶</a></span>\[\dot{m}_i = \frac{p_c A_{\text{th}}}{\frac{1}{\Gamma_c}\sqrt{\frac{R_u T_c}{W_c}}}\]</div>
 <p>where <span class="math notranslate nohighlight">\(p_c\)</span>, <span class="math notranslate nohighlight">\(T_c\)</span>, and <span class="math notranslate nohighlight">\(W_c\)</span> are the pressure, temperature, and molecular weight in the combustion chamber, and <span class="math notranslate nohighlight">\(\Gamma_c\)</span> is a combination term involving the (constant) specific heat ratio:</p>
-<div class="math notranslate nohighlight">
-\[\Gamma_c = \sqrt{\gamma_c}\left(\frac{2}{\gamma_c + 1}\right)^{\frac{\gamma_c + 1}{2\left(\gamma_c - 1\right)}}\]</div>
+<div class="math notranslate nohighlight" id="equation-gamma-function">
+<span class="eqno">(40)<a class="headerlink" href="#equation-gamma-function" title="Permalink to this equation">¶</a></span>\[\Gamma_c = \sqrt{\gamma_c}\left(\frac{2}{\gamma_c + 1}\right)^{\frac{\gamma_c + 1}{2\left(\gamma_c - 1\right)}}\]</div>
 <p>where <span class="math notranslate nohighlight">\(\gamma_c\)</span> is the specific heat ratio in the combustion chamber. The bottom of the fraction in Eq. <a class="reference internal" href="#equation-ideal-nozzle-mass-flow-rate">(39)</a> has dimensions of velocity, so it can be used to define a <strong>characteristic velocity</strong> of the nozzle:</p>
 <div class="math notranslate nohighlight" id="equation-nozzle-characteristic-velocity">
-<span class="eqno">(40)<a class="headerlink" href="#equation-nozzle-characteristic-velocity" title="Permalink to this equation">¶</a></span>\[c^* = \frac{1}{\Gamma_c}\sqrt{\frac{R_u T_c}{W_c}}\]</div>
-<p>This velocity characterizes the effectiveness of the combustion products to produce thrust from the nozzle. The characteristic velocity is large when <span class="math notranslate nohighlight">\(T_c\)</span> is large, or <span class="math notranslate nohighlight">\(\gamma_c\)</span> or <span class="math notranslate nohighlight">\(W_c\)</span> are small.</p>
+<span class="eqno">(41)<a class="headerlink" href="#equation-nozzle-characteristic-velocity" title="Permalink to this equation">¶</a></span>\[c^* = \frac{1}{\Gamma}\sqrt{\frac{R_u T_c}{W_c}} = \frac{a_c}{\Gamma \sqrt{\gamma}}\]</div>
+<p>where <span class="math notranslate nohighlight">\(a_c\)</span> is the speed of sound in the combustion chamber. The characteristic velocity is a figure of merit for the effectiveness of the combustion products to produce thrust from the nozzle. The characteristic velocity is large when <span class="math notranslate nohighlight">\(T_c\)</span> is large, or <span class="math notranslate nohighlight">\(\gamma\)</span> or <span class="math notranslate nohighlight">\(W_c\)</span> are small.</p>
 <p>For the case of LH2/LOX combustion, the combustion temperature is approximately 3,900 K, the products’ molecular weight is approximately 13 kg/kmol, and the ratio of specific heats is approximately 1.16. This gives a characteristic velocity of about 2,500 m/s.</p>
 <p>For the case of RP1/LOX combustion, the combustion temperature is about 3,700 K, the products’ molecular weight is approximately 23 kg/kmol, and the ratio of specific heats is approximately 1.14. This gives a characteristic velocity of about 1,800 m/s.</p>
-<p>These values give an approximate range typical of most propellants, 1,500 m/s &lt; <span class="math notranslate nohighlight">\(c^*\)</span> &lt; 2,500 m/s.</p>
+<p>These values give an approximate range typical of most propellants, 1,500 m/s &lt; <span class="math notranslate nohighlight">\(c^*\)</span> &lt; 2,500 m/s. In a subsequent section, we will discuss the effect of propellant choice on <span class="math notranslate nohighlight">\(c^*\)</span> more directly.</p>
 <p>With this definition of the characteristic velocity, we can rewrite the ideal mass flow rate:</p>
 <div class="math notranslate nohighlight" id="equation-ideal-mass-flow-rate-characteristic-velocity">
-<span class="eqno">(41)<a class="headerlink" href="#equation-ideal-mass-flow-rate-characteristic-velocity" title="Permalink to this equation">¶</a></span>\[\dot{m}_i = \frac{p_c A_{\text{th}}}{c^*}\]</div>
-<p>Combining Eqs. <a class="reference internal" href="#equation-nozzle-mass-flow-rate-coefficient">(38)</a> and <a class="reference internal" href="#equation-ideal-mass-flow-rate-characteristic-velocity">(41)</a>, we find that the discharge coefficient becomes:</p>
+<span class="eqno">(42)<a class="headerlink" href="#equation-ideal-mass-flow-rate-characteristic-velocity" title="Permalink to this equation">¶</a></span>\[\dot{m}_i = \frac{p_c A_{\text{th}}}{c^*}\]</div>
+<p>Combining Eqs. <a class="reference internal" href="#equation-nozzle-mass-flow-rate-coefficient">(38)</a> and <a class="reference internal" href="#equation-ideal-mass-flow-rate-characteristic-velocity">(42)</a>, we find that the discharge coefficient becomes:</p>
 <div class="math notranslate nohighlight" id="equation-nozzle-discharge-coefficient">
-<span class="eqno">(42)<a class="headerlink" href="#equation-nozzle-discharge-coefficient" title="Permalink to this equation">¶</a></span>\[c_d = c_m c^*\]</div>
+<span class="eqno">(43)<a class="headerlink" href="#equation-nozzle-discharge-coefficient" title="Permalink to this equation">¶</a></span>\[c_d = c_m c^*\]</div>
 <p>In this equation, both <span class="math notranslate nohighlight">\(c_m\)</span> and <span class="math notranslate nohighlight">\(c^*\)</span> are essentially functions of the propellant combination, so that the discharge coefficient is mostly a function of the propellant combination.</p>
 <p>For most nozzles, the discharge coefficient is very close to one. This means that the mass flow rate coefficient is nearly inversely proportional to the characteristic velocity. We will see later that the characteristic velocity of the nozzle can be used in other calculations, so being able to approximate it by measuring the actual mass flow rate of the nozzle, as well as the chamber pressure and throat area is very useful.</p>
 <div class="admonition note">
@@ -497,25 +829,218 @@
 <p>Measuring the true exit velocity of the combustion products from the nozzle is very difficult. Therefore, we would like to find a method to estimate the true velocity from other known information. As before, we are interested in a dimensionless coefficient that can be used to describe the velocity variation from the ideal.</p>
 <p>We can define the isentropic efficiency of the nozzle as:</p>
 <div class="math notranslate nohighlight" id="equation-nozzle-isentropic-efficiency">
-<span class="eqno">(43)<a class="headerlink" href="#equation-nozzle-isentropic-efficiency" title="Permalink to this equation">¶</a></span>\[\eta_n = \frac{h_c - h_e}{h_c - h_{e,i}} = \frac{V_e^2}{V_{e,i}^2}\]</div>
+<span class="eqno">(44)<a class="headerlink" href="#equation-nozzle-isentropic-efficiency" title="Permalink to this equation">¶</a></span>\[\eta_n = \frac{h_c - h_e}{h_c - h_{e,i}} = \frac{V_e^2}{V_{e,i}^2}\]</div>
 <p>where <span class="math notranslate nohighlight">\(h_c = h_t\)</span> is the enthalpy in the combustion chamber, equal to the stagnation enthalpy, <span class="math notranslate nohighlight">\(h_e\)</span> is the true exit enthalpy, and <span class="math notranslate nohighlight">\(h_{e,i}\)</span> is the ideal exit enthalpy. The isentropic nozzle efficiency is restricted to be between 0 and 1, since <span class="math notranslate nohighlight">\(h_e &lt; h_{e,i}\)</span>.</p>
 <p>From the energy equation, the difference in the enthalpy over the nozzle is equal to the square of the change in velocity, so we can define the isentropic efficiency in terms of the velocity as well. This suggests a definition for the <strong>nozzle velocity coefficient</strong>:</p>
 <div class="math notranslate nohighlight" id="equation-nozzle-velocity-coefficient">
-<span class="eqno">(44)<a class="headerlink" href="#equation-nozzle-velocity-coefficient" title="Permalink to this equation">¶</a></span>\[c_V = \frac{V_e}{V_{e,i}} = \sqrt{\eta_n}\]</div>
+<span class="eqno">(45)<a class="headerlink" href="#equation-nozzle-velocity-coefficient" title="Permalink to this equation">¶</a></span>\[c_V = \frac{V_e}{V_{e,i}} = \sqrt{\eta_n}\]</div>
 <p><span class="math notranslate nohighlight">\(c_V\)</span> is also restricted to lie between 0 and 1. For well-designed nozzles, <span class="math notranslate nohighlight">\(c_V\)</span> is typically in excess of 0.95.</p>
 <p>Whereas <span class="math notranslate nohighlight">\(c_m\)</span>, <span class="math notranslate nohighlight">\(c^*\)</span>, and <span class="math notranslate nohighlight">\(c_d\)</span> are related to the choice of propellant, <span class="math notranslate nohighlight">\(c_V\)</span> is related to the design of the nozzle. The reason for this is because the isentropic efficiency is essentially determined by the increase in entropy of the flow over the nozzle. Better designed nozzles that minimize the effect of the boundary layer and avoid shock waves have smaller entropy increases, and therefore higher values of <span class="math notranslate nohighlight">\(c_V\)</span>.</p>
+<div class="section" id="nozzle-exit-velocity">
+<h3>Nozzle Exit Velocity<a class="headerlink" href="#nozzle-exit-velocity" title="Permalink to this headline">¶</a></h3>
+<p>To determine the ideal nozzle exit velocity, we can apply conservation of energy across the nozzle, noting that <span class="math notranslate nohighlight">\(V_c\approx 0\)</span>:</p>
+<div class="math notranslate nohighlight">
+\[\frac{1}{2} V_e^2 + c_p T_e = c_p T_c\]</div>
+<p>Solving for <span class="math notranslate nohighlight">\(V_e\)</span> and substituting Eqs. <a class="reference internal" href="../compressible-flow/2-properties-of-compressible-flow.html#equation-cp-cv-relationships">(61)</a> and <a class="reference internal" href="../compressible-flow/2-properties-of-compressible-flow.html#equation-p-t-isentropic">(66)</a>, where <span class="math notranslate nohighlight">\(T_c = T_t\)</span>, we find:</p>
+<div class="math notranslate nohighlight" id="equation-ideal-exit-velocity">
+<span class="eqno">(46)<a class="headerlink" href="#equation-ideal-exit-velocity" title="Permalink to this equation">¶</a></span>\[V_e = \sqrt{\frac{2\gamma}{\gamma - 1} \frac{R_u T_c}{W_c} \left[1 - \left(\frac{p_e}{p_c}\right)^{\frac{\gamma - 1}{\gamma}}\right]}\]</div>
+<p>From Eq. <a class="reference internal" href="#equation-ideal-exit-velocity">(46)</a>, we have four factors that we control to adjust the exit velocity:</p>
+<ol class="simple">
+<li><p><span class="math notranslate nohighlight">\(p_e/p_c\)</span>: This is the ratio of the nozzle exit pressure to the combustion chamber (stagnation) pressure. Decreasing this ratio will increase the exit velocity. However, since the exit pressure must equilibrate with the ambient, we do not have direct control over that parameters. We can control the combustion chamber pressure, but we are limited by the strength of the materials required for the combustion chamber.</p></li>
+<li><p><span class="math notranslate nohighlight">\(T_c\)</span>: Increasing the combustion chamber temperature will increase the exit velocity. However, it also increases the requirements for cooling in the combustor and nozzle. Systems for cooling these components will add weight to the engine, tending to offset the increased thrust.</p></li>
+<li><p><span class="math notranslate nohighlight">\(W_c\)</span>: Decreasing the molecular weight of the combustion products is very effective at increasing the exit velocity. The most efficient combination is LH2/LOX, but this requires expensive and heavy cryogenic equipment on-board the engine.</p></li>
+<li><p><span class="math notranslate nohighlight">\(\gamma\)</span>: Decreasing the ratio of specific heats (which is a function of the temperature and composition, so not truly independent) will increase the exit velocity. However, <span class="math notranslate nohighlight">\(\gamma\)</span> can never be less than one.</p></li>
+</ol>
+</div>
+</div>
 <div class="section" id="nozzle-thrust-coefficient">
-<h3>Nozzle Thrust Coefficient<a class="headerlink" href="#nozzle-thrust-coefficient" title="Permalink to this headline">¶</a></h3>
-<p>We have now reached the point where we can relate both of our design variables, the choice of propellant and the design of the nozzle, to the thrust produced by the rocket. The thrust of the rocket is given by Eq. <a class="reference internal" href="#equation-rocket-thrust">(36)</a>. Using the discharge coefficient, Eq. <a class="reference internal" href="#equation-nozzle-discharge-coefficient">(42)</a>, and the velocity coefficient, Eq. <a class="reference internal" href="#equation-nozzle-velocity-coefficient">(44)</a>, we can rewrite the thrust equation in terms of the ideal exit velocity and mass flow rate:</p>
+<h2>Nozzle Thrust Coefficient<a class="headerlink" href="#nozzle-thrust-coefficient" title="Permalink to this headline">¶</a></h2>
+<p>We have now reached the point where we can relate both of our design variables, the choice of propellant and the design of the nozzle, to the thrust produced by the rocket. The thrust of the rocket is given by Eq. <a class="reference internal" href="#equation-rocket-thrust">(36)</a>. Using the discharge coefficient, Eq. <a class="reference internal" href="#equation-nozzle-discharge-coefficient">(43)</a>, and the velocity coefficient, Eq. <a class="reference internal" href="#equation-nozzle-velocity-coefficient">(45)</a>, we can rewrite the thrust equation in terms of the ideal exit velocity and mass flow rate:</p>
 <div class="math notranslate nohighlight">
 \[F = \lambda c_d c_V \dot{m}_i V_{e,i} + A_e\left(p_e - p_0\right)\]</div>
 <p>Further plugging in for the ideal mass flow rate and ideal exit velocity, we find:</p>
 <div class="math notranslate nohighlight">
-\[F = \lambda c_d c_V \Gamma_c p_c A_{\text{th}} \sqrt{\frac{2\gamma_c}{\gamma_c - 1}\left[1 - \left(\frac{p_e}{p_c}\right)^{\frac{\gamma_c - 1}{\gamma_c}}\right]} + A_e \left(p_e - p_0\right)\]</div>
+\[F = \lambda c_d c_V \Gamma p_c A_{\text{th}} \sqrt{\frac{2\gamma}{\gamma - 1}\left[1 - \left(\frac{p_e}{p_c}\right)^{\frac{\gamma - 1}{\gamma}}\right]} + A_e \left(p_e - p_0\right)\]</div>
 <p>This equation can be divided by the chamber pressure and throat area to define the <strong>nozzle thrust coefficient</strong>:</p>
 <div class="math notranslate nohighlight" id="equation-nozzle-thrust-coefficient">
-<span class="eqno">(45)<a class="headerlink" href="#equation-nozzle-thrust-coefficient" title="Permalink to this equation">¶</a></span>\[c_F = \frac{F}{p_c A_{\text{th}}} = \lambda c_d c_V \Gamma_c \sqrt{\frac{2\gamma_c}{\gamma_c - 1}\left[1 - \left(\frac{p_e}{p_c}\right)^{\frac{\gamma_c - 1}{\gamma_c}}\right]} + \frac{A_e}{A_{\text{th}}} \left(\frac{p_e}{p_c} - \frac{p_0}{p_c}\right)\]</div>
+<span class="eqno">(47)<a class="headerlink" href="#equation-nozzle-thrust-coefficient" title="Permalink to this equation">¶</a></span>\[c_F = \frac{F}{p_c A_{\text{th}}} = \lambda c_d c_V \Gamma \sqrt{\frac{2\gamma}{\gamma - 1}\left[1 - \left(\frac{p_e}{p_c}\right)^{\frac{\gamma - 1}{\gamma}}\right]} + \frac{A_e}{A_{\text{th}}} \left(\frac{p_e}{p_c} - \frac{p_0}{p_c}\right)\]</div>
+<p>When there are no losses in the nozzle, then <span class="math notranslate nohighlight">\(\lambda = c_V = c_d = 1\)</span> and the thrust coefficient is called the <strong>ideal thrust coefficient</strong>, denoted by <span class="math notranslate nohighlight">\(c_{F,i}\)</span>:</p>
+<div class="math notranslate nohighlight" id="equation-ideal-nozzle-thrust-coefficient">
+<span class="eqno">(48)<a class="headerlink" href="#equation-ideal-nozzle-thrust-coefficient" title="Permalink to this equation">¶</a></span>\[c_{F,i} = \Gamma \sqrt{\frac{2\gamma}{\gamma - 1}\left[1 - \left(\frac{p_e}{p_c}\right)^{\frac{\gamma - 1}{\gamma}}\right]}\]</div>
+<p>The general thrust coefficient <span class="math notranslate nohighlight">\(c_F\)</span> is given in terms of the ideal thrust coefficient as:</p>
+<div class="math notranslate nohighlight">
+\[c_F = c_{F,i} + \varepsilon\left(\frac{p_e}{p_c} - \frac{p_0}{p_c}\right)\]</div>
+<p>Furthermore, if we set <span class="math notranslate nohighlight">\(p_0 = 0\)</span> then the nozzle is exhausting into a vacuum and we can define the <strong>vacuum thrust coefficient</strong>, <span class="math notranslate nohighlight">\(c_{F,\text{vac}}\)</span>. Then, the normal thrust coefficient and the vacuum thrust coefficient are related by the area expansion ratio <span class="math notranslate nohighlight">\(\varepsilon\)</span>:</p>
+<div class="math notranslate nohighlight" id="equation-nozzle-thrust-coefficient-vacuum">
+<span class="eqno">(49)<a class="headerlink" href="#equation-nozzle-thrust-coefficient-vacuum" title="Permalink to this equation">¶</a></span>\[c_F = c_{F,\text{vac}} - \varepsilon \frac{p_0}{p_c}\]</div>
+<p>Although the thrust coefficient is non-dimensional, there are no specific restrictions on the values it can take on. Larger values of the thrust coefficient mean that the nozzle is more effective at turning high-pressure, high-temperature gases in the combustion chamber into acceleration of the engine via the thrust force. This is further emphasized by introducing the ideal mass flow rate and the characteristic velocity into Eq. <a class="reference internal" href="#equation-rocket-thrust">(36)</a>:</p>
+<div class="math notranslate nohighlight" id="equation-rocket-thrust-characteristic-velocity">
+<span class="eqno">(50)<a class="headerlink" href="#equation-rocket-thrust-characteristic-velocity" title="Permalink to this equation">¶</a></span>\[F = c_F p_c A_{\text{th}} = c_F \dot{m}_i c^* = c_F \frac{\dot{m}}{c_d} c^*\]</div>
+<p>Equation <a class="reference internal" href="#equation-rocket-thrust-characteristic-velocity">(50)</a> is made of two terms multiplying the mass flow rate:</p>
+<ol class="simple">
+<li><p><span class="math notranslate nohighlight">\(c^*\)</span>: the characteristic velocity</p></li>
+<li><p><span class="math notranslate nohighlight">\(c_F\)</span>: the thrust coefficient</p></li>
+</ol>
+<p>The characteristic velocity is a measure of the propellant performance and the thrust coefficient is a measure of the nozzle performance. Remember that the discharge coefficient is ideally 1, so it does not factor into this analysis.</p>
 </div>
+<div class="section" id="specific-impulse">
+<h2>Specific Impulse<a class="headerlink" href="#specific-impulse" title="Permalink to this headline">¶</a></h2>
+<p>Another figure of merit for rocket engines is the <strong>specific impulse</strong>. We discussed the specific impulse in the <a class="reference internal" href="../overview-of-flow-devices/4-the-rocket.html#intro-specific-impulse"><span class="std std-ref">introductory chapter</span></a>. Here, we will place the specific impulse in the context of the variables we have described so far.</p>
+<p>Recall that the definition of the specific impulse is the impulse per unit mass, or the thrust per unit <em>weight</em> flow of propellants. Assuming constant thrust and mass flow rate of the propellants, this is:</p>
+<div class="math notranslate nohighlight" id="equation-specific-impulse">
+<span class="eqno">(51)<a class="headerlink" href="#equation-specific-impulse" title="Permalink to this equation">¶</a></span>\[\Isp = \frac{F}{\dot{m} g} = \frac{V_e}{g} + \frac{A_e}{\dot{m}_e g}\left(p_e - p_0\right)\]</div>
+<p>where <span class="math notranslate nohighlight">\(g\)</span> is the gravitational acceleration at the Earth’s surface, 32.174 ft/s<sup>2</sup> or 9.81 m/s<sup>2</sup> depending on the units. Note that the Earth’s gravitational acceleration is always used regardless of where the rocket engine is physically located. The dimensions of <span class="math notranslate nohighlight">\(\Isp\)</span> are time, usually quoted in seconds. This similarly suggests the definition of a related figure of merit, called the <strong>effective exhaust velocity</strong>:</p>
+<div class="math notranslate nohighlight" id="equation-effective-exhaust-velocity">
+<span class="eqno">(52)<a class="headerlink" href="#equation-effective-exhaust-velocity" title="Permalink to this equation">¶</a></span>\[V_{\text{eff}} = \frac{F}{\dot{m}}\]</div>
+<p>which has dimensions of velocity. The effective velocity is, like the characteristic velocity, not an actual velocity that is required to be present in the system. Rather, it is the velocity of the exhaust that gives the equivalent thrust as the sum of the momentum and pressure thrust.</p>
+<p>The effective exhaust velocity, specific impulse, thrust coefficient, and characteristic velocity are all related to each other by the thrust:</p>
+<div class="math notranslate nohighlight">
+\[c^* c_{F} = V_{\text{eff}} = \Isp g\]</div>
+<p>Next, taking the specific impulse in Eq. <a class="reference internal" href="#equation-specific-impulse">(51)</a> and noting that <span class="math notranslate nohighlight">\(\dot{m} = \rho_e A_e V_e\)</span> and <span class="math notranslate nohighlight">\(\rho_e V_e^2 = \gamma_e p_e M_e^2\)</span>, we find:</p>
+<div class="math notranslate nohighlight">
+\[\Isp = \frac{V_e}{g}\left[1 + \left(1 - \frac{p_0}{p_e}\right)\frac{1}{\gamma_e M_e^2}\right]\]</div>
+<p>We have seen previously that the exit Mach number and exit velocity depend only on the chamber conditions and the expansion ratio, <span class="math notranslate nohighlight">\(\varepsilon\)</span>. Thus, the specific impulse for a given engine, with a particular choice of propellant, chamber, and nozzle, will vary only with the altitude.</p>
+<p>We define the vacuum specific impulse, with <span class="math notranslate nohighlight">\(p_0 = 0\)</span>, as:</p>
+<div class="math notranslate nohighlight" id="equation-vacuum-specific-impulse">
+<span class="eqno">(53)<a class="headerlink" href="#equation-vacuum-specific-impulse" title="Permalink to this equation">¶</a></span>\[I_{\text{sp},\text{vac}} = \frac{V_e}{g}\left(1 + \frac{1}{\gamma_e M_e^2}\right)\]</div>
+<p>Taking the ratio of the actual <span class="math notranslate nohighlight">\(\Isp\)</span> to the vacuum <span class="math notranslate nohighlight">\(\Isp\)</span>, we find:</p>
+<div class="math notranslate nohighlight" id="equation-specific-impulse-ratio">
+<span class="eqno">(54)<a class="headerlink" href="#equation-specific-impulse-ratio" title="Permalink to this equation">¶</a></span>\[\frac{\Isp}{I_{\text{sp},\text{vac}}} = 1 - \frac{1}{1 + \gamma M_e^2}\frac{p_0}{p_e} \leq 1\]</div>
+<p>where since the second term on the right hand side is between 0 and 1, the entire fraction must be less than one. This means that the vacuum specific impulse is the largest that a given rocket engine can produce. In general, references to a particular rocket engine will quote either the vacuum specific impulse or the sea-level specific impulse, with a slight preference for the vacuum specific impulse since it is larger.</p>
+<p>For a given rocket engine, one possible procedure to determine the specific impulse at any altitude is to calculate the vacuum specific impulse from Eq. <a class="reference internal" href="#equation-vacuum-specific-impulse">(53)</a>, which depends only on the exit velocity and the exit Mach number, which in turn depend only on the expansion ratio and combustion chamber conditions. Then, the ratio in Eq. <a class="reference internal" href="#equation-specific-impulse-ratio">(54)</a> is used to account for the effect of the varying pressure with altitude.</p>
+<p>Let’s consider two rocket engines with the same chamber temperature, <span class="math notranslate nohighlight">\(T_c\)</span> = 5000 °R, chamber pressure, <span class="math notranslate nohighlight">\(p_c\)</span> = 1000 psia, <span class="math notranslate nohighlight">\(W\)</span> = 28.95 kg/kmol, and <span class="math notranslate nohighlight">\(\gamma\)</span> = 1.4. Assume that both engines are ideal, such that <span class="math notranslate nohighlight">\(\lambda = c_V = c_d = 1\)</span>, and the process through both nozzles is isentropic. The two nozzles have differing expansion ratios giving them different values of <span class="math notranslate nohighlight">\(p_e\)</span>, and thus <span class="math notranslate nohighlight">\(M_e\)</span> and <span class="math notranslate nohighlight">\(V_e\)</span>:</p>
+<ol class="simple">
+<li><p><strong>Nozzle 1</strong>: <span class="math notranslate nohighlight">\(\varepsilon\)</span> = 10</p></li>
+<li><p><strong>Nozzle 2</strong>: <span class="math notranslate nohighlight">\(\varepsilon\)</span> = 25</p></li>
+</ol>
+<p>For both engines, we can calculate the vacuum specific impulse from Eq. <a class="reference internal" href="#equation-vacuum-specific-impulse">(53)</a> if we can determine <span class="math notranslate nohighlight">\(V_e\)</span> and <span class="math notranslate nohighlight">\(M_e\)</span>. The exit Mach number is determined by the area-Mach-number relation, Eq. <a class="reference internal" href="../compressible-flow/4-quasi-1d-flow.html#equation-area-mach-relation">(94)</a>, where we will assume that the solution is supersonic. The exit velocity is determined by Eq. <a class="reference internal" href="#equation-ideal-exit-velocity">(46)</a>. The exit properties and vacuum <span class="math notranslate nohighlight">\(\Isp\)</span> for both engines are shown in <a class="reference internal" href="#varying-expansion-ratio-isp"><span class="std std-numref">Table 3</span></a>.</p>
+<div class="cell tag_remove-output docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pint</span> <span class="kn">import</span> <span class="n">UnitRegistry</span>
+<span class="kn">from</span> <span class="nn">scipy</span> <span class="kn">import</span> <span class="n">optimize</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+<span class="n">units</span> <span class="o">=</span> <span class="n">UnitRegistry</span><span class="p">()</span>
+
+<span class="n">T_c</span> <span class="o">=</span> <span class="mi">5000</span> <span class="o">*</span> <span class="n">units</span><span class="o">.</span><span class="n">degR</span>
+<span class="n">p_c</span> <span class="o">=</span> <span class="mi">1000</span> <span class="o">*</span> <span class="n">units</span><span class="o">.</span><span class="n">psi</span>
+<span class="n">gamma</span> <span class="o">=</span> <span class="mf">1.4</span> <span class="o">*</span> <span class="n">units</span><span class="o">.</span><span class="n">dimensionless</span>
+<span class="n">W</span> <span class="o">=</span> <span class="mf">28.95</span> <span class="o">*</span> <span class="n">units</span><span class="o">.</span><span class="n">kg</span> <span class="o">/</span> <span class="n">units</span><span class="o">.</span><span class="n">kmol</span>
+<span class="n">R</span> <span class="o">=</span> <span class="n">units</span><span class="o">.</span><span class="n">molar_gas_constant</span> <span class="o">/</span> <span class="n">W</span>
+<span class="n">epsilon_1</span> <span class="o">=</span> <span class="mi">10</span> <span class="o">*</span> <span class="n">units</span><span class="o">.</span><span class="n">dimensionless</span>
+<span class="n">epsilon_2</span> <span class="o">=</span> <span class="mi">25</span> <span class="o">*</span> <span class="n">units</span><span class="o">.</span><span class="n">dimensionless</span>
+
+<span class="k">def</span> <span class="nf">area_ratio</span><span class="p">(</span><span class="n">M</span><span class="p">,</span> <span class="n">A_ratio</span><span class="p">,</span> <span class="n">gamma</span><span class="p">):</span>
+    <span class="n">first_term</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">/</span> <span class="p">(</span><span class="n">gamma</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="n">power</span> <span class="o">=</span> <span class="p">(</span><span class="n">gamma</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="n">gamma</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="n">second_term</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">+</span> <span class="p">(</span><span class="n">gamma</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">/</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">M</span><span class="o">**</span><span class="mi">2</span>
+    <span class="k">return</span> <span class="mi">1</span> <span class="o">/</span> <span class="n">M</span><span class="o">**</span><span class="mi">2</span> <span class="o">*</span> <span class="p">(</span><span class="n">first_term</span> <span class="o">*</span> <span class="n">second_term</span><span class="p">)</span><span class="o">**</span><span class="p">(</span><span class="n">power</span><span class="p">)</span> <span class="o">-</span> <span class="n">A_ratio</span><span class="o">**</span><span class="mi">2</span>
+
+<span class="n">M_e1</span> <span class="o">=</span> <span class="n">optimize</span><span class="o">.</span><span class="n">brentq</span><span class="p">(</span><span class="n">area_ratio</span><span class="p">,</span> <span class="mf">1.01</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="n">epsilon_1</span><span class="o">.</span><span class="n">magnitude</span><span class="p">,</span> <span class="n">gamma</span><span class="o">.</span><span class="n">magnitude</span><span class="p">))</span> <span class="o">*</span> <span class="n">units</span><span class="o">.</span><span class="n">dimensionless</span>
+<span class="n">T_e1</span> <span class="o">=</span> <span class="n">T_c</span> <span class="o">/</span> <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="p">(</span><span class="n">gamma</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">/</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">M_e1</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">p_e1</span> <span class="o">=</span> <span class="n">p_c</span> <span class="o">/</span> <span class="p">(</span><span class="n">T_c</span> <span class="o">/</span> <span class="n">T_e1</span><span class="p">)</span><span class="o">**</span><span class="p">(</span><span class="n">gamma</span> <span class="o">/</span> <span class="p">(</span><span class="n">gamma</span> <span class="o">-</span> <span class="mi">1</span><span class="p">))</span>
+<span class="n">V_e1</span> <span class="o">=</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">gamma</span> <span class="o">/</span> <span class="p">(</span><span class="n">gamma</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="n">R</span> <span class="o">*</span> <span class="n">T_c</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="p">(</span><span class="n">p_e1</span> <span class="o">/</span> <span class="n">p_c</span><span class="p">)</span><span class="o">**</span><span class="p">((</span><span class="n">gamma</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">/</span> <span class="n">gamma</span><span class="p">))))</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="s2">&quot;ft/s&quot;</span><span class="p">)</span>
+<span class="n">vIsp_1</span> <span class="o">=</span> <span class="p">(</span><span class="n">V_e1</span> <span class="o">/</span> <span class="n">units</span><span class="o">.</span><span class="n">gravity</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="mi">1</span> <span class="o">/</span> <span class="p">(</span><span class="n">gamma</span> <span class="o">*</span> <span class="n">M_e1</span><span class="o">**</span><span class="mi">2</span><span class="p">)))</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="s2">&quot;s&quot;</span><span class="p">)</span>
+
+<span class="n">M_e2</span> <span class="o">=</span> <span class="n">optimize</span><span class="o">.</span><span class="n">brentq</span><span class="p">(</span><span class="n">area_ratio</span><span class="p">,</span> <span class="mf">1.01</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="n">epsilon_2</span><span class="o">.</span><span class="n">magnitude</span><span class="p">,</span> <span class="n">gamma</span><span class="o">.</span><span class="n">magnitude</span><span class="p">))</span> <span class="o">*</span> <span class="n">units</span><span class="o">.</span><span class="n">dimensionless</span>
+<span class="n">T_e2</span> <span class="o">=</span> <span class="n">T_c</span> <span class="o">/</span> <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="p">(</span><span class="n">gamma</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">/</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">M_e2</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">p_e2</span> <span class="o">=</span> <span class="n">p_c</span> <span class="o">/</span> <span class="p">(</span><span class="n">T_c</span> <span class="o">/</span> <span class="n">T_e2</span><span class="p">)</span><span class="o">**</span><span class="p">(</span><span class="n">gamma</span> <span class="o">/</span> <span class="p">(</span><span class="n">gamma</span> <span class="o">-</span> <span class="mi">1</span><span class="p">))</span>
+<span class="n">V_e2</span> <span class="o">=</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">gamma</span> <span class="o">/</span> <span class="p">(</span><span class="n">gamma</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="n">R</span> <span class="o">*</span> <span class="n">T_c</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="p">(</span><span class="n">p_e2</span> <span class="o">/</span> <span class="n">p_c</span><span class="p">)</span><span class="o">**</span><span class="p">((</span><span class="n">gamma</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">/</span> <span class="n">gamma</span><span class="p">))))</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="s2">&quot;ft/s&quot;</span><span class="p">)</span>
+<span class="n">vIsp_2</span> <span class="o">=</span> <span class="p">(</span><span class="n">V_e2</span> <span class="o">/</span> <span class="n">units</span><span class="o">.</span><span class="n">gravity</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="mi">1</span> <span class="o">/</span> <span class="p">(</span><span class="n">gamma</span> <span class="o">*</span> <span class="n">M_e2</span><span class="o">**</span><span class="mi">2</span><span class="p">)))</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="s2">&quot;s&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<table class="colwidths-auto table" id="varying-expansion-ratio-isp">
+<caption><span class="caption-number">Table 3 </span><span class="caption-text">Effect of varying expansion ratio on rocket engine vacuum performance</span><a class="headerlink" href="#varying-expansion-ratio-isp" title="Permalink to this table">¶</a></caption>
+<thead>
+<tr class="row-odd"><th class="head"><p>Property</p></th>
+<th class="head"><p>Nozzle 1</p></th>
+<th class="head"><p>Nozzle 2</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><span class="math notranslate nohighlight">\(M_e\)</span></p></td>
+<td><p><span class="pasted-text">3.92</span></p></td>
+<td><p><span class="pasted-text">5.00</span></p></td>
+</tr>
+<tr class="row-odd"><td><p><span class="math notranslate nohighlight">\(V_e\)</span></p></td>
+<td><p><span class="pasted-text">6735.56 ft/s</span></p></td>
+<td><p><span class="pasted-text">7077.58 ft/s</span></p></td>
+</tr>
+<tr class="row-even"><td><p><span class="math notranslate nohighlight">\(p_e\)</span></p></td>
+<td><p><span class="pasted-text">7.31 psi</span></p></td>
+<td><p><span class="pasted-text">1.89 psi</span></p></td>
+</tr>
+<tr class="row-odd"><td><p><span class="math notranslate nohighlight">\(T_e\)</span></p></td>
+<td><p><span class="pasted-text">1226.31 °R</span></p></td>
+<td><p><span class="pasted-text">833.33 °R</span></p></td>
+</tr>
+<tr class="row-even"><td><p><span class="math notranslate nohighlight">\(I_{\text{sp},{\text{vac}}}\)</span></p></td>
+<td><p><span class="pasted-text">219.07 s</span></p></td>
+<td><p><span class="pasted-text">226.26 s</span></p></td>
+</tr>
+</tbody>
+</table>
+<p>We can see that the larger expansion ratio nozzle has higher specific impulse under the vacuum conditions. This makes sense, because it is not possible to overexpand the nozzle when the backpressure is a vacuum, and the ideal expansion ratio would be infinite. Thus, the larger expansion ratio is able to expand the flow closer to the vacuum.</p>
+<p>Now, we can plot the variation of the specific impulse with altitude for the two engines.</p>
+<div class="cell tag_remove-output docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">ambiance</span> <span class="kn">import</span> <span class="n">Atmosphere</span>
+
+<span class="n">heights</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mf">200E3</span><span class="p">)</span> <span class="o">*</span> <span class="n">units</span><span class="o">.</span><span class="n">ft</span>
+<span class="n">atmos</span> <span class="o">=</span> <span class="n">Atmosphere</span><span class="p">(</span><span class="n">heights</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="s2">&quot;m&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">magnitude</span><span class="p">)</span>
+<span class="n">p_0</span> <span class="o">=</span> <span class="n">atmos</span><span class="o">.</span><span class="n">pressure</span> <span class="o">*</span> <span class="n">units</span><span class="o">.</span><span class="n">Pa</span>
+
+<span class="n">Isp_1</span> <span class="o">=</span> <span class="p">((</span><span class="mi">1</span> <span class="o">-</span> <span class="n">p_0</span> <span class="o">/</span> <span class="p">((</span><span class="mi">1</span> <span class="o">+</span> <span class="n">gamma</span> <span class="o">*</span> <span class="n">M_e1</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span> <span class="o">*</span> <span class="n">p_e1</span><span class="p">))</span> <span class="o">*</span> <span class="n">vIsp_1</span><span class="p">)</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="s2">&quot;s&quot;</span><span class="p">)</span>
+<span class="n">Isp_2</span> <span class="o">=</span> <span class="p">((</span><span class="mi">1</span> <span class="o">-</span> <span class="n">p_0</span> <span class="o">/</span> <span class="p">((</span><span class="mi">1</span> <span class="o">+</span> <span class="n">gamma</span> <span class="o">*</span> <span class="n">M_e2</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span> <span class="o">*</span> <span class="n">p_e2</span><span class="p">))</span> <span class="o">*</span> <span class="n">vIsp_2</span><span class="p">)</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="s2">&quot;s&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell tag_remove-input docutils container">
+<div class="cell_output docutils container">
+<div class="output text_html">
+
+
+
+
+
+<div class="bk-root" id="cda97726-dfb7-4527-a4ee-c5e708452604" data-root-id="1003"></div>
+</div><script type="application/javascript">(function(root) {
+  function embed_document(root) {
+    
+  var docs_json = {"6f84df67-f821-44e2-b49b-e68e1f6a7a34":{"defs":[{"extends":null,"module":null,"name":"DataModel","overrides":[],"properties":[]}],"roots":{"references":[{"attributes":{"below":[{"id":"1012"}],"center":[{"id":"1015"},{"id":"1019"},{"id":"1050"},{"id":"1104"},{"id":"1107"},{"id":"1110"},{"id":"1113"}],"extra_y_ranges":{"pressure":{"id":"1069"}},"height":400,"left":[{"id":"1016"}],"min_border":10,"renderers":[{"id":"1037"},{"id":"1055"},{"id":"1073"},{"id":"1089"}],"right":[{"id":"1102"}],"title":{"id":"1039"},"toolbar":{"id":"1027"},"width":500,"x_range":{"id":"1004"},"x_scale":{"id":"1008"},"y_range":{"id":"1006"},"y_scale":{"id":"1010"}},"id":"1003","subtype":"Figure","type":"Plot"},{"attributes":{"axis_label":"Pressure difference, p_e - p_0, psia","formatter":{"id":"1129"},"major_label_policy":{"id":"1128"},"ticker":{"id":"1127"},"y_range_name":"pressure"},"id":"1102","type":"LinearAxis"},{"attributes":{},"id":"1010","type":"LinearScale"},{"attributes":{},"id":"1129","type":"BasicTickFormatter"},{"attributes":{},"id":"1042","type":"AllLabels"},{"attributes":{"end":230,"start":150},"id":"1006","type":"Range1d"},{"attributes":{},"id":"1127","type":"BasicTicker"},{"attributes":{"size":{"value":7}},"id":"1109","type":"NormalHead"},{"attributes":{"data_source":{"id":"1002"},"glyph":{"id":"1035"},"hover_glyph":null,"muted_glyph":null,"nonselection_glyph":{"id":"1036"},"view":{"id":"1038"}},"id":"1037","type":"GlyphRenderer"},{"attributes":{},"id":"1020","type":"PanTool"},{"attributes":{"size":{"value":7}},"id":"1112","type":"NormalHead"},{"attributes":{},"id":"1043","type":"BasicTickFormatter"},{"attributes":{"end":15,"start":-15},"id":"1069","type":"Range1d"},{"attributes":{"line_color":"#1f77b4","line_dash":[6],"line_width":2,"x":{"field":"h"},"y":{"field":"p_e1"}},"id":"1071","type":"Line"},{"attributes":{"label":{"value":"\ud835\udf00 = 10"},"renderers":[{"id":"1037"},{"id":"1073"}]},"id":"1051","type":"LegendItem"},{"attributes":{},"id":"1130","type":"Selection"},{"attributes":{"data_source":{"id":"1002"},"glyph":{"id":"1087"},"hover_glyph":null,"muted_glyph":null,"nonselection_glyph":{"id":"1088"},"view":{"id":"1090"},"y_range_name":"pressure"},"id":"1089","type":"GlyphRenderer"},{"attributes":{},"id":"1131","type":"UnionRenderers"},{"attributes":{"label":{"value":"\ud835\udf00 = 25"},"renderers":[{"id":"1055"},{"id":"1089"}]},"id":"1068","type":"LegendItem"},{"attributes":{},"id":"1047","type":"Selection"},{"attributes":{"line_color":"#1f77b4","line_width":2,"x":{"field":"h"},"y":{"field":"Isp_1"}},"id":"1035","type":"Line"},{"attributes":{"end":200},"id":"1004","type":"Range1d"},{"attributes":{},"id":"1017","type":"BasicTicker"},{"attributes":{"source":{"id":"1002"}},"id":"1074","type":"CDSView"},{"attributes":{},"id":"1048","type":"UnionRenderers"},{"attributes":{"end":{"id":"1109"},"line_width":{"value":2},"source":{"id":"1119"},"start":null,"x_end":{"value":55},"x_start":{"value":35},"y_end":{"value":3.9},"y_range_name":"pressure","y_start":{"value":3.9}},"id":"1110","type":"Arrow"},{"attributes":{"axis":{"id":"1016"},"dimension":1,"ticker":null},"id":"1019","type":"Grid"},{"attributes":{},"id":"1132","type":"Selection"},{"attributes":{},"id":"1045","type":"AllLabels"},{"attributes":{},"id":"1133","type":"UnionRenderers"},{"attributes":{"line_alpha":0.1,"line_color":"#ff7f0e","line_dash":[6],"line_width":2,"x":{"field":"h"},"y":{"field":"p_e2"}},"id":"1088","type":"Line"},{"attributes":{"data":{},"selected":{"id":"1130"},"selection_policy":{"id":"1131"}},"id":"1117","type":"ColumnDataSource"},{"attributes":{"line_alpha":0.1,"line_color":"#1f77b4","line_dash":[6],"line_width":2,"x":{"field":"h"},"y":{"field":"p_e1"}},"id":"1072","type":"Line"},{"attributes":{},"id":"1046","type":"BasicTickFormatter"},{"attributes":{"end":{"id":"1112"},"line_width":{"value":2},"source":{"id":"1120"},"start":null,"x_end":{"value":55},"x_start":{"value":35},"y_end":{"value":-1.9},"y_range_name":"pressure","y_start":{"value":-1.9}},"id":"1113","type":"Arrow"},{"attributes":{},"id":"1021","type":"WheelZoomTool"},{"attributes":{"overlay":{"id":"1026"}},"id":"1022","type":"BoxZoomTool"},{"attributes":{},"id":"1024","type":"ResetTool"},{"attributes":{"line_alpha":0.1,"line_color":"#1f77b4","line_width":2,"x":{"field":"h"},"y":{"field":"Isp_1"}},"id":"1036","type":"Line"},{"attributes":{},"id":"1023","type":"SaveTool"},{"attributes":{},"id":"1134","type":"Selection"},{"attributes":{},"id":"1025","type":"HelpTool"},{"attributes":{},"id":"1135","type":"UnionRenderers"},{"attributes":{"data_source":{"id":"1002"},"glyph":{"id":"1071"},"hover_glyph":null,"muted_glyph":null,"nonselection_glyph":{"id":"1072"},"view":{"id":"1074"},"y_range_name":"pressure"},"id":"1073","type":"GlyphRenderer"},{"attributes":{"size":{"value":7}},"id":"1103","type":"NormalHead"},{"attributes":{"axis":{"id":"1012"},"ticker":null},"id":"1015","type":"Grid"},{"attributes":{"source":{"id":"1002"}},"id":"1056","type":"CDSView"},{"attributes":{"bottom_units":"screen","fill_alpha":0.5,"fill_color":"lightgrey","left_units":"screen","level":"overlay","line_alpha":1.0,"line_color":"black","line_dash":[4,4],"line_width":2,"right_units":"screen","syncable":false,"top_units":"screen"},"id":"1026","type":"BoxAnnotation"},{"attributes":{"data":{},"selected":{"id":"1132"},"selection_policy":{"id":"1133"}},"id":"1118","type":"ColumnDataSource"},{"attributes":{"line_color":"#ff7f0e","line_width":2,"x":{"field":"h"},"y":{"field":"Isp_2"}},"id":"1053","type":"Line"},{"attributes":{"source":{"id":"1002"}},"id":"1038","type":"CDSView"},{"attributes":{},"id":"1013","type":"BasicTicker"},{"attributes":{},"id":"1136","type":"Selection"},{"attributes":{"end":{"id":"1103"},"line_width":{"value":2},"source":{"id":"1117"},"start":null,"x_end":{"value":5},"x_start":{"value":26},"y_end":{"value":212},"y_start":{"value":212}},"id":"1104","type":"Arrow"},{"attributes":{},"id":"1137","type":"UnionRenderers"},{"attributes":{},"id":"1128","type":"AllLabels"},{"attributes":{},"id":"1008","type":"LinearScale"},{"attributes":{"data":{},"selected":{"id":"1134"},"selection_policy":{"id":"1135"}},"id":"1119","type":"ColumnDataSource"},{"attributes":{"line_alpha":0.1,"line_color":"#ff7f0e","line_width":2,"x":{"field":"h"},"y":{"field":"Isp_2"}},"id":"1054","type":"Line"},{"attributes":{"size":{"value":7}},"id":"1106","type":"NormalHead"},{"attributes":{"axis_label":"Altitude, kft","formatter":{"id":"1046"},"major_label_policy":{"id":"1045"},"ticker":{"id":"1013"}},"id":"1012","type":"LinearAxis"},{"attributes":{"end":{"id":"1106"},"line_width":{"value":2},"source":{"id":"1118"},"start":null,"x_end":{"value":25},"x_start":{"value":47},"y_end":{"value":220},"y_start":{"value":220}},"id":"1107","type":"Arrow"},{"attributes":{"data":{"Isp_1":{"__ndarray__":"P34/OJfwaEBVUe69fkdpQKNK8FZTlGlACwxefwHYaUByjEoJZhNqQJ5psbtOR2pAKitk73p0akCRCvMpnJtqQDOCjbZWvWpAd8AHtj/aakBur0T3XvJqQClC/Bg0BmtA2n9Is4IWa0DJhhB56yNrQPykXHTyLmtAo1byJAQ4a0AV+3C0eT9rQOuSnlOZRWtAEVDU2pxKa0D5NSD8uE5rQAMiAnYYUmtAzT608d1Ua0BVJm+TJVdrQJcIizsGWWtAtdp4iJJaa0CiXUOm2VtrQNSUPu/nXGtAe3zEScZda0DBQ6kNfV5rQBM7TbgTX2tAJKyMR5Bfa0CwtX+K919rQCrxZWBNYGtAuiLb6ZRga0D27HSv0GBrQBKIK8ACYWtAQmhgySxha0D4jukpUGFrQKYjNgFuYWtAvXqTXIdha0A9i5cTnWFrQIy+cKyvYWtALfX6pL9ha0BjbJx4zWFrQEgC1G3ZYWtAsrdtwONha0C6Hlul7GFrQLfZaUv0YWtAfBbp2/pha0ArbD97AGJrQA==","dtype":"float64","order":"little","shape":[50]},"Isp_2":{"__ndarray__":"nlOwEJgsZkA7Y+Xe2gVnQGZSal3uxWdA1LV8wiFvaEDD9ksbnQNpQKEfTdlihWlAbQOMWlH2aUDkMfFsJFhqQO9cc8x2rGpAj/gkS730akDyTT1uCzFrQL88iEKgYmtA89ZGxGSLa0BD6Lqy6qxrQMEz+SZ8yGtA3m9vYCjfa0D5CixHzvFrQJAGHlUdAWxAbl8kJ6YNbEAwHmJ67BdsQEjsFitbIGxAPjRU4EgnbEATd6f0+yxsQLYs7ZitMWxAAro/WYw1bEBRAbojvjhsQE0LLtphO2xAb858vI09bECewDimVj9sQOqq0lDPQGxAl0XxtgZCbEBz3VDeCENsQCJyEHXfQ2xADG61TJJEbECi57W6J0VsQGhrfuSkRWxA4ZuC+w1GbECnfNlsZkZsQFrwGAexRmxAE0qCa/BGbEBScwy1JkdsQJlzKzNVR2xAKvyEIH1HbEAzppixn0dsQO2co5a9R2xAd+IjZddHbEAKZHWh7UdsQIM3msAASGxAcU/YKRFIbEClJTA4H0hsQA==","dtype":"float64","order":"little","shape":[50]},"h":{"__ndarray__":"AAAAAAAAAAAUvJyCl1MQQBS8nIKXUyBAHhrrQ2N9KEAUvJyCl1MwQBnrQ2N9aDRAHhrrQ2N9OEAjSZIkSZI8QBS8nIKXU0BAl1PwcgpeQkAZ60NjfWhEQJuCl1PwckZAHhrrQ2N9SECgsT401odKQCNJkiRJkkxApeDlFLycTkAUvJyCl1NQQNWHxvrQWFFAl1PwcgpeUkBYHxrrQ2NTQBnrQ2N9aFRA2rZt27ZtVUCbgpdT8HJWQF1OwcspeFdAHhrrQ2N9WEDg5RS8nIJZQKCxPjTWh1pAYn1orA+NW0AjSZIkSZJcQOUUvJyCl11ApeDlFLycXkBnrA+N9aFfQBS8nIKXU2BA9aGxPjTWYEDVh8b60FhhQLZt27Zt22FAl1PwcgpeYkB3OQUvp+BiQFgfGutDY2NAOAUvp+DlY0AZ60NjfWhkQPrQWB8a62RA2rZt27ZtZUC7nIKXU/BlQJuCl1PwcmZAfWisD431ZkBdTsHLKXhnQD001ofG+mdAHhrrQ2N9aED///////9oQA==","dtype":"float64","order":"little","shape":[50]},"p_e1":{"__ndarray__":"UZjHgeuOHcCr7+QeOWQVwI5THhrCVwzAvDamUqg+/79Yd5qnntbhv8CBiFvBL+U/ZPr99tSS+z9K2JUzJCQFQDw9pXf+egtA0g2ISAB1EEDaDgEYUbkSQFn3BuBvlhRAgToVH74eFkD+hsbVVWEXQJa2Z4qfahhALwffcs1EGUCyXiyVQPgZQFgB94uRixpA1oQr8i8EG0BWxvF/D2cbQNF6yoU0uBtA/rrS3uD6G0CZxySOuTEcQPGVZezkXhxAd4Ly5SKEHED2GuV64KIcQLn8wNhGvBxAdfrSGizRHEBHAq33WOIcQKH4d56B8BxAntz0Mzb8HECLuxxp6gUdQNtq1WT7DR1A/o61Y7QUHUAhRQVZUhodQJtzTsoGHx1AyapdEfoiHUBLymkmTSYdQEL9YAwbKR1Argj7EX0rHUD7FKl5hy0dQNYIet9GLx1AtZVFF8cwHUAT9be5EzIdQKGMwmYzMx1AmrP0vCs0HUCvmf61ATUdQJOq17e5NR1A9ZxLpFc2HUCj2Q/n3jYdQA==","dtype":"float64","order":"little","shape":[50]},"p_e2":{"__ndarray__":"gTSBSaCcKcAu4A8YR4clwDz9JA8b6yHAYF7kJf95HcCcHy7mKOUXwHnAyeVcBBPAMKT2pj+LDcAYyd/uhTAGwE3IoFVXs/+/ewvLIlPV9L+2Ds7JH4jnv4SVPRNTPtG/4HOadkMavT/QZLtIDHDbPyovZ8lTAuY/7LMhDcPT7D8FOMYPrjfxP5rC8OrxhPM/ktDCg2tn9T+U1tu66fL2P36oPtJ9N/g/NKlfNi9C+T+e26fzkR36PwEVq2w/0vo/GcfeUjdn+z8SKammLeL7Px+wGB7HR/w/DqdgJlyb/D9XxsiZD+D8P76f9DSyGP0/sy/oioRH/T9oq4dfVW79P6loak6Zjv0/NfnqSX2p/T/B0Skf9b/9P6iLTuTG0v0/YGiLAJTi/T9l5rtU4O/9P0SymOwX+/0/9d8AA6AE/j8mEbmhyQz+P5Hg/DjHE/4/DxQrGMgZ/j+IkfSh+h7+P8HvHlZ5I/4/oovnrlon/j/1Iw+Tsir+P4hnc5qSLf4/EDFDTAow/j/GI1RXJzL+Pw==","dtype":"float64","order":"little","shape":[50]}},"selected":{"id":"1047"},"selection_policy":{"id":"1048"}},"id":"1002","type":"ColumnDataSource"},{"attributes":{"active_multi":null,"tools":[{"id":"1020"},{"id":"1021"},{"id":"1022"},{"id":"1023"},{"id":"1024"},{"id":"1025"}]},"id":"1027","type":"Toolbar"},{"attributes":{"line_color":"#ff7f0e","line_dash":[6],"line_width":2,"x":{"field":"h"},"y":{"field":"p_e2"}},"id":"1087","type":"Line"},{"attributes":{"data_source":{"id":"1002"},"glyph":{"id":"1053"},"hover_glyph":null,"muted_glyph":null,"nonselection_glyph":{"id":"1054"},"view":{"id":"1056"}},"id":"1055","type":"GlyphRenderer"},{"attributes":{"axis_label":"I_sp, s","formatter":{"id":"1043"},"major_label_policy":{"id":"1042"},"ticker":{"id":"1017"}},"id":"1016","type":"LinearAxis"},{"attributes":{"data":{},"selected":{"id":"1136"},"selection_policy":{"id":"1137"}},"id":"1120","type":"ColumnDataSource"},{"attributes":{"source":{"id":"1002"}},"id":"1090","type":"CDSView"},{"attributes":{},"id":"1039","type":"Title"},{"attributes":{"items":[{"id":"1051"},{"id":"1068"}],"location":"bottom_right"},"id":"1050","type":"Legend"}],"root_ids":["1003"]},"title":"Bokeh Application","version":"2.3.0"}};
+  var render_items = [{"docid":"6f84df67-f821-44e2-b49b-e68e1f6a7a34","root_ids":["1003"],"roots":{"1003":"cda97726-dfb7-4527-a4ee-c5e708452604"}}];
+  root.Bokeh.embed.embed_items_notebook(docs_json, render_items);
+
+  }
+  if (root.Bokeh !== undefined) {
+    embed_document(root);
+  } else {
+    var attempts = 0;
+    var timer = setInterval(function(root) {
+      if (root.Bokeh !== undefined) {
+        clearInterval(timer);
+        embed_document(root);
+      } else {
+        attempts++;
+        if (attempts > 100) {
+          clearInterval(timer);
+          console.log("Bokeh: ERROR: Unable to run BokehJS code because BokehJS library is missing");
+        }
+      }
+    }, 10, root)
+  }
+})(window);</script></div>
+</div>
+<p>On this graph, the left axis shows the specific impulse and the right axis shows the pressure difference <span class="math notranslate nohighlight">\(p_e - p_0\)</span>.</p>
+<p>On the far right of the graph, the specific impulse approaches the vacuum specific impulse and pressure difference approaches the exit pressure as the ambient pressure trends towards zero. As altitude decreases moving left, the ambient pressure increases, and the specific impulse of both engines decreases.</p>
+<p>The drop off of specific impulse with altitude is fairly steep, and the slope is larger with the larger expansion ratio! This means that there is a crossover point where the smaller expansion ratio engine is more efficient than the larger expansion ratio.</p>
+<p>As we pointed out before, the larger expansion ratio is more efficient in a vacuum because it expands the flow closer to the ambient pressure. In other words, <span class="math notranslate nohighlight">\(p_e - p_0\)</span> is smaller under vacuum conditions for the larger expansion ratio, getting closer to the ideal case of <span class="math notranslate nohighlight">\(p_e = p_0\)</span>. However, this additional expansion means that at sea level, the pressure difference is larger for the larger expansion ratio than the smaller expansion ratio. This results in a less efficient engine with the larger expansion ratio!</p>
+<p>This trend suggests that a nozzle which is able to adapt to the changing ambient pressure would be advantageous. As we discussed in the <a class="reference internal" href="#nozzle-shapes"><span class="std std-ref">Nozzle Shapes section</span></a>, the plug, aerospike, and extendable nozzles can all help reduce the effect of the changing ambient pressure. However, none of these engines are used in practice.</p>
+<p>As it turns out, most rocket launch vehicles are <strong>staged</strong>. This means that portions of the structure of the rocket (the fuel tanks and support structures) are discarded when the fuel tanks are empty. Staging rockets helps to work around the tyranny of the rocket equation problem, as we’ll show later on.</p>
+<p>Since the rocket is staged, it will have different engines with different nozzles operating at different altitude ranges! This means that a fixed expansion ratio converging-diverging nozzle can be designed which operates well at low altitude for the first stage of the rocket, and later stages that operate higher in the atmosphere or in space use nozzles optimized for those conditions.</p>
 </div>
 </div>
 
@@ -548,7 +1073,7 @@
     <div class='prev-next-bottom'>
         
     <a class='left-prev' id="prev-link" href="1-introduction.html" title="previous page">Liquid Propellant Rocket Engines</a>
-    <a class='right-next' id="next-link" href="../compressible-flow/1-introduction.html" title="next page">Compressible Flow</a>
+    <a class='right-next' id="next-link" href="3-example-LR91.html" title="next page">Example: LR91 Rocket Motor</a>
 
     </div>
     <footer class="footer mt-5 mt-md-0">

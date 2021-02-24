@@ -1,3 +1,33 @@
+---
+jupytext:
+  formats: md:myst
+  text_representation:
+    extension: .md
+    format_name: myst
+kernelspec:
+  display_name: Python 3
+  language: python
+  name: python3
+---
+
+```{code-cell}
+:tags: [remove-input]
+
+import itertools
+
+from bokeh.io import show, output_notebook
+from bokeh.plotting import figure
+from bokeh.models import LinearAxis, Range1d, ColumnDataSource, Arrow, NormalHead
+from bokeh.palettes import Category10 as palette
+from bokeh.layouts import row
+
+from myst_nb import glue
+
+output_notebook(hide_banner=True)
+opts = dict(plot_width=500, plot_height=400, min_border=10)
+colors = itertools.cycle(palette[10])
+```
+
 # Design of Rocket Nozzles
 
 The nozzle is the most important component of the rocket engine. The nozzle converts high pressure, and ideally high temperature, gases into low pressure gases with much higher velocity by changing the cross-sectional area of the flow. This momentum transfer then provides the thrust force on the spacecraft.
@@ -8,6 +38,7 @@ Nearly all rocket nozzles are of the **converging-diverging** type. This means t
 
 We will now investigate the major factors influencing the design of a rocket nozzle and how to analyze the performance of a given nozzle. To help understand the qualitative behavior of design changes and the inherent tradeoffs, we would like to reduce the problem to an analysis of dimensionless parameters. First, we will discuss the various shape of nozzle designs before returning to some equations.
 
+(nozzle-shapes)=
 ## Nozzle Shapes
 
 The flow properties upstream of the nozzle throat are fixed when the flow reaches the sonic velocity at the throat, independent of any downstream changes. Therefore, the nozzle exit conditions are primarily determined by the shape of the nozzle after the throat.
@@ -203,6 +234,7 @@ The ideal mass flow rate is given by Eq. {eq}`choked-mass-flow-rate`, which can 
 where $p_c$, $T_c$, and $W_c$ are the pressure, temperature, and molecular weight in the combustion chamber, and $\Gamma_c$ is a combination term involving the (constant) specific heat ratio:
 
 ```{math}
+:label: Gamma-function
 \Gamma_c = \sqrt{\gamma_c}\left(\frac{2}{\gamma_c + 1}\right)^{\frac{\gamma_c + 1}{2\left(\gamma_c - 1\right)}}
 ```
 
@@ -210,16 +242,16 @@ where $\gamma_c$ is the specific heat ratio in the combustion chamber. The botto
 
 ```{math}
 :label: nozzle-characteristic-velocity
-c^* = \frac{1}{\Gamma_c}\sqrt{\frac{R_u T_c}{W_c}}
+c^* = \frac{1}{\Gamma}\sqrt{\frac{R_u T_c}{W_c}} = \frac{a_c}{\Gamma \sqrt{\gamma}}
 ```
 
-This velocity characterizes the effectiveness of the combustion products to produce thrust from the nozzle. The characteristic velocity is large when $T_c$ is large, or $\gamma_c$ or $W_c$ are small.
+where $a_c$ is the speed of sound in the combustion chamber. The characteristic velocity is a figure of merit for the effectiveness of the combustion products to produce thrust from the nozzle. The characteristic velocity is large when $T_c$ is large, or $\gamma$ or $W_c$ are small.
 
 For the case of LH2/LOX combustion, the combustion temperature is approximately 3,900 K, the products' molecular weight is approximately 13 kg/kmol, and the ratio of specific heats is approximately 1.16. This gives a characteristic velocity of about 2,500 m/s.
 
 For the case of RP1/LOX combustion, the combustion temperature is about 3,700 K, the products' molecular weight is approximately 23 kg/kmol, and the ratio of specific heats is approximately 1.14. This gives a characteristic velocity of about 1,800 m/s.
 
-These values give an approximate range typical of most propellants, 1,500 m/s < $c^*$ < 2,500 m/s.
+These values give an approximate range typical of most propellants, 1,500 m/s < $c^*$ < 2,500 m/s. In a subsequent section, we will discuss the effect of propellant choice on $c^*$ more directly.
 
 With this definition of the characteristic velocity, we can rewrite the ideal mass flow rate:
 
@@ -269,7 +301,29 @@ $c_V$ is also restricted to lie between 0 and 1. For well-designed nozzles, $c_V
 
 Whereas $c_m$, $c^*$, and $c_d$ are related to the choice of propellant, $c_V$ is related to the design of the nozzle. The reason for this is because the isentropic efficiency is essentially determined by the increase in entropy of the flow over the nozzle. Better designed nozzles that minimize the effect of the boundary layer and avoid shock waves have smaller entropy increases, and therefore higher values of $c_V$.
 
-### Nozzle Thrust Coefficient
+### Nozzle Exit Velocity
+
+To determine the ideal nozzle exit velocity, we can apply conservation of energy across the nozzle, noting that $V_c\approx 0$:
+
+```{math}
+\frac{1}{2} V_e^2 + c_p T_e = c_p T_c
+```
+
+Solving for $V_e$ and substituting Eqs. {eq}`cp-cv-relationships` and {eq}`p-T-isentropic`, where $T_c = T_t$, we find:
+
+```{math}
+:label: ideal-exit-velocity
+V_e = \sqrt{\frac{2\gamma}{\gamma - 1} \frac{R_u T_c}{W_c} \left[1 - \left(\frac{p_e}{p_c}\right)^{\frac{\gamma - 1}{\gamma}}\right]}
+```
+
+From Eq. {eq}`ideal-exit-velocity`, we have four factors that we control to adjust the exit velocity:
+
+1. $p_e/p_c$: This is the ratio of the nozzle exit pressure to the combustion chamber (stagnation) pressure. Decreasing this ratio will increase the exit velocity. However, since the exit pressure must equilibrate with the ambient, we do not have direct control over that parameters. We can control the combustion chamber pressure, but we are limited by the strength of the materials required for the combustion chamber.
+2. $T_c$: Increasing the combustion chamber temperature will increase the exit velocity. However, it also increases the requirements for cooling in the combustor and nozzle. Systems for cooling these components will add weight to the engine, tending to offset the increased thrust.
+3. $W_c$: Decreasing the molecular weight of the combustion products is very effective at increasing the exit velocity. The most efficient combination is LH2/LOX, but this requires expensive and heavy cryogenic equipment on-board the engine.
+4. $\gamma$: Decreasing the ratio of specific heats (which is a function of the temperature and composition, so not truly independent) will increase the exit velocity. However, $\gamma$ can never be less than one.
+
+## Nozzle Thrust Coefficient
 
 We have now reached the point where we can relate both of our design variables, the choice of propellant and the design of the nozzle, to the thrust produced by the rocket. The thrust of the rocket is given by Eq. {eq}`rocket-thrust`. Using the discharge coefficient, Eq. {eq}`nozzle-discharge-coefficient`, and the velocity coefficient, Eq. {eq}`nozzle-velocity-coefficient`, we can rewrite the thrust equation in terms of the ideal exit velocity and mass flow rate:
 
@@ -280,12 +334,234 @@ F = \lambda c_d c_V \dot{m}_i V_{e,i} + A_e\left(p_e - p_0\right)
 Further plugging in for the ideal mass flow rate and ideal exit velocity, we find:
 
 ```{math}
-F = \lambda c_d c_V \Gamma_c p_c A_{\text{th}} \sqrt{\frac{2\gamma_c}{\gamma_c - 1}\left[1 - \left(\frac{p_e}{p_c}\right)^{\frac{\gamma_c - 1}{\gamma_c}}\right]} + A_e \left(p_e - p_0\right)
+F = \lambda c_d c_V \Gamma p_c A_{\text{th}} \sqrt{\frac{2\gamma}{\gamma - 1}\left[1 - \left(\frac{p_e}{p_c}\right)^{\frac{\gamma - 1}{\gamma}}\right]} + A_e \left(p_e - p_0\right)
 ```
 
 This equation can be divided by the chamber pressure and throat area to define the **nozzle thrust coefficient**:
 
 ```{math}
 :label: nozzle-thrust-coefficient
-c_F = \frac{F}{p_c A_{\text{th}}} = \lambda c_d c_V \Gamma_c \sqrt{\frac{2\gamma_c}{\gamma_c - 1}\left[1 - \left(\frac{p_e}{p_c}\right)^{\frac{\gamma_c - 1}{\gamma_c}}\right]} + \frac{A_e}{A_{\text{th}}} \left(\frac{p_e}{p_c} - \frac{p_0}{p_c}\right)
+c_F = \frac{F}{p_c A_{\text{th}}} = \lambda c_d c_V \Gamma \sqrt{\frac{2\gamma}{\gamma - 1}\left[1 - \left(\frac{p_e}{p_c}\right)^{\frac{\gamma - 1}{\gamma}}\right]} + \frac{A_e}{A_{\text{th}}} \left(\frac{p_e}{p_c} - \frac{p_0}{p_c}\right)
 ```
+
+When there are no losses in the nozzle, then $\lambda = c_V = c_d = 1$ and the thrust coefficient is called the **ideal thrust coefficient**, denoted by $c_{F,i}$:
+
+```{math}
+:label: ideal-nozzle-thrust-coefficient
+c_{F,i} = \Gamma \sqrt{\frac{2\gamma}{\gamma - 1}\left[1 - \left(\frac{p_e}{p_c}\right)^{\frac{\gamma - 1}{\gamma}}\right]}
+```
+
+The general thrust coefficient $c_F$ is given in terms of the ideal thrust coefficient as:
+
+```{math}
+c_F = c_{F,i} + \varepsilon\left(\frac{p_e}{p_c} - \frac{p_0}{p_c}\right)
+```
+
+Furthermore, if we set $p_0 = 0$ then the nozzle is exhausting into a vacuum and we can define the **vacuum thrust coefficient**, $c_{F,\text{vac}}$. Then, the normal thrust coefficient and the vacuum thrust coefficient are related by the area expansion ratio $\varepsilon$:
+
+```{math}
+:label: nozzle-thrust-coefficient-vacuum
+c_F = c_{F,\text{vac}} - \varepsilon \frac{p_0}{p_c}
+```
+
+Although the thrust coefficient is non-dimensional, there are no specific restrictions on the values it can take on. Larger values of the thrust coefficient mean that the nozzle is more effective at turning high-pressure, high-temperature gases in the combustion chamber into acceleration of the engine via the thrust force. This is further emphasized by introducing the ideal mass flow rate and the characteristic velocity into Eq. {eq}`rocket-thrust`:
+
+```{math}
+:label: rocket-thrust-characteristic-velocity
+F = c_F p_c A_{\text{th}} = c_F \dot{m}_i c^* = c_F \frac{\dot{m}}{c_d} c^*
+```
+
+Equation {eq}`rocket-thrust-characteristic-velocity` is made of two terms multiplying the mass flow rate:
+
+1. $c^*$: the characteristic velocity
+2. $c_F$: the thrust coefficient
+
+The characteristic velocity is a measure of the propellant performance and the thrust coefficient is a measure of the nozzle performance. Remember that the discharge coefficient is ideally 1, so it does not factor into this analysis.
+
+## Specific Impulse
+
+Another figure of merit for rocket engines is the **specific impulse**. We discussed the specific impulse in the {ref}`introductory chapter <intro-specific-impulse>`. Here, we will place the specific impulse in the context of the variables we have described so far.
+
+Recall that the definition of the specific impulse is the impulse per unit mass, or the thrust per unit _weight_ flow of propellants. Assuming constant thrust and mass flow rate of the propellants, this is:
+
+```{math}
+:label: specific-impulse
+\Isp = \frac{F}{\dot{m} g} = \frac{V_e}{g} + \frac{A_e}{\dot{m}_e g}\left(p_e - p_0\right)
+```
+
+where $g$ is the gravitational acceleration at the Earth's surface, 32.174 ft/s{superscript}`2` or 9.81 m/s{superscript}`2` depending on the units. Note that the Earth's gravitational acceleration is always used regardless of where the rocket engine is physically located. The dimensions of $\Isp$ are time, usually quoted in seconds. This similarly suggests the definition of a related figure of merit, called the **effective exhaust velocity**:
+
+```{math}
+:label: effective-exhaust-velocity
+V_{\text{eff}} = \frac{F}{\dot{m}}
+```
+
+which has dimensions of velocity. The effective velocity is, like the characteristic velocity, not an actual velocity that is required to be present in the system. Rather, it is the velocity of the exhaust that gives the equivalent thrust as the sum of the momentum and pressure thrust.
+
+The effective exhaust velocity, specific impulse, thrust coefficient, and characteristic velocity are all related to each other by the thrust:
+
+```{math}
+c^* c_{F} = V_{\text{eff}} = \Isp g
+```
+
+Next, taking the specific impulse in Eq. {eq}`specific-impulse` and noting that $\dot{m} = \rho_e A_e V_e$ and $\rho_e V_e^2 = \gamma_e p_e M_e^2$, we find:
+
+```{math}
+\Isp = \frac{V_e}{g}\left[1 + \left(1 - \frac{p_0}{p_e}\right)\frac{1}{\gamma_e M_e^2}\right]
+```
+
+We have seen previously that the exit Mach number and exit velocity depend only on the chamber conditions and the expansion ratio, $\varepsilon$. Thus, the specific impulse for a given engine, with a particular choice of propellant, chamber, and nozzle, will vary only with the altitude.
+
+We define the vacuum specific impulse, with $p_0 = 0$, as:
+
+```{math}
+:label: vacuum-specific-impulse
+I_{\text{sp},\text{vac}} = \frac{V_e}{g}\left(1 + \frac{1}{\gamma_e M_e^2}\right)
+```
+
+Taking the ratio of the actual $\Isp$ to the vacuum $\Isp$, we find:
+
+```{math}
+:label: specific-impulse-ratio
+\frac{\Isp}{I_{\text{sp},\text{vac}}} = 1 - \frac{1}{1 + \gamma M_e^2}\frac{p_0}{p_e} \leq 1
+```
+
+where since the second term on the right hand side is between 0 and 1, the entire fraction must be less than one. This means that the vacuum specific impulse is the largest that a given rocket engine can produce. In general, references to a particular rocket engine will quote either the vacuum specific impulse or the sea-level specific impulse, with a slight preference for the vacuum specific impulse since it is larger.
+
+For a given rocket engine, one possible procedure to determine the specific impulse at any altitude is to calculate the vacuum specific impulse from Eq. {eq}`vacuum-specific-impulse`, which depends only on the exit velocity and the exit Mach number, which in turn depend only on the expansion ratio and combustion chamber conditions. Then, the ratio in Eq. {eq}`specific-impulse-ratio` is used to account for the effect of the varying pressure with altitude.
+
+Let's consider two rocket engines with the same chamber temperature, $T_c$ = 5000 °R, chamber pressure, $p_c$ = 1000 psia, $W$ = 28.95 kg/kmol, and $\gamma$ = 1.4. Assume that both engines are ideal, such that $\lambda = c_V = c_d = 1$, and the process through both nozzles is isentropic. The two nozzles have differing expansion ratios giving them different values of $p_e$, and thus $M_e$ and $V_e$:
+
+1. **Nozzle 1**: $\varepsilon$ = 10
+2. **Nozzle 2**: $\varepsilon$ = 25
+
+For both engines, we can calculate the vacuum specific impulse from Eq. {eq}`vacuum-specific-impulse` if we can determine $V_e$ and $M_e$. The exit Mach number is determined by the area-Mach-number relation, Eq. {eq}`area-mach-relation`, where we will assume that the solution is supersonic. The exit velocity is determined by Eq. {eq}`ideal-exit-velocity`. The exit properties and vacuum $\Isp$ for both engines are shown in {numref}`varying-expansion-ratio-Isp`.
+
+```{code-cell}
+:tags: [remove-output]
+
+from pint import UnitRegistry
+from scipy import optimize
+import numpy as np
+
+units = UnitRegistry()
+
+T_c = 5000 * units.degR
+p_c = 1000 * units.psi
+gamma = 1.4 * units.dimensionless
+W = 28.95 * units.kg / units.kmol
+R = units.molar_gas_constant / W
+epsilon_1 = 10 * units.dimensionless
+epsilon_2 = 25 * units.dimensionless
+
+def area_ratio(M, A_ratio, gamma):
+    first_term = 2 / (gamma + 1)
+    power = (gamma + 1) / (gamma - 1)
+    second_term = 1 + (gamma - 1) / 2 * M**2
+    return 1 / M**2 * (first_term * second_term)**(power) - A_ratio**2
+
+M_e1 = optimize.brentq(area_ratio, 1.01, 10, args=(epsilon_1.magnitude, gamma.magnitude)) * units.dimensionless
+T_e1 = T_c / (1 + (gamma - 1) / 2 * M_e1**2)
+p_e1 = p_c / (T_c / T_e1)**(gamma / (gamma - 1))
+V_e1 = (np.sqrt(2 * gamma / (gamma - 1) * R * T_c * (1 - (p_e1 / p_c)**((gamma - 1) / gamma)))).to("ft/s")
+vIsp_1 = (V_e1 / units.gravity * (1 + 1 / (gamma * M_e1**2))).to("s")
+
+M_e2 = optimize.brentq(area_ratio, 1.01, 10, args=(epsilon_2.magnitude, gamma.magnitude)) * units.dimensionless
+T_e2 = T_c / (1 + (gamma - 1) / 2 * M_e2**2)
+p_e2 = p_c / (T_c / T_e2)**(gamma / (gamma - 1))
+V_e2 = (np.sqrt(2 * gamma / (gamma - 1) * R * T_c * (1 - (p_e2 / p_c)**((gamma - 1) / gamma)))).to("ft/s")
+vIsp_2 = (V_e2 / units.gravity * (1 + 1 / (gamma * M_e2**2))).to("s")
+```
+
+```{code-cell}
+:tags: [remove-cell]
+
+for property in ["M_e" , "T_e", "p_e", "V_e", "vIsp_"]:
+    for nozzle in ["1", "2"]:
+        var = property + nozzle
+        glue(var, f"{locals()[var]:.2F~P}", display=False)
+```
+
+```{table} Effect of varying expansion ratio on rocket engine vacuum performance
+:name: varying-expansion-ratio-Isp
+
+| Property                     | Nozzle 1            | Nozzle 2            |
+|------------------------------|---------------------|---------------------|
+| $M_e$                        | {glue:text}`M_e1`   | {glue:text}`M_e2`   |
+| $V_e$                        | {glue:text}`V_e1`   | {glue:text}`V_e2`   |
+| $p_e$                        | {glue:text}`p_e1`   | {glue:text}`p_e2`   |
+| $T_e$                        | {glue:text}`T_e1`   | {glue:text}`T_e2`   |
+| $I_{\text{sp},{\text{vac}}}$ | {glue:text}`vIsp_1` | {glue:text}`vIsp_2` |
+```
+
+We can see that the larger expansion ratio nozzle has higher specific impulse under the vacuum conditions. This makes sense, because it is not possible to overexpand the nozzle when the backpressure is a vacuum, and the ideal expansion ratio would be infinite. Thus, the larger expansion ratio is able to expand the flow closer to the vacuum.
+
+Now, we can plot the variation of the specific impulse with altitude for the two engines.
+
+```{code-cell}
+:tags: [remove-output]
+
+from ambiance import Atmosphere
+
+heights = np.linspace(0, 200E3) * units.ft
+atmos = Atmosphere(heights.to("m").magnitude)
+p_0 = atmos.pressure * units.Pa
+
+Isp_1 = ((1 - p_0 / ((1 + gamma * M_e1**2) * p_e1)) * vIsp_1).to("s")
+Isp_2 = ((1 - p_0 / ((1 + gamma * M_e2**2) * p_e2)) * vIsp_2).to("s")
+```
+
+```{code-cell}
+:tags: [remove-input]
+
+data = ColumnDataSource(
+    data=dict(
+        h=heights.to("kft").magnitude,
+        Isp_1=Isp_1.magnitude,
+        Isp_2=Isp_2.magnitude,
+        p_e1=(p_e1 - p_0).to("psi").magnitude,
+        p_e2=(p_e2 - p_0).to("psi").magnitude,
+    )
+)
+
+colors = itertools.cycle(palette[10])
+p1 = figure(
+    y_axis_label="I_sp, s",
+    x_axis_label="Altitude, kft",
+    y_range=(150, 230),
+    x_range=(0, 200),
+    **opts
+)
+p1.line("h", "Isp_1", source=data, color=next(colors), line_width=2, legend_label=f"𝜀 = {epsilon_1:~P}")
+p1.line("h", "Isp_2", source=data, color=next(colors), line_width=2, legend_label=f"𝜀 = {epsilon_2:~P}")
+
+colors = itertools.cycle(palette[10])
+p1.extra_y_ranges["pressure"] = Range1d(-15, 15)
+p1.line("h", "p_e1", source=data, y_range_name="pressure", line_width=2, line_dash="dashed", color=next(colors), legend_label=f"𝜀 = {epsilon_1:~P}")
+p1.line("h", "p_e2", source=data, y_range_name="pressure", line_width=2, line_dash="dashed", color=next(colors), legend_label=f"𝜀 = {epsilon_2:~P}")
+ax2 = LinearAxis(y_range_name="pressure", axis_label="Pressure difference, p_e - p_0, psia")
+p1.add_layout(ax2, "right")
+
+p1.add_layout(Arrow(end=NormalHead(size=7), x_start=26, y_start=212, x_end=5, y_end=212, line_width=2))
+p1.add_layout(Arrow(end=NormalHead(size=7), x_start=47, y_start=220, x_end=25, y_end=220, line_width=2))
+p1.add_layout(Arrow(end=NormalHead(size=7), y_range_name="pressure", x_start=35, y_start=3.9, x_end=55, y_end=3.9, line_width=2))
+p1.add_layout(Arrow(end=NormalHead(size=7), y_range_name="pressure", x_start=35, y_start=-1.9, x_end=55, y_end=-1.9, line_width=2))
+
+p1.legend.location = "bottom_right"
+
+show(p1)
+```
+
+On this graph, the left axis shows the specific impulse and the right axis shows the pressure difference $p_e - p_0$.
+
+On the far right of the graph, the specific impulse approaches the vacuum specific impulse and pressure difference approaches the exit pressure as the ambient pressure trends towards zero. As altitude decreases moving left, the ambient pressure increases, and the specific impulse of both engines decreases.
+
+The drop off of specific impulse with altitude is fairly steep, and the slope is larger with the larger expansion ratio! This means that there is a crossover point where the smaller expansion ratio engine is more efficient than the larger expansion ratio.
+
+As we pointed out before, the larger expansion ratio is more efficient in a vacuum because it expands the flow closer to the ambient pressure. In other words, $p_e - p_0$ is smaller under vacuum conditions for the larger expansion ratio, getting closer to the ideal case of $p_e = p_0$. However, this additional expansion means that at sea level, the pressure difference is larger for the larger expansion ratio than the smaller expansion ratio. This results in a less efficient engine with the larger expansion ratio!
+
+This trend suggests that a nozzle which is able to adapt to the changing ambient pressure would be advantageous. As we discussed in the {ref}`Nozzle Shapes section <nozzle-shapes>`, the plug, aerospike, and extendable nozzles can all help reduce the effect of the changing ambient pressure. However, none of these engines are used in practice.
+
+As it turns out, most rocket launch vehicles are **staged**. This means that portions of the structure of the rocket (the fuel tanks and support structures) are discarded when the fuel tanks are empty. Staging rockets helps to work around the tyranny of the rocket equation problem, as we'll show later on.
+
+Since the rocket is staged, it will have different engines with different nozzles operating at different altitude ranges! This means that a fixed expansion ratio converging-diverging nozzle can be designed which operates well at low altitude for the first stage of the rocket, and later stages that operate higher in the atmosphere or in space use nozzles optimized for those conditions.

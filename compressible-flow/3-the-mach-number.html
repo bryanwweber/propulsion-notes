@@ -157,6 +157,11 @@
    Design of Rocket Nozzles
   </a>
  </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../liquid-rockets/3-example-LR91.html">
+   Example: LR91 Rocket Motor
+  </a>
+ </li>
 </ul>
 <p class="caption collapsible-parent">
  <span class="caption-text">
@@ -330,60 +335,60 @@
 <p>The speed of sound is the speed at which an infinitesimal pressure disturbance propagates through a fluid. The disturbance is of such a small magnitude that the process that the gas goes through is reversible, and the process is adiabatic. Therefore, sound waves are isentropic processes.</p>
 <p>The speed of sound is defined by the differential:</p>
 <div class="math notranslate nohighlight" id="equation-speed-of-sound-definition">
-<span class="eqno">(57)<a class="headerlink" href="#equation-speed-of-sound-definition" title="Permalink to this equation">¶</a></span>\[a^2 = \left(\frac{\partial p}{\partial \rho}\right)_{s}\]</div>
+<span class="eqno">(68)<a class="headerlink" href="#equation-speed-of-sound-definition" title="Permalink to this equation">¶</a></span>\[a^2 = \left(\frac{\partial p}{\partial \rho}\right)_{s}\]</div>
 <p>where <span class="math notranslate nohighlight">\(a\)</span> is the speed of sound and the subscript <span class="math notranslate nohighlight">\(s\)</span> indicates the partial derivative is to be taken for a constant entropy process.</p>
-<p>The entropy of the ideal gas can be determined from the second Gibbs relation (modified here from Eq. <a class="reference internal" href="2-properties-of-compressible-flow.html#equation-gibbs-relations">(51)</a>):</p>
+<p>The entropy of the ideal gas can be determined from the second Gibbs relation (modified here from Eq. <a class="reference internal" href="2-properties-of-compressible-flow.html#equation-gibbs-relations">(62)</a>):</p>
 <div class="math notranslate nohighlight" id="equation-second-gibbs">
-<span class="eqno">(58)<a class="headerlink" href="#equation-second-gibbs" title="Permalink to this equation">¶</a></span>\[ds = c_p \frac{dT}{T} - \frac{dp}{\rho T}\]</div>
-<p>Introducing Eq. <a class="reference internal" href="2-properties-of-compressible-flow.html#equation-ideal-gas-differential">(47)</a>, we find:</p>
+<span class="eqno">(69)<a class="headerlink" href="#equation-second-gibbs" title="Permalink to this equation">¶</a></span>\[ds = c_p \frac{dT}{T} - \frac{dp}{\rho T}\]</div>
+<p>Introducing Eq. <a class="reference internal" href="2-properties-of-compressible-flow.html#equation-ideal-gas-differential">(57)</a>, we find:</p>
 <div class="math notranslate nohighlight" id="equation-entropy-differential">
-<span class="eqno">(59)<a class="headerlink" href="#equation-entropy-differential" title="Permalink to this equation">¶</a></span>\[\frac{ds}{c_v} = \frac{dp}{p} - \gamma \frac{d\rho}{\rho} + \gamma \frac{dW}{W}\]</div>
-<p>If we assume the change in molecular weight is zero, and the process is isentropic, then we can relate the pressure to the density using Eq. <a class="reference internal" href="#equation-entropy-differential">(59)</a>:</p>
+<span class="eqno">(70)<a class="headerlink" href="#equation-entropy-differential" title="Permalink to this equation">¶</a></span>\[\frac{ds}{c_v} = \frac{dp}{p} - \gamma \frac{d\rho}{\rho} + \gamma \frac{dW}{W}\]</div>
+<p>If we assume the change in molecular weight is zero, and the process is isentropic, then we can relate the pressure to the density using Eq. <a class="reference internal" href="#equation-entropy-differential">(70)</a>:</p>
 <div class="math notranslate nohighlight">
 \[\frac{dp}{p} = \gamma \frac{d\rho}{\rho}\]</div>
 <p>or, rearranging:</p>
 <div class="math notranslate nohighlight">
 \[\frac{dp}{d\rho} = \frac{\gamma p}{\rho}\]</div>
-<p>Note that this differential is specifically and only for an isentropic process of an ideal gas, but it meets the definition of the speed of sound earlier. Plugging in Eq. <a class="reference internal" href="2-properties-of-compressible-flow.html#equation-ideal-gas-law">(46)</a>, we find:</p>
+<p>Note that this differential is specifically and only for an isentropic process of an ideal gas, but it meets the definition of the speed of sound earlier. Plugging in Eq. <a class="reference internal" href="2-properties-of-compressible-flow.html#equation-ideal-gas-law">(56)</a>, we find:</p>
 <div class="math notranslate nohighlight" id="equation-speed-of-sound">
-<span class="eqno">(60)<a class="headerlink" href="#equation-speed-of-sound" title="Permalink to this equation">¶</a></span>\[a = \sqrt{\gamma \frac{R_u}{W} T}\]</div>
+<span class="eqno">(71)<a class="headerlink" href="#equation-speed-of-sound" title="Permalink to this equation">¶</a></span>\[a = \sqrt{\gamma \frac{R_u}{W} T}\]</div>
 <p>In differential form, this is:</p>
 <div class="math notranslate nohighlight" id="equation-speed-of-sound-differential">
-<span class="eqno">(61)<a class="headerlink" href="#equation-speed-of-sound-differential" title="Permalink to this equation">¶</a></span>\[\frac{da}{a} = \frac{1}{2}\left(\frac{d\gamma}{\gamma} + \frac{dT}{T} - \frac{dW}{W}\right)\]</div>
+<span class="eqno">(72)<a class="headerlink" href="#equation-speed-of-sound-differential" title="Permalink to this equation">¶</a></span>\[\frac{da}{a} = \frac{1}{2}\left(\frac{d\gamma}{\gamma} + \frac{dT}{T} - \frac{dW}{W}\right)\]</div>
 </div>
 <div class="section" id="mach-number">
 <h2>Mach Number<a class="headerlink" href="#mach-number" title="Permalink to this headline">¶</a></h2>
 <p>The Mach number is defined as the ratio of the current speed to the speed of sound:</p>
 <div class="math notranslate nohighlight" id="equation-mach-number">
-<span class="eqno">(62)<a class="headerlink" href="#equation-mach-number" title="Permalink to this equation">¶</a></span>\[M = \frac{V}{a}\]</div>
+<span class="eqno">(73)<a class="headerlink" href="#equation-mach-number" title="Permalink to this equation">¶</a></span>\[M = \frac{V}{a}\]</div>
 <p>In differential form, it is more convenient to work with the square of the Mach number, to cancel some of the fractions from the speed of sound:</p>
 <div class="math notranslate nohighlight" id="equation-mach-number-differential">
-<span class="eqno">(63)<a class="headerlink" href="#equation-mach-number-differential" title="Permalink to this equation">¶</a></span>\[\frac{dM^2}{M^2} = \frac{dV^2}{V^2} + \frac{dW}{W} - \frac{d\gamma}{\gamma} - \frac{dT}{T}\]</div>
+<span class="eqno">(74)<a class="headerlink" href="#equation-mach-number-differential" title="Permalink to this equation">¶</a></span>\[\frac{dM^2}{M^2} = \frac{dV^2}{V^2} + \frac{dW}{W} - \frac{d\gamma}{\gamma} - \frac{dT}{T}\]</div>
 <p>By definition, flows with Mach number <span class="math notranslate nohighlight">\(M &lt; 1\)</span> are called <strong>subsonic</strong>, flows with <span class="math notranslate nohighlight">\(M &gt; 1\)</span> are called <strong>supersonic</strong>, and flows with <span class="math notranslate nohighlight">\(M = 1\)</span> are called <strong>sonic</strong>. In addition, the range <span class="math notranslate nohighlight">\(0.8 &lt; M &lt; 1.2\)</span> is usually called <strong>transonic</strong> and <span class="math notranslate nohighlight">\(M &gt; 5\)</span> is usually called <strong>hypersonic</strong>.</p>
 <div class="section" id="relationships-to-the-mach-number">
 <h3>Relationships to the Mach Number<a class="headerlink" href="#relationships-to-the-mach-number" title="Permalink to this headline">¶</a></h3>
 <p>Next, we would like a way to relate the property ratios to the Mach number. The reason we want this is because we can determine the Mach number at any axial location in the flow. Thus, if we have a relationship between the static properties, total properties, and Mach number, we can find any property at any axial location.</p>
 <p>We start from the definition of the enthalpy:</p>
 <div class="math notranslate nohighlight" id="equation-enthalpy">
-<span class="eqno">(64)<a class="headerlink" href="#equation-enthalpy" title="Permalink to this equation">¶</a></span>\[h = c_p T\]</div>
+<span class="eqno">(75)<a class="headerlink" href="#equation-enthalpy" title="Permalink to this equation">¶</a></span>\[h = c_p T\]</div>
 <p>where <span class="math notranslate nohighlight">\(h\)</span> is the enthalpy. Then, the conservation of energy for this flow is given by:</p>
 <div class="math notranslate nohighlight">
 \[h_t + V_{t}^2/2 = h + V^2/2\]</div>
-<p>where <span class="math notranslate nohighlight">\(V_{t}\)</span> is zero by definition. Plugging in Eqs. <a class="reference internal" href="#equation-speed-of-sound">(60)</a>, <a class="reference internal" href="#equation-mach-number">(62)</a>, and <a class="reference internal" href="#equation-enthalpy">(64)</a>, we find:</p>
+<p>where <span class="math notranslate nohighlight">\(V_{t}\)</span> is zero by definition. Plugging in Eqs. <a class="reference internal" href="#equation-speed-of-sound">(71)</a>, <a class="reference internal" href="#equation-mach-number">(73)</a>, and <a class="reference internal" href="#equation-enthalpy">(75)</a>, we find:</p>
 <div class="math notranslate nohighlight" id="equation-isentropic-temperature-mach">
-<span class="eqno">(65)<a class="headerlink" href="#equation-isentropic-temperature-mach" title="Permalink to this equation">¶</a></span>\[\frac{T_t}{T} = 1 + \frac{\gamma - 1}{2}M^2\]</div>
-<p>Using Eqs. <a class="reference internal" href="2-properties-of-compressible-flow.html#equation-p-t-isentropic">(55)</a> and <a class="reference internal" href="2-properties-of-compressible-flow.html#equation-t-rho-isentropic">(56)</a>, we can also find:</p>
+<span class="eqno">(76)<a class="headerlink" href="#equation-isentropic-temperature-mach" title="Permalink to this equation">¶</a></span>\[\frac{T_t}{T} = 1 + \frac{\gamma - 1}{2}M^2\]</div>
+<p>Using Eqs. <a class="reference internal" href="2-properties-of-compressible-flow.html#equation-p-t-isentropic">(66)</a> and <a class="reference internal" href="2-properties-of-compressible-flow.html#equation-t-rho-isentropic">(67)</a>, we can also find:</p>
 <div class="math notranslate nohighlight" id="equation-isentropic-pressure-mach">
-<span class="eqno">(66)<a class="headerlink" href="#equation-isentropic-pressure-mach" title="Permalink to this equation">¶</a></span>\[\frac{p_t}{p} = \left(1 + \frac{\gamma - 1}{2}M^2\right)^{\frac{\gamma}{\gamma - 1}}\]</div>
+<span class="eqno">(77)<a class="headerlink" href="#equation-isentropic-pressure-mach" title="Permalink to this equation">¶</a></span>\[\frac{p_t}{p} = \left(1 + \frac{\gamma - 1}{2}M^2\right)^{\frac{\gamma}{\gamma - 1}}\]</div>
 <p>and</p>
 <div class="math notranslate nohighlight" id="equation-isentropic-density-mach">
-<span class="eqno">(67)<a class="headerlink" href="#equation-isentropic-density-mach" title="Permalink to this equation">¶</a></span>\[\frac{\rho_t}{\rho} = \left(1 + \frac{\gamma - 1}{2}M^2\right)^{\frac{1}{\gamma - 1}}\]</div>
+<span class="eqno">(78)<a class="headerlink" href="#equation-isentropic-density-mach" title="Permalink to this equation">¶</a></span>\[\frac{\rho_t}{\rho} = \left(1 + \frac{\gamma - 1}{2}M^2\right)^{\frac{1}{\gamma - 1}}\]</div>
 <p>We can also define the stagnation speed of sound, based on the stagnation temperature:</p>
 <div class="math notranslate nohighlight" id="equation-a-t-definition">
-<span class="eqno">(68)<a class="headerlink" href="#equation-a-t-definition" title="Permalink to this equation">¶</a></span>\[a_t = \sqrt{\gamma R T_t}\]</div>
+<span class="eqno">(79)<a class="headerlink" href="#equation-a-t-definition" title="Permalink to this equation">¶</a></span>\[a_t = \sqrt{\gamma R T_t}\]</div>
 <p>or we can relate this to the local flow conditions by using the energy equation <span id="id1">[<a class="reference internal" href="../bibliography.html#id2"><span>And03</span></a>]</span> (Ch. 3.5):</p>
 <div class="math notranslate nohighlight" id="equation-stagnation-speed-of-sound">
-<span class="eqno">(69)<a class="headerlink" href="#equation-stagnation-speed-of-sound" title="Permalink to this equation">¶</a></span>\[\frac{a_t^2}{\gamma - 1} = \frac{a^2}{\gamma - 1} + \frac{V^2}{2}\]</div>
+<span class="eqno">(80)<a class="headerlink" href="#equation-stagnation-speed-of-sound" title="Permalink to this equation">¶</a></span>\[\frac{a_t^2}{\gamma - 1} = \frac{a^2}{\gamma - 1} + \frac{V^2}{2}\]</div>
 <p>where <span class="math notranslate nohighlight">\(a\)</span>, <span class="math notranslate nohighlight">\(\gamma\)</span>, and <span class="math notranslate nohighlight">\(V\)</span> are found at the local axial location.</p>
 </div>
 <div class="section" id="characteristic-properties">
@@ -391,18 +396,18 @@
 <p>Another important set of reference properties are called the <strong>characteristic properties</strong>, related to the sonic condition rather than the stagnation condition. The characteristic properties are defined by another imaginary isentropic process that takes the flow from its current velocity to a Mach number <span class="math notranslate nohighlight">\(M = 1\)</span>. If the flow is supersonic, this will means slowing it down; if it is subsonic, it will be accelerated.</p>
 <p>Since this process is adiabatic, we can imagine that this process will change the static temperature. The static temperature reached when <span class="math notranslate nohighlight">\(M = 1\)</span> is defined as the <strong>characteristic temperature</strong>, <span class="math notranslate nohighlight">\(T^*\)</span>. Then, the <strong>characteristic speed of sound</strong> is:</p>
 <div class="math notranslate nohighlight" id="equation-a-star-definition">
-<span class="eqno">(70)<a class="headerlink" href="#equation-a-star-definition" title="Permalink to this equation">¶</a></span>\[a^* = \sqrt{\gamma R T^*}\]</div>
+<span class="eqno">(81)<a class="headerlink" href="#equation-a-star-definition" title="Permalink to this equation">¶</a></span>\[a^* = \sqrt{\gamma R T^*}\]</div>
 <p>and the <strong>characteristic Mach number</strong>:</p>
 <div class="math notranslate nohighlight" id="equation-characteristic-mach-number">
-<span class="eqno">(71)<a class="headerlink" href="#equation-characteristic-mach-number" title="Permalink to this equation">¶</a></span>\[M^* = \frac{V}{a^*}\]</div>
+<span class="eqno">(82)<a class="headerlink" href="#equation-characteristic-mach-number" title="Permalink to this equation">¶</a></span>\[M^* = \frac{V}{a^*}\]</div>
 <p>In general, <span class="math notranslate nohighlight">\(M^*\neq M\)</span>, where <span class="math notranslate nohighlight">\(M\)</span> is the actual Mach number at a given axial location in the flow. For the special case when <span class="math notranslate nohighlight">\(M^* = 1\)</span>, then <span class="math notranslate nohighlight">\(M = 1\)</span> as well.</p>
 <p>Like the stagnation properties, the characteristic properties are defined for every point in the flow, given the Mach number and static temperature. If the flow is isentropic throughout, then the values for <span class="math notranslate nohighlight">\(T^*\)</span> and <span class="math notranslate nohighlight">\(a^*\)</span> will be constant throughout the flow.</p>
 <p>We can show <span id="id2">[<a class="reference internal" href="../bibliography.html#id2"><span>And03</span></a>]</span> (Ch. 3.5) that the characteristic speed of sound is given by:</p>
 <div class="math notranslate nohighlight" id="equation-characteristic-speed-of-sound">
-<span class="eqno">(72)<a class="headerlink" href="#equation-characteristic-speed-of-sound" title="Permalink to this equation">¶</a></span>\[\left(a^*\right)^2 \frac{\gamma + 1}{2\left(\gamma - 1\right)} = \frac{a^2}{\gamma - 1} + \frac{V^2}{2}\]</div>
-<p>where <span class="math notranslate nohighlight">\(a\)</span>, <span class="math notranslate nohighlight">\(V\)</span>, and <span class="math notranslate nohighlight">\(\gamma\)</span> are calculated at the local flow conditions. From this, we can also determine the characteristic Mach number and temperature. Eq. <a class="reference internal" href="#equation-characteristic-speed-of-sound">(72)</a> can also be divided by <span class="math notranslate nohighlight">\(V^2\)</span> to give a relationship between <span class="math notranslate nohighlight">\(M\)</span> and <span class="math notranslate nohighlight">\(M^*\)</span>:</p>
+<span class="eqno">(83)<a class="headerlink" href="#equation-characteristic-speed-of-sound" title="Permalink to this equation">¶</a></span>\[\left(a^*\right)^2 \frac{\gamma + 1}{2\left(\gamma - 1\right)} = \frac{a^2}{\gamma - 1} + \frac{V^2}{2}\]</div>
+<p>where <span class="math notranslate nohighlight">\(a\)</span>, <span class="math notranslate nohighlight">\(V\)</span>, and <span class="math notranslate nohighlight">\(\gamma\)</span> are calculated at the local flow conditions. From this, we can also determine the characteristic Mach number and temperature. Eq. <a class="reference internal" href="#equation-characteristic-speed-of-sound">(83)</a> can also be divided by <span class="math notranslate nohighlight">\(V^2\)</span> to give a relationship between <span class="math notranslate nohighlight">\(M\)</span> and <span class="math notranslate nohighlight">\(M^*\)</span>:</p>
 <div class="math notranslate nohighlight" id="equation-mach-to-m-star">
-<span class="eqno">(73)<a class="headerlink" href="#equation-mach-to-m-star" title="Permalink to this equation">¶</a></span>\[M^2 = \frac{2}{\left[\left(\gamma + 1\right)/\left(M^*\right)^2\right] - \left(\gamma - 1\right)}\]</div>
+<span class="eqno">(84)<a class="headerlink" href="#equation-mach-to-m-star" title="Permalink to this equation">¶</a></span>\[M^2 = \frac{2}{\left[\left(\gamma + 1\right)/\left(M^*\right)^2\right] - \left(\gamma - 1\right)}\]</div>
 <p>From this equation, we can see the following relationships:</p>
 <ul class="simple">
 <li><p><span class="math notranslate nohighlight">\(M^* = 1\)</span> if <span class="math notranslate nohighlight">\(M = 1\)</span></p></li>
@@ -413,18 +418,18 @@
 </div>
 <div class="section" id="ratios-of-characteristic-properties">
 <h3>Ratios of Characteristic Properties<a class="headerlink" href="#ratios-of-characteristic-properties" title="Permalink to this headline">¶</a></h3>
-<p>Similar to the ratios of total and static properties, we will find it useful to have ratios related to the characteristic properties. Starting from the characteristic speed of sound, Eq. <a class="reference internal" href="#equation-characteristic-speed-of-sound">(72)</a>, and dividing by the stagnation speed of sound, Eq. <a class="reference internal" href="#equation-stagnation-speed-of-sound">(69)</a>, we find:</p>
+<p>Similar to the ratios of total and static properties, we will find it useful to have ratios related to the characteristic properties. Starting from the characteristic speed of sound, Eq. <a class="reference internal" href="#equation-characteristic-speed-of-sound">(83)</a>, and dividing by the stagnation speed of sound, Eq. <a class="reference internal" href="#equation-stagnation-speed-of-sound">(80)</a>, we find:</p>
 <div class="math notranslate nohighlight" id="equation-a-star-over-a-t">
-<span class="eqno">(74)<a class="headerlink" href="#equation-a-star-over-a-t" title="Permalink to this equation">¶</a></span>\[\frac{a^*}{a_t} = \sqrt{\frac{2}{\gamma + 1}}\]</div>
+<span class="eqno">(85)<a class="headerlink" href="#equation-a-star-over-a-t" title="Permalink to this equation">¶</a></span>\[\frac{a^*}{a_t} = \sqrt{\frac{2}{\gamma + 1}}\]</div>
 <p>From the definition of the speed of sound, we can also write:</p>
 <div class="math notranslate nohighlight" id="equation-t-star-over-t-t">
-<span class="eqno">(75)<a class="headerlink" href="#equation-t-star-over-t-t" title="Permalink to this equation">¶</a></span>\[\frac{T^*}{T_t} = \frac{2}{\gamma + 1}\]</div>
-<p>Finally, we can use the relationships of stagnation pressure and density with the Mach number, Eqs. <a class="reference internal" href="#equation-isentropic-pressure-mach">(66)</a> and <a class="reference internal" href="#equation-isentropic-density-mach">(67)</a>, noting that for the characteristic conditions <span class="math notranslate nohighlight">\(M = 1\)</span>, to write:</p>
+<span class="eqno">(86)<a class="headerlink" href="#equation-t-star-over-t-t" title="Permalink to this equation">¶</a></span>\[\frac{T^*}{T_t} = \frac{2}{\gamma + 1}\]</div>
+<p>Finally, we can use the relationships of stagnation pressure and density with the Mach number, Eqs. <a class="reference internal" href="#equation-isentropic-pressure-mach">(77)</a> and <a class="reference internal" href="#equation-isentropic-density-mach">(78)</a>, noting that for the characteristic conditions <span class="math notranslate nohighlight">\(M = 1\)</span>, to write:</p>
 <div class="math notranslate nohighlight" id="equation-p-star-over-p-t">
-<span class="eqno">(76)<a class="headerlink" href="#equation-p-star-over-p-t" title="Permalink to this equation">¶</a></span>\[\frac{p^*}{p_t} = \left(\frac{2}{\gamma + 1}\right)^{\frac{\gamma}{\gamma - 1}}\]</div>
+<span class="eqno">(87)<a class="headerlink" href="#equation-p-star-over-p-t" title="Permalink to this equation">¶</a></span>\[\frac{p^*}{p_t} = \left(\frac{2}{\gamma + 1}\right)^{\frac{\gamma}{\gamma - 1}}\]</div>
 <p>and</p>
 <div class="math notranslate nohighlight" id="equation-rho-star-over-rho-t">
-<span class="eqno">(77)<a class="headerlink" href="#equation-rho-star-over-rho-t" title="Permalink to this equation">¶</a></span>\[\frac{\rho^*}{\rho_t} = \left(\frac{2}{\gamma + 1}\right)^{\frac{1}{\gamma - 1}}\]</div>
+<span class="eqno">(88)<a class="headerlink" href="#equation-rho-star-over-rho-t" title="Permalink to this equation">¶</a></span>\[\frac{\rho^*}{\rho_t} = \left(\frac{2}{\gamma + 1}\right)^{\frac{1}{\gamma - 1}}\]</div>
 </div>
 </div>
 </div>
