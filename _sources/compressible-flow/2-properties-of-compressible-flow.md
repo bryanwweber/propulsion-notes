@@ -122,7 +122,9 @@ Equation {eq}`cp-cv-R` shows that $c_p > c_v$ and therefore that $\gamma > 1.0$.
 
 ```{math}
 :label: cp-cv-relationships
+\begin{aligned}
 c_p &= \frac{\gamma R}{\gamma - 1} & c_v &= \frac{R}{\gamma - 1}
+\end{aligned}
 ```
 
 Finally, the entropy is defined from the Gibbs relations:

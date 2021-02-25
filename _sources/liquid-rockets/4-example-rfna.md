@@ -53,6 +53,7 @@ p_0 = 0.2 * units.atmosphere
 1. The nozzle is not isentropic, but is characterized by the nozzle efficiency
 2. The specific heat ratio and molecular weight are constant
 3. The discharge coefficient and $\lambda$ are equal to one
+4. The flow is adiabatic through the nozzle, even though it is not isentropic
 
 ### Procedure
 
