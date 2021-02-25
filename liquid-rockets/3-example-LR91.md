@@ -215,12 +215,12 @@ p_e = p_0
 pe_pc = (p_e / p_c).to("dimensionless")
 c_fi = Gamma * np.sqrt(2 * gamma / (gamma - 1) * (1 - pe_pc**((gamma - 1) / gamma)))
 A_th = np.pi * d_th**2 / 4
-F_alt = A_th * p_c * c_fi
+F_2 = A_th * p_c * c_fi
 ```
 
 ```{code-cell}
 :tags: [remove-cell]
-glue("F_alt", f"{F_alt.to('kN'):.2F~P}", display=False)
+glue("F_2", f"{F_2.to('kN'):.2F~P}", display=False)
 ```
 
-With this approach, the thrust is $F$ = {glue:text}`F_alt`, equivalent to the first approach. This provides a good check that our work is correct and consistent.
+With this approach, the thrust is $F$ = {glue:text}`F_2`, equivalent to the first approach. This provides a good check that our work is correct and consistent.

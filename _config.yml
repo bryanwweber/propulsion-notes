@@ -2,7 +2,7 @@ title: Notes for Propulsion
 author: Bryan Weber
 # logo: logo.png
 
-exclude_patterns: [homework]
+exclude_patterns: [homework, LICENSE.md, README.md]
 
 # execute:
 #   execute_notebooks: force

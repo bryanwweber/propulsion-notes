@@ -3,7 +3,7 @@
   chapters:
   - file: review/1-introduction
   - file: review/2-conservation-equations
-- part: Overfiew of Flow Devices
+- part: Overview of Flow Devices
   chapters:
   - file: overview-of-flow-devices/1-introduction
   - file: overview-of-flow-devices/2-no-heat-addition
@@ -15,6 +15,7 @@
   - file: liquid-rockets/1-introduction
   - file: liquid-rockets/2-rocket-nozzles
   - file: liquid-rockets/3-example-LR91
+  - file: liquid-rockets/4-example-rfna
 - part: Compressible Flow
   chapters:
   - file: compressible-flow/1-introduction
