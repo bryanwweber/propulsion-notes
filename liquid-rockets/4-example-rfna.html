@@ -1,0 +1,564 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Example: JP4/RFNA Rocket Motor &#8212; Notes for Propulsion</title>
+    
+  <link rel="stylesheet" href="../_static/css/index.f658d18f9b420779cfdf24aa0a7e2d77.css">
+
+    
+  <link rel="stylesheet"
+    href="../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    
+      
+  <link rel="stylesheet"
+    href="../_static/vendor/open-sans_all/1.44.1/index.css">
+  <link rel="stylesheet"
+    href="../_static/vendor/lato_latin-ext/1.44.1/index.css">
+
+    
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/sphinx-book-theme.40e2e510f6b7d1648584402491bb10fe.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" />
+    
+  <link rel="preload" as="script" href="../_static/js/index.d3f166471bb80abb5163.js">
+
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/togglebutton.js"></script>
+    <script src="../_static/clipboard.min.js"></script>
+    <script src="../_static/copybutton.js"></script>
+    <script >var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="../_static/sphinx-book-theme.d31b09fe5c1d09cb49b26a786de4a05d.js"></script>
+    <script async="async" src="https://unpkg.com/thebelab@latest/lib/index.js"></script>
+    <script >
+        const thebe_selector = ".thebe"
+        const thebe_selector_input = "pre"
+        const thebe_selector_output = ".output"
+    </script>
+    <script async="async" src="../_static/sphinx-thebe.js"></script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/x-mathjax-config">MathJax.Hub.Config({"TeX": {"Macros": {"vector": ["\\vec{#1}", 1], "uvec": ["\\hat{#1}", 1], "mag": ["\\lVert#1\\rVert", 1], "cross": "\\times", "unit": ["#1~\\mathrm{#2}", 2], "pf": ["\\overline{#1}", 1], "mat": ["\\left[\\mathbf{#1}\\right]", 1], "Isp": "I_{\\text{sp}}"}}, "tex2jax": {"inlineMath": [["\\(", "\\)"]], "displayMath": [["\\[", "\\]"]], "processRefs": false, "processEnvironments": false}})</script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Compressible Flow" href="../compressible-flow/1-introduction.html" />
+    <link rel="prev" title="Example: LR91 Rocket Motor" href="3-example-LR91.html" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="en" />
+
+
+
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
+    
+        <div class="navbar-brand-box">
+<a class="navbar-brand text-wrap" href="../index.html">
+  
+  
+  <h1 class="site-logo" id="site-title">Notes for Propulsion</h1>
+  
+</a>
+</div><form class="bd-search d-flex align-items-center" action="../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form>
+<nav class="bd-links" id="bd-docs-nav" aria-label="Main navigation">
+    <ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../intro.html">
+   Notes for Propulsion
+  </a>
+ </li>
+</ul>
+<p class="caption collapsible-parent">
+ <span class="caption-text">
+  Review
+ </span>
+</p>
+<ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../review/1-introduction.html">
+   Introduction
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../review/2-conservation-equations.html">
+   Conservation Equations
+  </a>
+ </li>
+</ul>
+<p class="caption collapsible-parent">
+ <span class="caption-text">
+  Overview of Flow Devices
+ </span>
+</p>
+<ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../overview-of-flow-devices/1-introduction.html">
+   Overview of Flow Devices
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../overview-of-flow-devices/2-no-heat-addition.html">
+   Flow Machines with No Heat Addition
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../overview-of-flow-devices/3-no-net-power.html">
+   Flow Machines with No Net Power Input
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../overview-of-flow-devices/4-the-rocket.html">
+   The Rocket
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../overview-of-flow-devices/5-combined-heat-and-power.html">
+   Combined Heat and Power Addition: The Turbofan
+  </a>
+ </li>
+</ul>
+<p class="caption collapsible-parent">
+ <span class="caption-text">
+  Liquid Propellant Rocket Engines
+ </span>
+</p>
+<ul class="current nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="1-introduction.html">
+   Liquid Propellant Rocket Engines
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="2-rocket-nozzles.html">
+   Design of Rocket Nozzles
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="3-example-LR91.html">
+   Example: LR91 Rocket Motor
+  </a>
+ </li>
+ <li class="toctree-l1 current active">
+  <a class="current reference internal" href="#">
+   Example: JP4/RFNA Rocket Motor
+  </a>
+ </li>
+</ul>
+<p class="caption collapsible-parent">
+ <span class="caption-text">
+  Compressible Flow
+ </span>
+</p>
+<ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../compressible-flow/1-introduction.html">
+   Compressible Flow
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../compressible-flow/2-properties-of-compressible-flow.html">
+   Properties of Compressible Flow
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../compressible-flow/3-the-mach-number.html">
+   The Mach Number
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="../compressible-flow/4-quasi-1d-flow.html">
+   Quasi-One-Dimensional Nozzle Flow
+  </a>
+ </li>
+</ul>
+<p class="caption collapsible-parent">
+ <span class="caption-text">
+  Bibliography
+ </span>
+</p>
+<ul class="nav sidenav_l1">
+ <li class="toctree-l1">
+  <a class="reference internal" href="../bibliography.html">
+   Bibliography
+  </a>
+ </li>
+</ul>
+
+</nav> <!-- To handle the deprecated key -->
+
+<div class="navbar_extra_footer">
+  Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+</div>
+
+</div>
+
+
+          
+
+
+          
+<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
+    
+    <div class="row topbar fixed-top container-xl">
+    <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show">
+    </div>
+    <div class="col pl-2 topbar-main">
+        
+        <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
+            data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
+            aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
+            title="Toggle navigation" data-toggle="tooltip" data-placement="left">
+            <i class="fas fa-bars"></i>
+            <i class="fas fa-arrow-left"></i>
+            <i class="fas fa-arrow-up"></i>
+        </button>
+        
+        
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
+            class="fas fa-download"></i></button>
+
+    <div class="dropdown-buttons">
+        <!-- ipynb file if we had a myst markdown file -->
+        <a class="dropdown-buttons"
+            href="../_sources/liquid-rockets/4-example-rfna.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Download notebook file" data-toggle="tooltip"
+                data-placement="left">.ipynb</button></a>
+        <!-- Download raw file -->
+        <a class="dropdown-buttons" href="../_sources/liquid-rockets/4-example-rfna.md"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
+                data-placement="left">.md</button></a>
+        <!-- Download PDF via print -->
+        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
+            onClick="window.print()" data-toggle="tooltip" data-placement="left">.pdf</button>
+    </div>
+</div>
+
+        <!-- Source interaction buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Connect with source repository"><i class="fab fa-github"></i></button>
+    <div class="dropdown-buttons sourcebuttons">
+        <a class="repository-button"
+            href="https://github.com/bryanwweber/propulsion-notes"><button type="button" class="btn btn-secondary topbarbtn"
+                data-toggle="tooltip" data-placement="left" title="Source repository"><i
+                    class="fab fa-github"></i>repository</button></a>
+        <a class="issues-button"
+            href="https://github.com/bryanwweber/propulsion-notes/issues/new?title=Issue%20on%20page%20%2Fliquid-rockets/4-example-rfna.html&body=Your%20issue%20content%20here."><button
+                type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
+                title="Open an issue"><i class="fas fa-lightbulb"></i>open issue</button></a>
+        <a class="edit-button" href="https://github.com/bryanwweber/propulsion-notes/edit/main/liquid-rockets/4-example-rfna.md"><button
+                type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
+                title="Edit this page"><i class="fas fa-pencil-alt"></i>suggest edit</button></a>
+    </div>
+</div>
+
+
+        <!-- Full screen (wrap in <a> to have style consistency -->
+        <a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
+                data-placement="bottom" onclick="toggleFullScreen()" aria-label="Fullscreen mode"
+                title="Fullscreen mode"><i
+                    class="fas fa-expand"></i></button></a>
+
+        <!-- Launch buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
+    <div class="dropdown-buttons">
+        
+        <a class="binder-button" href="https://mybinder.org/v2/gh/bryanwweber/propulsion-notes/main?urlpath=tree/liquid-rockets/4-example-rfna.md"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip"
+                data-placement="left"><img class="binder-button-logo"
+                    src="../_static/images/logo_binder.svg"
+                    alt="Interact on binder">Binder</button></a>
+        
+        
+        
+        
+    </div>
+</div>
+
+    </div>
+
+    <!-- Table of contents -->
+    <div class="d-none d-md-block col-md-2 bd-toc show">
+        
+        <div class="tocsection onthispage pt-5 pb-3">
+            <i class="fas fa-list"></i> Contents
+        </div>
+        <nav id="bd-toc-nav">
+            <ul class="nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#solution">
+   Solution
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#engineering-model">
+     Engineering Model
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#procedure">
+     Procedure
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#work">
+     Work
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#results">
+     Results
+    </a>
+   </li>
+  </ul>
+ </li>
+</ul>
+
+        </nav>
+        
+    </div>
+</div>
+    <div id="main-content" class="row">
+        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
+        
+              <div>
+                
+  <div class="section" id="example-jp4-rfna-rocket-motor">
+<h1>Example: JP4/RFNA Rocket Motor<a class="headerlink" href="#example-jp4-rfna-rocket-motor" title="Permalink to this headline">¶</a></h1>
+<!-- This is based on Problem E11.3 from Sforza, Theory of Aerospace Propulsion -->
+<p>A liquid propellant rocket motor using <a class="reference external" href="https://en.wikipedia.org/wiki/JP-4">JP-4</a>/<a class="reference external" href="https://en.wikipedia.org/wiki/Red_fuming_nitric_acid">Red Fuming Nitric Acid (RFNA)</a> propellant combination must produce 19.6 kN of thrust at sea level. The characteristics of the combustion products are <span class="math notranslate nohighlight">\(T_c\)</span> = 3000 K, <span class="math notranslate nohighlight">\(\gamma\)</span> = 1.2 (constant), <span class="math notranslate nohighlight">\(W\)</span> = 27 kg/kmol (constant), and <span class="math notranslate nohighlight">\(p_c\)</span> = 19.34 atm. Determine:</p>
+<ol class="simple">
+<li><p>the throat and exit diameters, in cm, for matched nozzle exit flow at sea level assuming a nozzle efficiency of <span class="math notranslate nohighlight">\(\eta_n\)</span> = 95%</p></li>
+<li><p>the characteristic velocity, <span class="math notranslate nohighlight">\(c^*\)</span>, in m/s</p></li>
+<li><p>the propellant mass flow rate, in kg/s</p></li>
+<li><p>the specific impulse of the engine, in s</p></li>
+<li><p>the thrust, in kN, at an altitude of 11.5 km where the pressure is <span class="math notranslate nohighlight">\(p_0\)</span> = 0.2 atm</p></li>
+<li><p>the thrust, in kN, and exit diameter, in cm, assuming matched operation at this altitude and the same throat diameter</p></li>
+</ol>
+<div class="section" id="solution">
+<h2>Solution<a class="headerlink" href="#solution" title="Permalink to this headline">¶</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pint</span> <span class="kn">import</span> <span class="n">UnitRegistry</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+<span class="n">units</span> <span class="o">=</span> <span class="n">UnitRegistry</span><span class="p">()</span>
+
+<span class="n">F_sl</span> <span class="o">=</span> <span class="mf">19.6</span> <span class="o">*</span> <span class="n">units</span><span class="o">.</span><span class="n">kN</span>
+<span class="n">T_c</span> <span class="o">=</span> <span class="mi">3000</span> <span class="o">*</span> <span class="n">units</span><span class="o">.</span><span class="n">K</span>
+<span class="n">gamma</span> <span class="o">=</span> <span class="mf">1.2</span> <span class="o">*</span> <span class="n">units</span><span class="o">.</span><span class="n">dimensionless</span>
+<span class="n">W</span> <span class="o">=</span> <span class="mi">27</span> <span class="o">*</span> <span class="n">units</span><span class="o">.</span><span class="n">kg</span> <span class="o">/</span> <span class="n">units</span><span class="o">.</span><span class="n">kmol</span>
+<span class="n">R</span> <span class="o">=</span> <span class="n">units</span><span class="o">.</span><span class="n">molar_gas_constant</span> <span class="o">/</span> <span class="n">W</span>
+<span class="n">c_p</span> <span class="o">=</span> <span class="n">gamma</span> <span class="o">*</span> <span class="n">R</span> <span class="o">/</span> <span class="p">(</span><span class="n">gamma</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
+<span class="n">p_c</span> <span class="o">=</span> <span class="mf">19.34</span> <span class="o">*</span> <span class="n">units</span><span class="o">.</span><span class="n">atmosphere</span>
+<span class="n">eta_n</span> <span class="o">=</span> <span class="mf">0.95</span> <span class="o">*</span> <span class="n">units</span><span class="o">.</span><span class="n">dimensionless</span>
+<span class="n">p_sl</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">*</span> <span class="n">units</span><span class="o">.</span><span class="n">atmosphere</span>
+<span class="n">p_0</span> <span class="o">=</span> <span class="mf">0.2</span> <span class="o">*</span> <span class="n">units</span><span class="o">.</span><span class="n">atmosphere</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="engineering-model">
+<h3>Engineering Model<a class="headerlink" href="#engineering-model" title="Permalink to this headline">¶</a></h3>
+<ol class="simple">
+<li><p>The nozzle is not isentropic, but is characterized by the nozzle efficiency</p></li>
+<li><p>The specific heat ratio and molecular weight are constant</p></li>
+<li><p>The discharge coefficient and <span class="math notranslate nohighlight">\(\lambda\)</span> are equal to one</p></li>
+</ol>
+</div>
+<div class="section" id="procedure">
+<h3>Procedure<a class="headerlink" href="#procedure" title="Permalink to this headline">¶</a></h3>
+<p>In this problem, we are initially given <span class="math notranslate nohighlight">\(p_0\)</span> and told the operation of the nozzle is matched. We are also given <span class="math notranslate nohighlight">\(p_c\)</span>, so we can use the stagnation-to-static pressure ratio for isentropic flow to determine the ideal exit velocity from Eq. <a class="reference internal" href="2-rocket-nozzles.html#equation-ideal-exit-velocity">(46)</a>. Using the nozzle efficiency from Eq. <a class="reference internal" href="2-rocket-nozzles.html#equation-nozzle-isentropic-efficiency">(44)</a>, we can correct <span class="math notranslate nohighlight">\(V_{e,i}\)</span> to find the actual nozzle exit velocity.</p>
+<p>Since we are given the thrust and initially the pressure is matched, we can use the actual nozzle exit velocity to calculate the mass flow rate from Eq. <a class="reference internal" href="2-rocket-nozzles.html#equation-rocket-thrust">(36)</a>. We can also use the actual nozzle exit velocity to find the actual exit temperature from the energy equation. This determines the actual exit density via the ideal gas law. We can then find the exit area from the definition of the mass flow rate.</p>
+<p>Then, assuming the discharge coefficient is unity, the mass flow rate coefficient, <span class="math notranslate nohighlight">\(c_m\)</span>, is equal to the inverse of the characteristic velocity <span class="math notranslate nohighlight">\(c^*\)</span>. The characteristic velocity is given in terms of the combustion chamber speed of sound at the specific heat ratio by Eq. <a class="reference internal" href="2-rocket-nozzles.html#equation-nozzle-characteristic-velocity">(41)</a>. The mass flow rate coefficient can be used to find the throat area.</p>
+<p>Next, the specific impulse can be determined by dividing the actual exit velocity by the gravitational constant.</p>
+<p>At the altitude of 11.5 km, we need to correct the thrust by including the pressure thrust in Eq. <a class="reference internal" href="2-rocket-nozzles.html#equation-rocket-thrust">(36)</a>.</p>
+<p>Finally, we need to calculate the thrust and exit diameter at the altitude of 11.5 km assuming matched operation. This can be done by the thrust coefficient, <span class="math notranslate nohighlight">\(c_F\)</span>, assuming that <span class="math notranslate nohighlight">\(\lambda = c_d = 1\)</span>. Since the throat area and chamber conditions are the same, the mass flow rate is the same. This can be used to find the actual exit velocity. From there, the same process as before is used to find the exit diameter.</p>
+</div>
+<div class="section" id="work">
+<h3>Work<a class="headerlink" href="#work" title="Permalink to this headline">¶</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pe_pc</span> <span class="o">=</span> <span class="p">(</span><span class="n">p_sl</span> <span class="o">/</span> <span class="n">p_c</span><span class="p">)</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="s2">&quot;dimensionless&quot;</span><span class="p">)</span>
+<span class="n">V_ei</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">gamma</span> <span class="o">/</span> <span class="p">(</span><span class="n">gamma</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="n">R</span> <span class="o">*</span> <span class="n">T_c</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">pe_pc</span><span class="o">**</span><span class="p">((</span><span class="n">gamma</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">/</span> <span class="n">gamma</span><span class="p">)))</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="s2">&quot;m/s&quot;</span><span class="p">)</span>
+
+<span class="n">Ve_sl</span> <span class="o">=</span> <span class="n">V_ei</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">eta_n</span><span class="p">)</span>
+<span class="n">mdot</span> <span class="o">=</span> <span class="p">(</span><span class="n">F_sl</span> <span class="o">/</span> <span class="n">Ve_sl</span><span class="p">)</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="s2">&quot;kg/s&quot;</span><span class="p">)</span>
+
+<span class="n">Te_sl</span> <span class="o">=</span> <span class="n">T_c</span> <span class="o">-</span> <span class="n">Ve_sl</span><span class="o">**</span><span class="mi">2</span> <span class="o">/</span> <span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">c_p</span><span class="p">)</span>
+<span class="n">rhoe_sl</span> <span class="o">=</span> <span class="p">(</span><span class="n">p_sl</span> <span class="o">/</span> <span class="p">(</span><span class="n">R</span> <span class="o">*</span> <span class="n">Te_sl</span><span class="p">))</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="s2">&quot;kg/m**3&quot;</span><span class="p">)</span>
+<span class="n">Ae_sl</span> <span class="o">=</span> <span class="p">(</span><span class="n">mdot</span> <span class="o">/</span> <span class="p">(</span><span class="n">rhoe_sl</span> <span class="o">*</span> <span class="n">Ve_sl</span><span class="p">))</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="s2">&quot;cm**2&quot;</span><span class="p">)</span>
+<span class="n">de_sl</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">4</span> <span class="o">*</span> <span class="n">Ae_sl</span> <span class="o">/</span> <span class="n">units</span><span class="o">.</span><span class="n">pi</span><span class="p">)</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="s2">&quot;cm&quot;</span><span class="p">)</span>
+
+<span class="n">Gamma</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">gamma</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="mi">2</span> <span class="o">/</span> <span class="p">(</span><span class="n">gamma</span> <span class="o">+</span> <span class="mi">1</span><span class="p">))</span><span class="o">**</span><span class="p">((</span><span class="n">gamma</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="p">(</span><span class="n">gamma</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)))</span>
+<span class="n">a_c</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">gamma</span> <span class="o">*</span> <span class="n">R</span> <span class="o">*</span> <span class="n">T_c</span><span class="p">)</span>
+<span class="n">c_star</span> <span class="o">=</span> <span class="p">(</span><span class="n">a_c</span> <span class="o">/</span> <span class="p">(</span><span class="n">Gamma</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">gamma</span><span class="p">)))</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="s2">&quot;m/s&quot;</span><span class="p">)</span>
+<span class="n">c_m</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">/</span> <span class="n">c_star</span>
+<span class="n">A_th</span> <span class="o">=</span> <span class="p">(</span><span class="n">mdot</span> <span class="o">/</span> <span class="p">(</span><span class="n">p_c</span> <span class="o">*</span> <span class="n">c_m</span><span class="p">))</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="s2">&quot;cm**2&quot;</span><span class="p">)</span>
+<span class="n">d_th</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">4</span> <span class="o">*</span> <span class="n">A_th</span> <span class="o">/</span> <span class="n">units</span><span class="o">.</span><span class="n">pi</span><span class="p">)</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="s2">&quot;cm&quot;</span><span class="p">)</span>
+
+<span class="n">I_sp</span> <span class="o">=</span> <span class="p">(</span><span class="n">Ve_sl</span> <span class="o">/</span> <span class="n">units</span><span class="o">.</span><span class="n">gravity</span><span class="p">)</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="s2">&quot;s&quot;</span><span class="p">)</span>
+
+<span class="n">F</span> <span class="o">=</span> <span class="p">(</span><span class="n">mdot</span> <span class="o">*</span> <span class="n">Ve_sl</span> <span class="o">+</span> <span class="n">Ae_sl</span> <span class="o">*</span> <span class="p">(</span><span class="n">p_sl</span> <span class="o">-</span> <span class="n">p_0</span><span class="p">))</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="s2">&quot;kN&quot;</span><span class="p">)</span>
+
+<span class="n">c_V</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">eta_n</span><span class="p">)</span>
+<span class="n">c_F</span> <span class="o">=</span> <span class="n">c_V</span> <span class="o">*</span> <span class="n">Gamma</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">gamma</span> <span class="o">/</span> <span class="p">(</span><span class="n">gamma</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="p">(</span><span class="n">p_0</span><span class="o">/</span><span class="n">p_c</span><span class="p">)</span><span class="o">**</span><span class="p">((</span><span class="n">gamma</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">/</span> <span class="n">gamma</span><span class="p">)))</span>
+<span class="n">F_alt</span> <span class="o">=</span> <span class="p">(</span><span class="n">c_F</span> <span class="o">*</span> <span class="p">((</span><span class="mf">19.34</span> <span class="o">*</span> <span class="mi">101325</span><span class="p">)</span> <span class="o">*</span> <span class="n">units</span><span class="o">.</span><span class="n">Pa</span><span class="p">)</span> <span class="o">*</span> <span class="n">A_th</span><span class="p">)</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="s2">&quot;kN&quot;</span><span class="p">)</span>
+<span class="n">Ve_alt</span> <span class="o">=</span> <span class="p">(</span><span class="n">F_alt</span> <span class="o">/</span> <span class="n">mdot</span><span class="p">)</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="s2">&quot;m/s&quot;</span><span class="p">)</span>
+<span class="n">Te_alt</span> <span class="o">=</span> <span class="n">T_c</span> <span class="o">-</span> <span class="n">Ve_alt</span><span class="o">**</span><span class="mi">2</span> <span class="o">/</span> <span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">c_p</span><span class="p">)</span>
+<span class="n">rhoe_alt</span> <span class="o">=</span> <span class="p">(</span><span class="n">p_0</span> <span class="o">/</span> <span class="p">(</span><span class="n">R</span> <span class="o">*</span> <span class="n">Te_alt</span><span class="p">))</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="s2">&quot;kg/m**3&quot;</span><span class="p">)</span>
+<span class="n">Ae_alt</span> <span class="o">=</span> <span class="p">(</span><span class="n">mdot</span> <span class="o">/</span> <span class="p">(</span><span class="n">rhoe_alt</span> <span class="o">*</span> <span class="n">Ve_alt</span><span class="p">))</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="s2">&quot;cm**2&quot;</span><span class="p">)</span>
+<span class="n">de_alt</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">4</span> <span class="o">*</span> <span class="n">Ae_alt</span> <span class="o">/</span> <span class="n">units</span><span class="o">.</span><span class="n">pi</span><span class="p">)</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="s2">&quot;cm&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="results">
+<h3>Results<a class="headerlink" href="#results" title="Permalink to this headline">¶</a></h3>
+<table class="colwidths-auto table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Property</p></th>
+<th class="head"><p>Value</p></th>
+<th class="head"><p>Property</p></th>
+<th class="head"><p>Value</p></th>
+<th class="head"><p>Property</p></th>
+<th class="head"><p>Value</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><span class="math notranslate nohighlight">\(V_{e,i}\)</span></p></td>
+<td><p><span class="pasted-text">2078.33 m/s</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(d_e\)</span></p></td>
+<td><p><span class="pasted-text">18.69 cm</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(F\)</span> at 11.5 km, matched</p></td>
+<td><p><span class="pasted-text">22.93 kN</span></p></td>
+</tr>
+<tr class="row-odd"><td><p><span class="math notranslate nohighlight">\(V_e\)</span></p></td>
+<td><p><span class="pasted-text">2025.71 m/s</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(c^*\)</span></p></td>
+<td><p><span class="pasted-text">1482.06 m/s</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(V_e\)</span> at 11.5 km, matched</p></td>
+<td><p><span class="pasted-text">2369.78 m/s</span></p></td>
+</tr>
+<tr class="row-even"><td><p><span class="math notranslate nohighlight">\(\dot{m}\)</span></p></td>
+<td><p><span class="pasted-text">9.68 kg/s</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(A_{\text{th}}\)</span></p></td>
+<td><p><span class="pasted-text">73.18 cm²</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(T_e\)</span> at 11.5 km, matched</p></td>
+<td><p><span class="pasted-text">1480.27 K</span></p></td>
+</tr>
+<tr class="row-odd"><td><p><span class="math notranslate nohighlight">\(T_e\)</span></p></td>
+<td><p><span class="pasted-text">1889.54 K</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(d_{\text{th}}\)</span></p></td>
+<td><p><span class="pasted-text">9.65 cm</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(\rho_e\)</span> at 11.5 km, matched</p></td>
+<td><p><span class="pasted-text">0.04 kg/m³</span></p></td>
+</tr>
+<tr class="row-even"><td><p><span class="math notranslate nohighlight">\(\rho_e\)</span></p></td>
+<td><p><span class="pasted-text">0.17 kg/m³</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(I_{\text{sp}}\)</span></p></td>
+<td><p><span class="pasted-text">206.56 s</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(A_e\)</span> at 11.5 km, matched</p></td>
+<td><p><span class="pasted-text">918.41 cm²</span></p></td>
+</tr>
+<tr class="row-odd"><td><p><span class="math notranslate nohighlight">\(A_e\)</span></p></td>
+<td><p><span class="pasted-text">274.29 cm²</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(F\)</span> at 11.5 km</p></td>
+<td><p><span class="pasted-text">21.82 kN</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(d_e\)</span> at 11.5 km, matched</p></td>
+<td><p><span class="pasted-text">34.20 cm</span></p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./liquid-rockets"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+        </div>
+    </div>
+    
+    
+    <div class='prev-next-bottom'>
+        
+    <a class='left-prev' id="prev-link" href="3-example-LR91.html" title="previous page">Example: LR91 Rocket Motor</a>
+    <a class='right-next' id="next-link" href="../compressible-flow/1-introduction.html" title="next page">Compressible Flow</a>
+
+    </div>
+    <footer class="footer mt-5 mt-md-0">
+    <div class="container">
+      <p>
+        
+          By Bryan Weber<br/>
+        
+          <div class="extra_footer">
+            <p xmlns:dct="http://purl.org/dc/terms/" xmlns:cc="http://creativecommons.org/ns#" class="license-text"><a rel="cc:attributionURL" property="dct:title" href="https://bryanwweber.github.io/propulsion-notes">Notes for Propulsion</a> by <span property="cc:attributionName">Bryan Weber</span> is licensed under <a rel="license" href="https://creativecommons.org/licenses/by-sa/4.0">CC BY-SA 4.0<img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/cc.svg?ref=chooser-v1" /><img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/by.svg?ref=chooser-v1" /><img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/sa.svg?ref=chooser-v1" /></a></p>
+
+          </div>
+      </p>
+    </div>
+  </footer>
+</main>
+
+
+      </div>
+    </div>
+
+    
+  <script src="../_static/js/index.d3f166471bb80abb5163.js"></script>
+
+
+    
+  </body>
+</html>
